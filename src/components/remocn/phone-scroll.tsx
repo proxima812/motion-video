@@ -1088,18 +1088,6 @@ function PhoneBody({
         <div
           style={{
             position: "absolute",
-            top: 11,
-            left: (SW - 126) / 2,
-            width: 126,
-            height: 37,
-            borderRadius: 19,
-            background: "#000",
-            zIndex: 5,
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
             bottom: 8,
             left: (SW - 136) / 2,
             width: 136,
