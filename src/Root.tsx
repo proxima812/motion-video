@@ -3,8 +3,6 @@ import { Composition, Still } from "remotion";
 import { Cover } from "./cover/Cover";
 import { FableReel } from "./fable/FableReel";
 import { F } from "./fable/timeline";
-import { Reel as OrbitReel } from "./Reel";
-import { T } from "./stage/timeline";
 import { Outro, OUTRO_FRAMES, outroTotal, withOutro } from "./outro/Outro";
 import { Video1 } from "./v1/Video1";
 import { F as F1 } from "./v1/timeline";

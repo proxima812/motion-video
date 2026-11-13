@@ -6,7 +6,7 @@
 - **Сторонние** (`remocn`, `tactile`, `shadcn`, `paper`) в библиотеке не правим: стиль задаем пропсами (`theme="light"`, `accent`, `ink`, `background`), шрифт — оберткой `InterScope`, shadcn в `WebScale` — поверхностью `webSurface(s)`.
 - Новый компонент: файл в `src/catalog/own/` + запись в `ENTRIES` + строка здесь.
 
-## Свои (src/catalog/own) — в дизайн-системе (31)
+## Свои (src/catalog/own) — в дизайн-системе (28)
 
 | name | для чего | откуда |
 |---|---|---|
@@ -30,11 +30,8 @@
 | `check-circle` | Круглая галочка, которая прорисовывается (чек-листы). | v5 → catalog/own/icons |
 | `verdict` | Статус да/нет: зеленая ✓ или красный ✕. | v11 → catalog/own/icons |
 | `db-icon` | Иконка базы данных. | v11 → catalog/own/icons |
-| `ornament` | Декоративный ромб-орнамент на фон (INK, прозрачность 0.12), медленно вращается. | v18 → catalog/own/icons |
-| `ring-logo` | Серый круг, который загорается вращающимся градиентным кольцом. | v3 Logo → catalog/own/icons |
 | `wordmark` | Вордмарк сайта «name.tld» с цветной точкой. | v18 → catalog/own/icons |
 | `dot-grid` | Сетка точек (год = 365 дней), выделенные точки горят: «1 день из 365». | v14 Year → catalog/own/fx |
-| `flip-card` | Карточка, которая переворачивается: было → стало (человек → агент). | v7 Tile → catalog/own/fx |
 | `pointer` | Курсор мыши: плавно ездит по ключам, клик с рябью. | kit/reel → catalog/own/fx |
 | `punch` | Жесткая склейка с коротким наездом камеры (вход в сцену). | v17 → catalog/own/fx |
 | `power-off` | Выключение телевизора (светлое): картинка схлопывается в линию и точку. Конец ролика/сцены. | v17 → catalog/own/fx |
@@ -42,7 +39,7 @@
 | `web-scale` | Обертка для web-UI (shadcn): верстка в нативном размере и масштаб — текст остается четким. Есть также ScaleFill, FrameBox, Skip. | v19 Zoom → catalog/own/fx |
 | `scale-fill` | Масштабировать полноэкранный 16:9-компонент внутри 9:16. | v17 Zoom → catalog/own/fx |
 
-## Свои общие (используются старыми роликами) (13)
+## Свои общие (используются старыми роликами) (7)
 
 | name | для чего | откуда |
 |---|---|---|
@@ -53,12 +50,6 @@
 | `outro` | Концовка @const_proxima (RU/EN), добавляется withOutro(). | outro/Outro |
 | `outro-tatarverse` | Концовка @the_tatarverse, добавляется withOutro(..., 'tatarverse'). | outro/TatarverseOutro |
 | `cover` | Обложка ролика (Still Cover / CoverWide). | cover/Cover |
-| `legacy-app-window` | Окно приложения из первого Reel (захардкожено под тот ролик). | ui/AppWindow |
-| `legacy-chart` | График из первого Reel (захардкожен). | ui/Chart |
-| `legacy-cursor` | Курсор первого Reel (путь захардкожен; для новых — pointer). | stage/Cursor |
-| `legacy-captions` | Субтитры первого Reel (захардкожены). | scenes/Captions |
-| `legacy-logo` | Логотип первого Reel. | scenes/Logo |
-| `legacy-background` | Фон первого Reel. | scenes/Background |
 
 ## tactile-glass-ui (5)
 
@@ -85,12 +76,10 @@
 | `shader-warp` | Анимированный шейдер-градиент на фон. | components/remocn/shader-warp (@paper-design) |
 | `shader-warp-cream` | Кремовый шейдер-градиент (фон обложки). | components/remocn/shader-warp-cream (@paper-design) |
 
-## Remocn (35)
+## Remocn (31)
 
 | name | для чего | откуда |
 |---|---|---|
-| `hook-punch` | Хук: стоп-слово, скролл, панчлайн. | components/remocn/hook-punch (v17) |
-| `pov-setup` | POV-подводка: «POV: ты …» → панч. | components/remocn/pov-setup (v17, v19Wide) |
 | `chat-gpt` | Интерфейс ChatGPT с печатью промпта. | components/remocn/chat-gpt (v17) |
 | `prompt-to-app` | Промпт → сборка → задеплоенное приложение. | components/remocn/prompt-to-app (v17) |
 | `prompt-restyle` | Сайт перекрашивается по промптам «сделай красивее». | components/remocn/prompt-restyle (v17) |
@@ -116,11 +105,9 @@
 | `parallax-depth` | Параллакс холмов с глубиной. | components/remocn/parallax-depth (v19Wide) |
 | `search-reveal` | Поисковая строка: печать запроса и раскрытие. | components/remocn/search-reveal (v19Wide) |
 | `dot-map` | Карта мира из точек с городами и счетчиком. | components/remocn/dot-map (v19Wide) |
-| `spec-sheet` | Таблица характеристик продукта. | components/remocn/spec-sheet (v19Wide) |
 | `fraction-split` | Дробь из фразы: 3/8 выделяется. | components/remocn/fraction-split (v19Wide) |
 | `tile-wave` | Волна плиток меняет одну фразу на другую. | components/remocn/tile-wave (v19Wide) |
 | `halftone-cut` | Растровый (halftone) переход между фразами. | components/remocn/halftone-cut (v19Wide) |
-| `backdrop` | Фон-подложка Remocn. | components/remocn/backdrop (не использовался) |
 | `caret` | Мигающая каретка ввода. | components/remocn/caret (не использовался в роликах) |
 | `font-cycle` | Слово перебирает шрифты. | components/remocn/font-cycle (не использовался) |
 | `tv-power-off` | Выключение ТВ (canvas): в рендере падает, вместо него power-off. | components/remocn/tv-power-off (не использовался) |

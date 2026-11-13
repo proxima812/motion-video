@@ -1,8 +1,7 @@
 import React from "react";
 import { AbsoluteFill, Sequence, interpolate, useCurrentFrame } from "remotion";
 import { SPRING, ease, lerp, progress, springAt } from "../../stage/motion";
-import { pop } from "../../kit/reel";
-import { INK, INTER, SURFACE, WHITE } from "../../kit/design";
+import { INK, INTER, WHITE } from "../../kit/design";
 
 // Layout wrappers, transitions and pointer in the design system (surfaces = SURFACE, INK by default, no extra shadows).
 
@@ -64,20 +63,6 @@ export const PowerOff: React.FC<{ at: number; len?: number; dot?: string; childr
         </AbsoluteFill>
       )}
     </AbsoluteFill>
-  );
-};
-
-/** Card that pops in at `enter` and flips (Y axis) to its back at `flipAt`: front = white surface, back = accent fill */
-export const FlipCard: React.FC<{ frame: number; enter: number; flipAt: number; front: React.ReactNode; back: React.ReactNode; w?: number; h?: number; accent?: string }> = ({ frame, enter, flipAt, front, back, w = 430, h = 330, accent = INK }) => {
-  const p = pop(frame, enter, SPRING.smooth);
-  const flip = Math.min(1, springAt(frame, flipAt, SPRING.snappy));
-  const isBack = flip > 0.5;
-  return (
-    <div style={{ ...p.style, width: w, height: h, perspective: 1200 }}>
-      <div style={{ ...SURFACE, width: "100%", height: "100%", transform: `rotateY(${flip * 180}deg)`, background: isBack ? accent : WHITE, color: isBack ? WHITE : INK, position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, transform: isBack ? "scaleX(-1)" : undefined, display: "grid", placeItems: "center" }}>{isBack ? back : front}</div>
-      </div>
-    </div>
   );
 };
 

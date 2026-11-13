@@ -3,7 +3,6 @@ import { BookOpen, Building2, Earth, Globe, Hand, Laugh, MapPin, MessageCircle, 
 import { AbsoluteFill, staticFile } from "remotion";
 import { TactileButton, TactileGlassWord, TactilePromptInput, TactileSwitch, TactileTabs } from "tactile-glass-ui";
 import { AnalyticsFunnel } from "@/components/remocn/analytics-funnel";
-import { Backdrop } from "@/components/remocn/backdrop";
 import { Caret } from "@/components/remocn/caret";
 import { ChatGpt } from "@/components/remocn/chat-gpt";
 import { CompactStat } from "@/components/remocn/compact-stat";
@@ -17,14 +16,12 @@ import { FontCycle } from "@/components/remocn/font-cycle";
 import { FractionSplit } from "@/components/remocn/fraction-split";
 import { GridMontage } from "@/components/remocn/grid-montage";
 import { HalftoneCut } from "@/components/remocn/halftone-cut";
-import { HookPunch } from "@/components/remocn/hook-punch";
 import { CheckIcon } from "@/components/remocn/icon-check";
 import { ImpactShake } from "@/components/remocn/impact-shake";
 import { LongVowel } from "@/components/remocn/long-vowel";
 import { NumberSplit } from "@/components/remocn/number-split";
 import { ParallaxDepth } from "@/components/remocn/parallax-depth";
 import { PhoneScroll } from "@/components/remocn/phone-scroll";
-import { PovSetup } from "@/components/remocn/pov-setup";
 import { PromptRestyle } from "@/components/remocn/prompt-restyle";
 import { PromptToApp } from "@/components/remocn/prompt-to-app";
 import { QuadtreeMark } from "@/components/remocn/quadtree-mark";
@@ -34,7 +31,6 @@ import { SearchReveal } from "@/components/remocn/search-reveal";
 import { ShaderWarp } from "@/components/remocn/shader-warp";
 import { ShaderWarpCream } from "@/components/remocn/shader-warp-cream";
 import { ShardsToGrid } from "@/components/remocn/shards-to-grid";
-import { SpecSheet } from "@/components/remocn/spec-sheet";
 import { SpeedrunTimer } from "@/components/remocn/speedrun-timer";
 import { TelegramChatFlow } from "@/components/remocn/telegram-chat-flow";
 import { TileWave } from "@/components/remocn/tile-wave";
@@ -48,19 +44,13 @@ import { GLASS, K, count, shake } from "../kit/reel";
 import { Outro } from "../outro/Outro";
 import { TatarverseOutro } from "../outro/TatarverseOutro";
 import { Cover } from "../cover/Cover";
-import { AppWindow } from "../ui/AppWindow";
-import { Chart } from "../ui/Chart";
 import { Odometer } from "../ui/Odometer";
-import { Captions } from "../scenes/Captions";
-import { Logo as OrbitLogo } from "../scenes/Logo";
-import { Background as OrbitBackground } from "../scenes/Background";
-import { Cursor } from "../stage/Cursor";
 import { SPRING, ease, progress, springAt } from "../stage/motion";
 import { Big, Header, Headline, Paragraph, Said, Strike, Words } from "./own/text";
 import { HEADING, INK, NUMBER, PARAGRAPH } from "../kit/design";
 import { AiBubble, Bubble, Browser, Card, Chip, Meter, Pill, StatTile, Stamp, Sticker, Terminal } from "./own/surfaces";
-import { CheckCircle, DbIcon, Ornament, RingLogo, Verdict, Wordmark } from "./own/icons";
-import { DotGrid, FlipCard, InterScope, PowerOff, Pointer, Punch, ScaleFill, WebScale } from "./own/fx";
+import { CheckCircle, DbIcon, Verdict, Wordmark } from "./own/icons";
+import { DotGrid, InterScope, PowerOff, Pointer, Punch, ScaleFill, WebScale } from "./own/fx";
 
 // Every component of the catalog with a demo. Pick one in Studio: Playground -> props -> name.
 // Groups: own = our components (src/catalog/own, being restyled to src/kit/design.ts),
@@ -434,28 +424,6 @@ export const ENTRIES: Entry[] = [
     ),
   },
   {
-    id: "ornament",
-    group: "own",
-    use: "Декоративный ромб-орнамент на фон (INK, прозрачность 0.12), медленно вращается.",
-    source: "v18 → catalog/own/icons",
-    render: (f) => (
-      <AbsoluteFill>
-        <Ornament x={540} y={960} size={700} spin={f * 0.2} opacity={0.6} />
-      </AbsoluteFill>
-    ),
-  },
-  {
-    id: "ring-logo",
-    group: "own",
-    use: "Серый круг, который загорается вращающимся градиентным кольцом.",
-    source: "v3 Logo → catalog/own/icons",
-    render: (f) => (
-      <Mid>
-        <RingLogo frame={f} size={300} at={30} t={progress(f, 30, 50)} />
-      </Mid>
-    ),
-  },
-  {
     id: "wordmark",
     group: "own",
     use: "Вордмарк сайта «name.tld» с цветной точкой.",
@@ -476,24 +444,6 @@ export const ENTRIES: Entry[] = [
     render: (f) => (
       <Mid>
         <DotGrid frame={f} at={10} lit={(i) => (i === 0 ? 1 : 0)} size={24} on={ACCENT} />
-      </Mid>
-    ),
-  },
-  {
-    id: "flip-card",
-    group: "own",
-    use: "Карточка, которая переворачивается: было → стало (человек → агент).",
-    source: "v7 Tile → catalog/own/fx",
-    render: (f) => (
-      <Mid>
-        <FlipCard
-          frame={f}
-          enter={10}
-          flipAt={90}
-          accent={ACCENT}
-          front={<div style={{ ...HEADING, fontSize: 64 }}>Человек</div>}
-          back={<div style={{ ...HEADING, fontSize: 64, color: "#fff" }}>Агент</div>}
-        />
       </Mid>
     ),
   },
@@ -624,12 +574,6 @@ export const ENTRIES: Entry[] = [
   { id: "outro", group: "shared", use: "Концовка @const_proxima (RU/EN), добавляется withOutro().", source: "outro/Outro", frames: 180, bg: "none", render: () => <Outro lang="ru" /> },
   { id: "outro-tatarverse", group: "shared", use: "Концовка @the_tatarverse, добавляется withOutro(..., 'tatarverse').", source: "outro/TatarverseOutro", frames: 180, bg: "none", render: () => <TatarverseOutro /> },
   { id: "cover", group: "shared", use: "Обложка ролика (Still Cover / CoverWide).", source: "cover/Cover", frames: 1, bg: "none", render: () => <Cover title="Заголовок" description="Короткое описание темы" /> },
-  { id: "legacy-app-window", group: "shared", use: "Окно приложения из первого Reel (захардкожено под тот ролик).", source: "ui/AppWindow", bg: "white", render: (f) => <AppWindow frame={f} /> },
-  { id: "legacy-chart", group: "shared", use: "График из первого Reel (захардкожен).", source: "ui/Chart", bg: "white", render: (f) => <Chart frame={f} /> },
-  { id: "legacy-cursor", group: "shared", use: "Курсор первого Reel (путь захардкожен; для новых — pointer).", source: "stage/Cursor", bg: "white", render: (f) => <Cursor frame={f} /> },
-  { id: "legacy-captions", group: "shared", use: "Субтитры первого Reel (захардкожены).", source: "scenes/Captions", bg: "white", render: (f) => <Captions frame={f} /> },
-  { id: "legacy-logo", group: "shared", use: "Логотип первого Reel.", source: "scenes/Logo", bg: "white", render: (f) => <OrbitLogo frame={f} /> },
-  { id: "legacy-background", group: "shared", use: "Фон первого Reel.", source: "scenes/Background", bg: "none", render: (f) => <OrbitBackground frame={f} /> },
 
   /* ───────── tactile-glass-ui ───────── */
   { id: "tactile-glass-word", group: "tactile", tactile: true, use: "Слово из жидкого стекла — акцент в заголовке. На белом почти не видно — нужен цветной/текстурный фон за ним.", source: "tactile-glass-ui (v1, v3, v5, v7)", render: () => <Mid><div style={{ ...HEADING, fontSize: 196, fontWeight: 700 }}><TactileGlassWord {...GLASS}>5.2</TactileGlassWord></div></Mid> },
@@ -650,8 +594,6 @@ export const ENTRIES: Entry[] = [
   /* ───────── remocn ───────── */
   ...(
     [
-      ["hook-punch", "Хук: стоп-слово, скролл, панчлайн.", "v17", 300, <HookPunch theme="light" accent={ACCENT} stop="Никто" scroll="не признает," lead="но твой стартап —" payoff="обертка." speed={0.51} fit={0.52} stage="#FFFFFF" />],
-      ["pov-setup", "POV-подводка: «POV: ты …» → панч.", "v17, v19Wide", 300, <PovSetup theme="light" accent={ACCENT} setup="ты вайб-кодер" lead="есть" punch="идея." speed={1.8} fit={1.25} stage="#FFFFFF" />],
       ["chat-gpt", "Интерфейс ChatGPT с печатью промпта.", "v17", 300, <ChatGpt textScale={2} greeting="Чем помочь?" placeholder="Спросите что-нибудь" prompt="сделай Uber для котов" accentColor={ACCENT} />],
       ["prompt-to-app", "Промпт → сборка → задеплоенное приложение.", "v17", 600, <PromptToApp theme="light" accent={ACCENT} prompt="сделай Uber, но для котов" projectName="uber-dlya-kotov" deployUrl="uber-koty.vercel.app" siteName="Котоберь" />],
       ["prompt-restyle", "Сайт перекрашивается по промптам «сделай красивее».", "v17", 400, <PromptRestyle theme="light" background="#FFFFFF" accent={ACCENT} headline="Котобер изменит мир" highlight="изменит мир" instructions={["сделай красивее", "еще красивее", "добавь градиент"]} />],
@@ -677,11 +619,9 @@ export const ENTRIES: Entry[] = [
       ["parallax-depth", "Параллакс холмов с глубиной.", "v19Wide", 300, <ParallaxDepth />],
       ["search-reveal", "Поисковая строка: печать запроса и раскрытие.", "v19Wide", 300, <SearchReveal text="татарский центр рядом" fontSize={54} color={INK} panelColor={ACCENT} backgroundColor="#FFFFFF" />],
       ["dot-map", "Карта мира из точек с городами и счетчиком.", "v19Wide", 400, <DotMap count={410} label="центров" accent={ACCENT} theme="light" />],
-      ["spec-sheet", "Таблица характеристик продукта.", "v19Wide", 400, <SpecSheet title="Карточки" name="tatarverse.cc" highlight={3} rows={[{ label: "Ссылки", value: "215" }, { label: "Связь", value: "напрямую" }, { label: "Печать", value: "PDF" }, { label: "Языки", value: "RU · EN" }]} accent={ACCENT} theme="light" />],
       ["fraction-split", "Дробь из фразы: 3/8 выделяется.", "v19Wide", 300, <FractionSplit line="3/8 карточек ждут помощи" highlight="3/8" keep={3} accentPiece={0} accent={ACCENT} theme="light" />],
       ["tile-wave", "Волна плиток меняет одну фразу на другую.", "v19Wide", 200, <TileWave from="Новый город" to="tatarverse.cc" theme="light" accent={ACCENT} rows={8} delay={14} />],
       ["halftone-cut", "Растровый (halftone) переход между фразами.", "v19Wide", 200, <HalftoneCut from="410 центров" to="Как искать" theme="light" accent={ACCENT} />],
-      ["backdrop", "Фон-подложка Remocn.", "не использовался", 200, <Backdrop />],
       ["caret", "Мигающая каретка ввода.", "не использовался в роликах", 120, <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}><Caret color={INK} /></AbsoluteFill>],
       ["font-cycle", "Слово перебирает шрифты.", "не использовался", 240, <FontCycle theme="light" accent={ACCENT} background="#FFFFFF" />],
       ["tv-power-off", "Выключение ТВ (canvas): в рендере падает, вместо него power-off.", "не использовался", 120, <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: 100, fontSize: 44, textAlign: "center" }}>tv-power-off не рендерится (нет canvas capture API) — используй power-off</AbsoluteFill>],
