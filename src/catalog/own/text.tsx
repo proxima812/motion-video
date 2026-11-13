@@ -1,8 +1,12 @@
 import React from "react";
 import { interpolateColors } from "remotion";
+import { X } from "lucide-react";
 import { SPRING, ease, progress, springAt } from "../../stage/motion";
 import { HEADING, INK, PARAGRAPH, SAFE, WHITE } from "../../kit/design";
 import { K } from "../../kit/reel";
+
+// default accent for Mark (the reels' violet); pass the video's accent via color
+const ACCENT_VIOLET = "#6E33CC";
 
 // Text components in the design system (src/kit/design.ts): headings Inter 400 with the key word 700,
 // paragraphs Raleway 400 with accent words 700, all dark text INK. Mark a key word as *word* in text props.
@@ -72,27 +76,39 @@ export const Headline: React.FC<{ frame: number; items: HeadlineItem[]; size?: n
   );
 };
 
-/** "Not this" mark from `at`: text-selection handles (thin bar + filled dot, like selecting text on a phone) -
- * the selection sweeps from the start to the end of the word, then everything turns red (handles, word, soft fill) */
-export const Strike: React.FC<{ frame: number; at: number; color?: string; children: React.ReactNode }> = ({ frame, at, color = K.red, children }) => {
+/** Accent mark from `at`: phone-style text selection - thin bars with filled dots (left dot on top, right at the bottom)
+ * sweep from the start to the end of the word, then handles, word and a soft fill turn `color` (default the accent violet) */
+export const Mark: React.FC<{ frame: number; at: number; color?: string; children: React.ReactNode }> = ({ frame, at, color = ACCENT_VIOLET, children }) => {
   const show = Math.min(1, springAt(frame, at, SPRING.snappy) * 1.5);
   const sweep = ease.inOut(progress(frame, at + 4, at + 20));
-  const red = ease.inOut(progress(frame, at + 24, at + 34));
-  const c = interpolateColors(red, [0, 1], [INK, color]);
-  const fill = `color-mix(in srgb, ${c} ${Math.round(10 + red * 6)}%, transparent)`;
-  // bar spans the line; the left handle's dot sits on top, the right one's at the bottom
-  const handle = (left: string, dot: "top" | "bottom"): React.CSSProperties => ({ position: "absolute", left, top: "0.02em", bottom: "-0.02em", width: "0.035em", marginLeft: "-0.0175em", background: c, opacity: show });
-  const knob = (dot: "top" | "bottom"): React.CSSProperties => ({ position: "absolute", left: "50%", [dot]: "-0.15em", width: "0.16em", height: "0.16em", marginLeft: "-0.08em", borderRadius: "50%", background: c });
+  const tint = ease.inOut(progress(frame, at + 24, at + 34));
+  const c = interpolateColors(tint, [0, 1], [INK, color]);
+  const fill = `color-mix(in srgb, ${c} ${Math.round(10 + tint * 6)}%, transparent)`;
+  const bar = (left: string): React.CSSProperties => ({ position: "absolute", left, top: "0.02em", bottom: "-0.02em", width: "0.035em", marginLeft: "-0.0175em", background: c, opacity: show });
+  const dot = (side: "top" | "bottom"): React.CSSProperties => ({ position: "absolute", left: "50%", [side]: "-0.15em", width: "0.16em", height: "0.16em", marginLeft: "-0.08em", borderRadius: "50%", background: c });
   return (
     <span style={{ position: "relative", display: "inline-block", margin: "0 0.08em" }}>
       <span style={{ position: "absolute", left: "-0.04em", top: "0.02em", bottom: "-0.02em", width: `calc((100% + 0.08em) * ${sweep})`, background: fill }} />
-      <span style={handle("-0.04em", "top")}>
-        <span style={knob("top")} />
+      <span style={bar("-0.04em")}>
+        <span style={dot("top")} />
       </span>
-      <span style={handle(`calc(-0.04em + (100% + 0.08em) * ${sweep})`, "bottom")}>
-        <span style={knob("bottom")} />
+      <span style={bar(`calc(-0.04em + (100% + 0.08em) * ${sweep})`)}>
+        <span style={dot("bottom")} />
       </span>
       <span style={{ position: "relative", color: c }}>{children}</span>
+    </span>
+  );
+};
+
+/** "No / not this": the Mark selection in red, then a red cross pops in next to the word */
+export const Strike: React.FC<{ frame: number; at: number; color?: string; children: React.ReactNode }> = ({ frame, at, color = K.red, children }) => {
+  const x = springAt(frame, at + 30, SPRING.bouncy);
+  return (
+    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.18em" }}>
+      <Mark frame={frame} at={at} color={color}>
+        {children}
+      </Mark>
+      <X size="0.75em" strokeWidth={3.2} color={color} style={{ flex: "none", opacity: Math.min(1, x * 1.5), transform: `scale(${x}) rotate(${(1 - Math.min(x, 1)) * -90}deg)` }} />
     </span>
   );
 };

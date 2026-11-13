@@ -51,7 +51,7 @@ import { TatarverseOutro } from "../outro/TatarverseOutro";
 import { Cover } from "../cover/Cover";
 import { Odometer } from "../ui/Odometer";
 import { SPRING, ease, progress, springAt } from "../stage/motion";
-import { Big, Header, Headline, Paragraph, Said, Strike, Words } from "./own/text";
+import { Big, Header, Headline, Mark, Paragraph, Said, Strike, Words } from "./own/text";
 import { HEADING, INK, NUMBER, PARAGRAPH } from "../kit/design";
 import { AiBubble, Bubble, Browser, Card, Chip, Meter, Pill, StatTile, Stamp, Sticker, Terminal } from "./own/surfaces";
 import { CheckCircle, DbIcon, Verdict, Wordmark } from "./own/icons";
@@ -203,7 +203,7 @@ export const ENTRIES: Entry[] = [
   {
     id: "strike",
     group: "own",
-    use: "«Не то»: слово выделяется как текст на телефоне (ручки с точками, от начала до конца), потом все краснеет.",
+    use: "«Нет / не то»: выделение как у текста на телефоне, все краснеет, рядом красный крестик.",
     source: "v13–v15 → catalog/own/text",
     render: (f) => (
       <Mid>
@@ -211,6 +211,19 @@ export const ENTRIES: Entry[] = [
           <Strike frame={f} at={30}>
             исчезаем
           </Strike>
+        </div>
+      </Mid>
+    ),
+  },
+  {
+    id: "mark",
+    group: "own",
+    use: "Акцент на слове: выделение как у текста на телефоне (ручки с точками, от начала до конца), потом слово и заливка в акцентный фиолетовый. Без иконок.",
+    source: "strike → catalog/own/text",
+    render: (f) => (
+      <Mid>
+        <div style={{ ...HEADING, fontSize: 96, textAlign: "center" }}>
+          Найди <Mark frame={f} at={30} color={ACCENT}>своих</Mark>
         </div>
       </Mid>
     ),
