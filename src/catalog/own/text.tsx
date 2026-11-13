@@ -1,6 +1,7 @@
 import React from "react";
+import { interpolateColors } from "remotion";
 import { SPRING, ease, progress, springAt } from "../../stage/motion";
-import { HEADING, INK, PARAGRAPH, SAFE } from "../../kit/design";
+import { HEADING, INK, PARAGRAPH, SAFE, WHITE } from "../../kit/design";
 import { K } from "../../kit/reel";
 
 // Text components in the design system (src/kit/design.ts): headings Inter 400 with the key word 700,
@@ -71,22 +72,30 @@ export const Headline: React.FC<{ frame: number; items: HeadlineItem[]; size?: n
   );
 };
 
-/** Line drawn across text from left to right over [at, at + 14]; text fades back */
+/** "Not this" mark from `at`: the word turns red, red [ ] brackets close in on its sides with a red fill behind it
+ * (word white), then the fill fades away, leaving the red word in red brackets */
 export const Strike: React.FC<{ frame: number; at: number; color?: string; children: React.ReactNode }> = ({ frame, at, color = K.red, children }) => {
-  // messy pen scribble, up-down like in a school notebook: uneven zigzag drawn left to right
-  const w = ease.inOut(progress(frame, at, at + 22));
-  const n = 9;
-  const pts = Array.from({ length: n * 2 + 1 }, (_, i) => {
-    const x = -3 + (i / (n * 2)) * 106 + Math.sin(i * 2.3) * 2.5;
-    const y = i % 2 ? 18 + Math.sin(i * 1.7) * 8 : 82 + Math.cos(i * 1.3) * 8;
-    return `${x.toFixed(1)} ${y.toFixed(1)}`;
+  const red = progress(frame, at, at + 10);
+  const br = springAt(frame, at + 8, SPRING.bouncy);
+  const fill = ease.out(progress(frame, at + 14, at + 24)) * (1 - ease.inOut(progress(frame, at + 50, at + 64)));
+  const ink = interpolateColors(red, [0, 1], [INK, color]);
+  const bracket = (side: "l" | "r"): React.CSSProperties => ({
+    position: "absolute",
+    top: "-0.06em",
+    bottom: "-0.06em",
+    width: "0.2em",
+    [side === "l" ? "left" : "right"]: "-0.32em",
+    border: `0.075em solid ${color}`,
+    [side === "l" ? "borderRight" : "borderLeft"]: "none",
+    opacity: Math.min(1, br * 1.5),
+    transform: `translateX(${(side === "l" ? -1 : 1) * (1 - br) * 0.4}em) scaleY(${0.6 + 0.4 * br})`,
   });
   return (
-    <span style={{ position: "relative", display: "inline-block" }}>
-      <span style={{ opacity: 1 - 0.45 * w }}>{children}</span>
-      <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", left: 0, top: "22%", width: "100%", height: "70%", overflow: "visible", transform: "rotate(-2deg)" }}>
-        <path d={`M${pts.join(" L")}`} pathLength={1} fill="none" stroke={color} strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" strokeDasharray="1 1" strokeDashoffset={1 - w} style={{ opacity: w > 0 ? 1 : 0 }} />
-      </svg>
+    <span style={{ position: "relative", display: "inline-block", margin: "0 0.34em" }}>
+      <span style={{ position: "absolute", inset: "0.02em -0.06em", background: color, opacity: fill, transform: `scaleX(${0.4 + 0.6 * Math.min(1, fill * 2)})` }} />
+      <span style={bracket("l")} />
+      <span style={bracket("r")} />
+      <span style={{ position: "relative", color: interpolateColors(fill, [0, 1], [ink, WHITE]) }}>{children}</span>
     </span>
   );
 };

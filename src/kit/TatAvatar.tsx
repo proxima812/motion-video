@@ -9,8 +9,8 @@ import { ACCENT_WEIGHT, GLASS_PILL, INK, PARAGRAPH, SURFACE } from "./design";
 // and the spoken words pop out of her in small pills on the side she looks to (right; left when mirrored) and vanish right away.
 export type Emotion = "confident-emerald" | "confident-traditional" | "kalpak-green" | "portrait-green" | "portrait-traditional" | "smile-green";
 export type AvatarKey = { at: number; e: Emotion };
-// icon = lucide icon by meaning (shown before the word), accent = accent text color (weight 500),
-// glass = frosted pill; without it every 3rd pill is glass so they are sometimes, not always, glass.
+// Subtitles only: plain words on a frosted glass pill, no icons. accent = accent text color (weight 500).
+// icon / glass are ignored (kept so existing videos compile).
 export type SpokenWord = { f: number; w: string; icon?: LucideIcon; accent?: string; glass?: boolean };
 // Stance: "right" = she looks right, stands left (100 px from the left edge), words fly right;
 // "left" = mirrored, stands right, words fly left; "center" = middle, words alternate left/right.
@@ -35,7 +35,7 @@ const nodAt = (frame: number, words: SpokenWord[]) =>
     return d < 0 || d > 16 ? m : Math.max(m, Math.sin((d / 16) * Math.PI));
   }, 0);
 
-// Word pills: one fixed style in every video - design-system surface (white, radius 24, the one shadow), #251B3A Raleway text, hairline light-gray border.
+// Word pills: one fixed style in every video - glass pill (GLASS_PILL over the surface radius), #251B3A Raleway text, no icons.
 // Background is never the accent color; the text may be (then weight 500).
 const PILL: React.CSSProperties = {
   ...SURFACE,
@@ -59,18 +59,13 @@ const WordPills: React.FC<{ frame: number; words: SpokenWord[]; head?: { x: numb
       const fade = progress(frame, w.f + LIFE - 12, w.f + LIFE);
       const x = hx + dir * (60 + fly * (210 + lane * 30)) * size;
       const y = head.y - (10 + fly * (30 + lane * 40) + fade * 24) * size;
-      const glass = w.glass ?? i % 3 === 2;
-      const Icon = w.icon;
       return (
         <div
           key={i}
           style={{
             ...PILL,
-            ...(glass ? GLASS_PILL : null),
+            ...GLASS_PILL,
             ...(w.accent ? { color: w.accent, fontWeight: ACCENT_WEIGHT } : null),
-            display: "flex",
-            alignItems: "center",
-            gap: 10 * size,
             position: "absolute",
             left: x,
             top: y,
@@ -81,7 +76,6 @@ const WordPills: React.FC<{ frame: number; words: SpokenWord[]; head?: { x: numb
             fontSize: 32 * size,
           }}
         >
-          {Icon && <Icon size={30 * size} strokeWidth={2} color={w.accent ?? INK} />}
           {w.w}
         </div>
       );

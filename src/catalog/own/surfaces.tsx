@@ -19,23 +19,23 @@ export const Card: React.FC<{ style?: React.CSSProperties; children: React.React
   <div style={{ ...SURFACE, ...PARAGRAPH, padding: 40, boxSizing: "border-box", ...style }}>{children}</div>
 );
 
-/** Small tag, same look as the avatar's word pills */
-/** Small tag. accent = text color (weight 500), glass = frosted surface, icon = lucide icon by meaning */
+/** Small tag: text weight 500, accent = text color, glass = frosted surface, icon = lucide icon by meaning */
 export const Pill: React.FC<{ size?: number; accent?: string; glass?: boolean; icon?: LucideIcon; style?: React.CSSProperties; children: React.ReactNode }> = ({ size = 30, accent, glass, icon: Icon, style, children }) => (
-  <span style={{ ...SURFACE, ...PARAGRAPH, border: HAIRLINE, ...(glass ? GLASS_PILL : null), ...(accent ? { color: accent, fontWeight: ACCENT_WEIGHT } : null), fontSize: size, lineHeight: 1, padding: size * 0.6, whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: size * 0.35, ...style }}>
+  <span style={{ ...SURFACE, ...PARAGRAPH, border: HAIRLINE, ...(glass ? GLASS_PILL : null), fontWeight: ACCENT_WEIGHT, ...(accent ? { color: accent } : null), fontSize: size, lineHeight: 1, padding: size * 0.6, whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: size * 0.35, ...style }}>
     {Icon && <Icon size={size * 1.05} strokeWidth={2} color={accent ?? INK} />}
     {children}
   </span>
 );
 
-/** Filter chip: pops in at `at`, gets selected (accent fill, white text, bump) at `on` */
-export const Chip: React.FC<{ frame: number; at: number; on?: number; accent?: string; size?: number; children: React.ReactNode }> = ({ frame, at, on, accent = INK, size = 38, children }) => {
+/** Filter chip (text weight 500, icon = lucide icon by meaning of the word): pops in at `at`, gets selected (accent fill, white text, bump) at `on` */
+export const Chip: React.FC<{ frame: number; at: number; on?: number; accent?: string; size?: number; icon?: LucideIcon; children: React.ReactNode }> = ({ frame, at, on, accent = INK, size = 38, icon: Icon, children }) => {
   const p = pop(frame, at, SPRING.bouncy);
   const sel = on === undefined ? 0 : springAt(frame, on, SPRING.snappy);
   if (p.t <= 0) return null;
   const onNow = sel > 0.5;
   return (
-    <div style={{ ...p.style, ...SURFACE, ...PARAGRAPH, fontSize: size, lineHeight: 1, padding: size * 0.65, whiteSpace: "nowrap", background: onNow ? accent : WHITE, color: onNow ? WHITE : INK, scale: String(1 + Math.sin(Math.min(sel, 1) * Math.PI) * 0.08) }}>
+    <div style={{ ...p.style, ...SURFACE, ...PARAGRAPH, fontSize: size, fontWeight: ACCENT_WEIGHT, lineHeight: 1, padding: size * 0.65, whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: size * 0.35, background: onNow ? accent : WHITE, color: onNow ? WHITE : INK, scale: String(1 + Math.sin(Math.min(sel, 1) * Math.PI) * 0.08) }}>
+      {Icon && <Icon size={size * 1.05} strokeWidth={2} color={onNow ? WHITE : INK} />}
       {children}
     </div>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { BookOpen, Building2, Earth, Globe, Hand, Laugh, MapPin, MessageCircle, Sparkles, Users } from "lucide-react";
+import { Building2, Globe, Handshake, Landmark, Laugh, MessageCircle, Users } from "lucide-react";
 import { AbsoluteFill, staticFile } from "remotion";
 import { TactileButton, TactileGlassWord, TactilePromptInput, TactileSwitch, TactileTabs } from "tactile-glass-ui";
 import { AnalyticsFunnel } from "@/components/remocn/analytics-funnel";
@@ -97,14 +97,14 @@ const STANCES: StanceKey[] = [
   { at: 300, s: "center" },
 ];
 const SAMPLE: Omit<SpokenWord, "f">[] = [
-  { w: "Знакомьтесь", icon: Hand },
-  { w: "tatarverse.cc", icon: Globe, accent: ACCENT },
-  { w: "каталог", icon: BookOpen },
-  { w: "татарских", icon: Users },
-  { w: "центров", icon: Building2, accent: ACCENT },
-  { w: "по", icon: MapPin },
-  { w: "всему", icon: Sparkles },
-  { w: "миру", icon: Earth, accent: ACCENT },
+  { w: "Знакомьтесь" },
+  { w: "tatarverse.cc", accent: ACCENT },
+  { w: "каталог" },
+  { w: "татарских" },
+  { w: "центров", accent: ACCENT },
+  { w: "по" },
+  { w: "всему" },
+  { w: "миру", accent: ACCENT },
 ];
 const SPOKEN: SpokenWord[] = Array.from({ length: 22 }, (_, i) => ({ f: 20 + i * 20, ...SAMPLE[i % SAMPLE.length] }));
 
@@ -198,7 +198,7 @@ export const ENTRIES: Entry[] = [
   {
     id: "strike",
     group: "own",
-    use: "Зачеркивание слова небрежным росчерком ручкой вверх-вниз, как в школе: «не то, а это».",
+    use: "«Не то»: слово краснеет, по бокам красные [ ] и красный фон, фон уходит.",
     source: "v13–v15 → catalog/own/text",
     render: (f) => (
       <Mid>
@@ -246,7 +246,7 @@ export const ENTRIES: Entry[] = [
   {
     id: "pill",
     group: "own",
-    use: "Маленький тег / подпись (как плашки слов у аватара).",
+    use: "Маленький тег / подпись: текст 500, иконка по смыслу.",
     source: "kit/reel → catalog/own/surfaces",
     render: () => (
       <Mid>
@@ -260,13 +260,13 @@ export const ENTRIES: Entry[] = [
   {
     id: "chip",
     group: "own",
-    use: "Чипы-фильтры: выскакивают по очереди, один выбирается (заливка акцентом).",
+    use: "Чипы-фильтры с иконкой по смыслу: выскакивают по очереди, один выбирается (заливка акцентом).",
     source: "v19 → catalog/own/surfaces",
     render: (f) => (
       <Mid>
         <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 18 }}>
-          {["Центры", "Автономии", "Общества", "Союзы", "Онлайн"].map((c, i) => (
-            <Chip key={c} frame={f} at={10 + i * 6} on={i === 2 ? 90 : undefined} accent={ACCENT}>
+          {([["Центры", Building2], ["Автономии", Landmark], ["Общества", Users], ["Союзы", Handshake], ["Онлайн", Globe]] as const).map(([c, icon], i) => (
+            <Chip key={c} frame={f} at={10 + i * 6} on={i === 2 ? 90 : undefined} accent={ACCENT} icon={icon}>
               {c}
             </Chip>
           ))}
