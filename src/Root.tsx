@@ -43,6 +43,7 @@ import { Video19 } from "./v19/Video19";
 import { Video19Wide } from "./v19/Video19Wide";
 import { F as F19 } from "./v19/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
+import { AVATAR_SHOWCASE_FRAMES, AvatarShowcase } from "./playground/AvatarShowcase";
 import { PLAYGROUND_ALL_FRAMES, Playground, PlaygroundAll, playgroundMetadata, playgroundSchema } from "./playground/Playground";
 
 const V1 = withOutro(Video1, F1.duration, "ru");
@@ -97,6 +98,7 @@ export const Root: React.FC = () => (
       safeZone: true,
       title: true,
     }} />
+    <Composition id="AvatarShowcase" component={AvatarShowcase} width={1080} height={1920} fps={60} durationInFrames={AVATAR_SHOWCASE_FRAMES} />
     <Composition id="PlaygroundAll" component={PlaygroundAll} width={1080} height={1920} fps={60} durationInFrames={PLAYGROUND_ALL_FRAMES} />
     <Composition id="Outro" component={Outro} width={1080} height={1920} fps={60} durationInFrames={OUTRO_FRAMES} defaultProps={{ lang: "ru" as const }} />
     <Still id="Cover" component={Cover} width={1080} height={1920} defaultProps={{ title: "Заголовок", description: "Короткое описание темы" }} />
