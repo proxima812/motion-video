@@ -7,7 +7,8 @@ import { ACCENT_WEIGHT, GLASS_PILL, INK, PARAGRAPH, SURFACE } from "./design";
 // @the_tatarverse host: transparent cutout pinned to the bottom center for the whole video (not in the outro).
 // She is "alive": emotion swaps every ~2 s by context, a small nod on every spoken word, sway + breathing,
 // and the spoken words pop out of her in small pills on the side she looks to (right; left when mirrored) and vanish right away.
-export type Emotion = "confident-emerald" | "confident-traditional" | "kalpak-green" | "portrait-green" | "portrait-traditional" | "smile-green";
+export type Emotion = "confident-emerald" | "confident-traditional" | "kalpak-green" | "portrait-green" | "portrait-traditional" | "smile-green"
+  | "pensive" | "dreamy" | "displeased" | "surprised" | "waving" | "inspired" | "explaining" | "delighted" | "skeptical" | "laughing" | "puzzled" | "disappointed" | "smile-up" | "thinking" | "soft-smile";
 export type AvatarKey = { at: number; e: Emotion };
 // Subtitles only: plain words on a frosted glass pill, no icons. accent = accent text color (weight 500).
 // icon / glass are ignored (kept so existing videos compile).

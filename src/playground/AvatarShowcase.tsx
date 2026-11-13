@@ -12,16 +12,24 @@ import { SPRING, progress, springAt } from "../stage/motion";
 type Beat = { e: Emotion; s: Stance; title: string; note: string; phrase: string };
 
 const BEATS: Beat[] = [
-  { e: "portrait-green", s: "right", title: "Радость", note: "широкая улыбка  смотрит вправо", phrase: "Сәлам всем рада вас видеть" },
-  { e: "confident-emerald", s: "left", title: "Тепло", note: "смена позиции  смотрит влево", phrase: "Сегодня расскажу кое что приятное" },
-  { e: "kalpak-green", s: "left", title: "Скепсис", note: "руки скрещены", phrase: "Думаете татарский это сложно" },
-  { e: "portrait-traditional", s: "center", title: "Задумчивость", note: "по центру  слова в обе стороны", phrase: "Хм а если подумать иначе" },
-  { e: "smile-green", s: "right", title: "Мечта", note: "взгляд вверх  смотрит вправо", phrase: "Представьте вы свободно говорите" },
-  { e: "confident-traditional", s: "left", title: "Хитрость", note: "лукавая улыбка  смотрит влево", phrase: "У меня есть один секрет" },
-  { e: "portrait-green", s: "center", title: "Финал", note: "кивок на каждое слово", phrase: "Рәхмәт до встречи" },
+  { e: "waving", s: "right", title: "Привет", note: "машет рукой", phrase: "Сәлам всем привет" },
+  { e: "soft-smile", s: "right", title: "Сдержанная улыбка", note: "смотрит вправо", phrase: "Рада что вы здесь" },
+  { e: "explaining", s: "left", title: "Объясняет", note: "смена позиции  жест рукой", phrase: "Сейчас всё объясню" },
+  { e: "pensive", s: "left", title: "Задумчивая", note: "рука у подбородка", phrase: "Как же это сказать" },
+  { e: "thinking", s: "center", title: "Широкая улыбка", note: "по центру  слова в обе стороны", phrase: "Вот это мне нравится" },
+  { e: "puzzled", s: "center", title: "Недоумение", note: "рука у подбородка", phrase: "Подождите а почему так" },
+  { e: "skeptical", s: "right", title: "Скепсис", note: "руки на поясе", phrase: "Ну не знаю не верю" },
+  { e: "displeased", s: "right", title: "Недовольная", note: "руки скрещены", phrase: "Опять эти ошибки" },
+  { e: "disappointed", s: "left", title: "Разочарование", note: "руки скрещены  смотрит влево", phrase: "Жаль не получилось" },
+  { e: "surprised", s: "left", title: "Удивление", note: "приоткрытый рот", phrase: "Ого вот это да" },
+  { e: "delighted", s: "right", title: "Восторг", note: "раскрытая ладонь", phrase: "Это просто чудесно" },
+  { e: "laughing", s: "center", title: "Смех", note: "руки в стороны", phrase: "Ха ха ну вы даете" },
+  { e: "dreamy", s: "right", title: "Мечтательная", note: "взгляд вверх", phrase: "Представьте лето в деревне" },
+  { e: "inspired", s: "left", title: "Вдохновение", note: "ладони у подбородка", phrase: "Я так хочу туда" },
+  { e: "smile-up", s: "center", title: "Улыбка вверх", note: "финал  кивок на каждое слово", phrase: "Рәхмәт до встречи" },
 ];
 
-const BEAT = 150; // 2.5 s per beat at 60 fps
+const BEAT = 120; // 2 s per beat at 60 fps
 const START = 12;
 const WORD_GAP = 14;
 export const AVATAR_SHOWCASE_FRAMES = START + BEATS.length * BEAT + 30;
