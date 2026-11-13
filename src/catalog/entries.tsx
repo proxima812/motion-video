@@ -128,7 +128,7 @@ export const ENTRIES: Entry[] = [
             Привет, это <b>Сара</b>
           </div>
           <Paragraph>
-            Абзацы набираем шрифтом Raleway, а <b>важные слова</b> выделяем жирным.
+            Абзацы Raleway <b>важное</b> жирным
           </Paragraph>
           <Card style={{ display: "flex", alignItems: "center", gap: 36 }}>
             <div style={{ ...NUMBER, fontSize: 120 }}>410</div>
@@ -173,7 +173,7 @@ export const ENTRIES: Entry[] = [
             words={[
               { w: "Это", at: 4 },
               { w: "изменит", at: 19 },
-              { w: "то,", at: 54 },
+              { w: "то", at: 54 },
               { w: "как", at: 74 },
               { w: "ты", at: 83 },
               { w: "ищешь", at: 96 },
@@ -236,7 +236,7 @@ export const ENTRIES: Entry[] = [
     render: () => (
       <Mid>
         <Big>
-          Один <b>человек.</b>
+          Один <b>человек</b>
         </Big>
       </Mid>
     ),
@@ -257,7 +257,7 @@ export const ENTRIES: Entry[] = [
     source: "kit/reel → catalog/own/surfaces",
     render: () => (
       <Mid>
-        <Card style={{ width: 880, fontSize: 40 }}>Карточка с контентом: Raleway, а <b>важное</b> — жирным.</Card>
+        <Card style={{ width: 880, fontSize: 40 }}>Карточка с <b>контентом</b></Card>
       </Mid>
     ),
   },
@@ -301,9 +301,9 @@ export const ENTRIES: Entry[] = [
       <Mid>
         <div style={{ width: 880, display: "flex", flexDirection: "column", gap: 36 }}>
           <Bubble frame={f} at={10} side="l" tag="прямо">
-            зачем вам свой язык?
+            зачем вам свой язык
           </Bubble>
-          <Bubble frame={f} at={50} side="r" tag="в шутку 😅" accent={ACCENT}>
+          <Bubble frame={f} at={50} side="r" tag="в шутку" accent={ACCENT}>
             ну стань уже как все
           </Bubble>
         </div>
@@ -315,7 +315,7 @@ export const ENTRIES: Entry[] = [
     group: "own",
     use: "Реплика ИИ-ассистента внизу кадра, слова печатаются.",
     source: "v17 → catalog/own/surfaces",
-    render: (f) => <AiBubble frame={f} at={10} until={280} text="Готово! Это шедевр!" y={1100} accent={ACCENT} />,
+    render: (f) => <AiBubble frame={f} at={10} until={280} text="Готово это шедевр" y={1100} accent={ACCENT} />,
   },
   {
     id: "sticker",
@@ -325,7 +325,7 @@ export const ENTRIES: Entry[] = [
     render: (f) => (
       <Mid>
         <Sticker frame={f} at={15} accent={ACCENT}>
-          Мировой рекорд!
+          Мировой рекорд
         </Sticker>
       </Mid>
     ),
@@ -526,7 +526,7 @@ export const ENTRIES: Entry[] = [
     render: (f) => (
       <Mid>
         <div style={{ transform: `translateX(${shake(f, 30)}px)` }}>
-          <Big><b>Бах!</b></Big>
+          <Big><b>Бах</b></Big>
         </div>
       </Mid>
     ),
@@ -555,7 +555,7 @@ export const ENTRIES: Entry[] = [
     bg: "white",
     render: () => (
       <ScaleFill k={1.42} y={-60}>
-        <ChatGpt textScale={2} greeting="Чем помочь?" placeholder="Спросите что-нибудь" prompt="сделай Uber для котов" accentColor={ACCENT} />
+        <ChatGpt textScale={2} greeting="Чем помочь" placeholder="Спросите что-нибудь" prompt="сделай Uber для котов" accentColor={ACCENT} />
       </ScaleFill>
     ),
   },
@@ -626,14 +626,14 @@ export const ENTRIES: Entry[] = [
   /* ───────── remocn ───────── */
   ...(
     [
-      ["chat-gpt", "Интерфейс ChatGPT с печатью промпта.", "v17", 300, <ChatGpt textScale={2} greeting="Чем помочь?" placeholder="Спросите что-нибудь" prompt="сделай Uber для котов" accentColor={ACCENT} />],
-      ["prompt-to-app", "Промпт → сборка → задеплоенное приложение.", "v17", 600, <PromptToApp theme="light" accent={ACCENT} prompt="сделай Uber, но для котов" projectName="uber-dlya-kotov" deployUrl="uber-koty.vercel.app" siteName="Котоберь" />],
+      ["chat-gpt", "Интерфейс ChatGPT с печатью промпта.", "v17", 300, <ChatGpt textScale={2} greeting="Чем помочь" placeholder="Спросите что-нибудь" prompt="сделай Uber для котов" accentColor={ACCENT} />],
+      ["prompt-to-app", "Промпт → сборка → задеплоенное приложение.", "v17", 600, <PromptToApp theme="light" accent={ACCENT} prompt="сделай Uber но для котов" projectName="uber-dlya-kotov" deployUrl="uber-koty.vercel.app" siteName="Котоберь" />],
       ["prompt-restyle", "Сайт перекрашивается по промптам «сделай красивее».", "v17", 400, <PromptRestyle theme="light" background="#FFFFFF" accent={ACCENT} headline="Котобер изменит мир" highlight="изменит мир" instructions={["сделай красивее", "еще красивее", "добавь градиент"]} />],
       ["exploded-view", "Стек слоев разлетается с подписями.", "v17", 400, <ExplodedView portrait backgroundColor="#FFFFFF" layers={4} labels={["Градиент", "ChatGPT", "Еще ChatGPT", "Надежда"]} highlight={3} />],
       ["speedrun-timer", "Таймер спидрана со сплитами.", "v17", 400, <SpeedrunTimer theme="light" stage="#FFFFFF" accent={ACCENT} category="Стартап · Any%" banner="Мировой рекорд" splits={[{ name: "Промпт", time: 20, pb: 60 }, { name: "Градиент", time: 90, pb: 120 }, { name: "Деплой", time: 240, pb: 600 }]} />],
-      ["long-vowel", "Растянутая гласная: «Оооочень много».", "v17", 240, <LongVowel word="Очень" letter="О" repeat={6} rest="много." theme="light" background="#FFFFFF" accent={ACCENT} />],
+      ["long-vowel", "Растянутая гласная: «Оооочень много».", "v17", 240, <LongVowel word="Очень" letter="О" repeat={6} rest="много" theme="light" background="#FFFFFF" accent={ACCENT} />],
       ["compact-stat", "Большое число со счетчиком: 12 млн.", "v17", 300, <CompactStat value={12000000} decimals={0} suffix=" млн" label="вайб-проектов" theme="light" background="#FFFFFF" accent={ACCENT} />],
-      ["crash-zoom", "Подводка → резкий зум на ответ.", "v17", 300, <CrashZoom theme="light" accent={ACCENT} tease="Пользователей…" reveal="1." tagline="и это мама." />],
+      ["crash-zoom", "Подводка → резкий зум на ответ.", "v17", 300, <CrashZoom theme="light" accent={ACCENT} tease="Пользователей" reveal="1" tagline="и это мама" />],
       ["impact-shake", "Слово-удар с тряской.", "v17", 200, <ImpactShake text="ОБЕРТКА" backgroundColor="#FFFFFF" foregroundColor={INK} />],
       ["rank-climb", "Рейтинг: позиция поднимается с 6 на 1.", "v17", 400, <RankClimb portrait theme="light" background="#FFFFFF" accent={ACCENT} brand="Котобер" from={6} to={1} eyebrow="Вайб-проект дня" caption="место в рейтинге" />],
       ["analytics-funnel", "Воронка аналитики.", "v17 Lab", 400, <AnalyticsFunnel theme="light" accent={ACCENT} title="Воронка" />],
