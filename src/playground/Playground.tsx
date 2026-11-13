@@ -66,7 +66,8 @@ export const Playground: React.FC<PlaygroundProps> = ({ name, safeZone, title })
 
 // Showreel: every catalog component back-to-back (avatar with sample words first), no props to pick.
 const ALL = [...ENTRIES.filter((e) => e.id === "tat-avatar"), ...ENTRIES.filter((e) => e.id !== "tat-avatar")];
-const len = (e: Entry) => e.frames ?? 300;
+// each demo capped at 2.5 s so the whole reel flies by (full length: Playground with name)
+const len = (e: Entry) => Math.min(e.frames ?? 300, e.id === "tat-avatar" ? 300 : 150);
 export const PLAYGROUND_ALL_FRAMES = ALL.reduce((n, e) => n + len(e), 0);
 
 export const PlaygroundAll: React.FC = () => (
