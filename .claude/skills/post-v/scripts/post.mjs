@@ -1,5 +1,5 @@
 // Планирует ролик в Instagram (страница «Запланированный контент») через окно Яндекс Браузера PostV (порт 9222).
-// node post.mjs <N> [--dry] [--at "YYYY-MM-DD HH:MM"] [--force] [--account the_tatarverse]
+// node post.mjs <N> [--dry] [--at "YYYY-MM-DD HH:MM"] [--force] [--account the_tatarverse] [--part P]
 //   N       - номер ролика (папка video/N-slug, нужны output/video.mp4, cover.jpg, summary-inst.txt)
 //   --dry   - заполнить все и остановиться перед «Запланировать», окно закрыть без публикации
 //   --at    - своя дата и время; иначе следующий слот (06:00, 08:00, 12:00) после последнего запланированного поста
@@ -32,8 +32,13 @@ if (!N) die('укажи номер ролика: node post.mjs 38');
 // --- файлы ролика
 const dir = fs.readdirSync(path.join(ROOT, 'video')).find(d => d.startsWith(N + '-'));
 if (!dir) die(`нет папки video/${N}-*`);
-const out = path.join(ROOT, 'video', dir, 'output');
-const f = {video: path.join(out, 'video.mp4'), cover: path.join(out, 'cover.jpg'), caption: path.join(out, 'summary-inst.txt'), posted: path.join(out, 'posted.json')};
+// --part P: one part of a series cut, files in output/parts/ (partP.mp4, cover-partP.jpg, summary-inst-partP.txt, posted-partP.json)
+const PART = args.includes('--part') ? args[args.indexOf('--part') + 1] : null;
+const out = path.join(ROOT, 'video', dir, 'output', PART ? 'parts' : '');
+const sfx = PART ? `-part${PART}` : '';
+const f = PART
+  ? {video: path.join(out, `part${PART}.mp4`), cover: path.join(out, `cover${sfx}.jpg`), caption: path.join(out, `summary-inst${sfx}.txt`), posted: path.join(out, `posted${sfx}.json`)}
+  : {video: path.join(out, 'video.mp4'), cover: path.join(out, 'cover.jpg'), caption: path.join(out, 'summary-inst.txt'), posted: path.join(out, 'posted.json')};
 for (const k of ['video', 'cover', 'caption']) if (!fs.existsSync(f[k])) die(`нет ${path.relative(ROOT, f[k])}`);
 if (fs.existsSync(f.posted) && !FORCE) die(`ролик ${N} уже запланирован: ${fs.readFileSync(f.posted, 'utf8').trim()}`);
 // без перевода строки в конце: Enter после хэштега выбирает подсказку Instagram и подменяет тег
@@ -245,7 +250,7 @@ try {
   await sleep(800);
   await jevStep('done');
   await click('Готово', {within: true}).catch(() => {});
-  const rec = {video: +N, slug: dir, scheduled: `${iso(slot)}T${HH}:${MM}`, account: ACCOUNT, cover: 'cover.jpg', caption: 'summary-inst.txt', ai_label: true, at: new Date().toISOString().slice(0, 16)};
+  const rec = {video: +N, slug: dir, scheduled: `${iso(slot)}T${HH}:${MM}`, account: ACCOUNT, ...(PART ? {part: +PART} : {}), cover: path.basename(f.cover), caption: path.basename(f.caption), ai_label: true, at: new Date().toISOString().slice(0, 16)};
   fs.writeFileSync(f.posted, JSON.stringify(rec, null, 2) + '\n');
   log('запланировано: ' + rec.scheduled + ', записан ' + path.relative(ROOT, f.posted));
 } catch (e) {
