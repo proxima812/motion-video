@@ -2,6 +2,11 @@ import React from "react";
 import { Building2, Globe, Handshake, Landmark, Laugh, MessageCircle, Users } from "lucide-react";
 import { AbsoluteFill, staticFile } from "remotion";
 import { TactileButton, TactileGlassWord, TactilePromptInput, TactileSwitch, TactileTabs } from "tactile-glass-ui";
+import { AchievementPop } from "@/components/remocn/achievement-pop";
+import { ContributionHeatmap } from "@/components/remocn/contribution-heatmap";
+import { GitHubSponsors } from "@/components/remocn/github-sponsors";
+import { TestimonialStack } from "@/components/remocn/testimonial-stack";
+import { UnitGrid } from "@/components/remocn/unit-grid";
 import { AnalyticsFunnel } from "@/components/remocn/analytics-funnel";
 import { Caret } from "@/components/remocn/caret";
 import { ChatGpt } from "@/components/remocn/chat-gpt";
@@ -636,6 +641,11 @@ export const ENTRIES: Entry[] = [
       ["fraction-split", "Дробь из фразы: 3/8 выделяется.", "v19Wide", 300, <FractionSplit line="3/8 карточек ждут помощи" highlight="3/8" keep={3} accentPiece={0} accent={ACCENT} theme="light" />],
       ["tile-wave", "Волна плиток меняет одну фразу на другую.", "v19Wide", 200, <TileWave from="Новый город" to="tatarverse.cc" theme="light" accent={ACCENT} rows={8} delay={14} />],
       ["halftone-cut", "Растровый (halftone) переход между фразами.", "v19Wide", 200, <HalftoneCut from="410 центров" to="Как искать" theme="light" accent={ACCENT} />],
+      ["unit-grid", "Цифры и статистика: сетка из N единиц, часть загорается («33 из 100»).", "новый", 360, <UnitGrid total={100} highlighted={33} caption="онлайн" accent={ACCENT} theme="light" />],
+      ["contribution-heatmap", "Поддержка во времени: сетка-календарь заполняется — «благодаря вам», вклад сообщества.", "новый", 360, <ScaleFill k={1.12}><ContributionHeatmap value={1240} label="благодаря вам" accent={ACCENT} theme="light" /></ScaleFill>],
+      ["achievement-pop", "Достижения: что добавлено / сделано, всплывающие карточки с очками.", "новый", 360, <AchievementPop theme="light" accent={ACCENT} achievements={[{ label: "Добавлено", title: "410 центров", points: 410, icon: "trophy" }, { label: "Сделано", title: "Поиск по карте", points: 120, icon: "bolt" }, { label: "Новое", title: "Английская версия", points: 80, icon: "star" }]} totalLabel="Итого" unit="" logo={false} />],
+      ["testimonial-stack", "Комментарии и отзывы: карточки цитат складываются в стопку.", "новый", 480, <TestimonialStack theme="light" accent={ACCENT} title="Что говорят" quotes={[{ text: "Нашла татарский центр в Берлине за минуту", highlight: "за минуту", name: "Алсу", role: "Берлин", stars: 5 }, { text: "Наконец все общины в одном месте", highlight: "в одном месте", name: "Рустем", role: "Сиэтл", stars: 5 }, { text: "Добавили наш клуб на следующий день", highlight: "на следующий день", name: "Ильдар", role: "Казань", stars: 5 }]} />],
+      ["github-sponsors", "Подписчики/поддержка: красное сердце, аватарки, «Спасибо за подписку и поддержку проекта».", "новый", 360, <ScaleFill k={1.22}><GitHubSponsors theme="light" accentColor="#FF3040" thanks="Спасибо вам" caption="за подписку и поддержку проекта" cta="Подписаться" link="instagram.com/the_tatarverse" sponsors={["alsu", "rustem", "ildar", "gulnara", "timur", "dinara", "aidar", "leysan", "kamil", "regina", "marat", "elvira", "azat", "nailya", "ruslan", "liliya", "bulat", "alina"].map((login) => ({ login, avatarUrl: "" }))} /></ScaleFill>],
       ["caret", "Мигающая каретка ввода.", "не использовался в роликах", 120, <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}><Caret color={INK} /></AbsoluteFill>],
       ["font-cycle", "Слово перебирает шрифты.", "не использовался", 240, <FontCycle theme="light" accent={ACCENT} background="#FFFFFF" />],
       ["tv-power-off", "Выключение ТВ (canvas): в рендере падает, вместо него power-off.", "не использовался", 120, <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: 100, fontSize: 44, textAlign: "center" }}>tv-power-off не рендерится (нет canvas capture API) — используй power-off</AbsoluteFill>],

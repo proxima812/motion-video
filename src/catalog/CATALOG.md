@@ -76,7 +76,7 @@
 | `shader-warp` | Анимированный шейдер-градиент на фон. | components/remocn/shader-warp (@paper-design) |
 | `shader-warp-cream` | Шейдер-градиент в акцентном фиолетовом (фон обложки). | components/remocn/shader-warp-cream (@paper-design) |
 
-## Remocn (31)
+## Remocn (36)
 
 | name | для чего | откуда |
 |---|---|---|
@@ -108,6 +108,11 @@
 | `fraction-split` | Дробь из фразы: 3/8 выделяется. | components/remocn/fraction-split (v19Wide) |
 | `tile-wave` | Волна плиток меняет одну фразу на другую. | components/remocn/tile-wave (v19Wide) |
 | `halftone-cut` | Растровый (halftone) переход между фразами. | components/remocn/halftone-cut (v19Wide) |
+| `unit-grid` | Цифры и статистика: сетка из N единиц, часть загорается («33 из 100»). | components/remocn/unit-grid |
+| `contribution-heatmap` | Поддержка во времени: сетка-календарь заполняется — «благодаря вам», вклад сообщества. | components/remocn/contribution-heatmap |
+| `achievement-pop` | Достижения: что добавлено / сделано, всплывающие карточки с очками (`totalLabel`, `unit`, `logo={false}`). | components/remocn/achievement-pop |
+| `testimonial-stack` | Комментарии и отзывы: карточки цитат складываются в стопку. | components/remocn/testimonial-stack |
+| `github-sponsors` | Подписчики/поддержка: красное сердце, аватарки, «Спасибо за подписку и поддержку проекта» (`thanks`, `caption`, `cta`, `link`). | components/remocn/github-sponsors |
 | `caret` | Мигающая каретка ввода. | components/remocn/caret (не использовался в роликах) |
 | `font-cycle` | Слово перебирает шрифты. | components/remocn/font-cycle (не использовался) |
 | `tv-power-off` | Выключение ТВ (canvas): в рендере падает, вместо него power-off. | components/remocn/tv-power-off (не использовался) |
