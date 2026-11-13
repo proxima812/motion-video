@@ -1,5 +1,6 @@
 "use client";
 
+import type React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { Caret } from "@/components/remocn/caret";
 import { type RemocnTheme, revealedText } from "@/lib/remocn-ui";
@@ -22,7 +23,25 @@ export interface TelegramChatFlowProps {
   accentColor?: string;
   speed?: number;
   theme?: Partial<RemocnTheme>;
+  /** chat wallpaper behind the messages (CSS background) */
+  background?: string;
 }
+
+// soft Telegram-like wallpaper: pastel gradient + faint dot pattern
+const WALLPAPER = [
+  "radial-gradient(rgba(110,51,204,0.10) 1.2px, transparent 1.6px) 0 0 / 22px 22px",
+  "radial-gradient(circle at 15% 10%, #E4D9FF 0%, transparent 55%)",
+  "radial-gradient(circle at 90% 45%, #D6E6FF 0%, transparent 55%)",
+  "radial-gradient(circle at 20% 95%, #DDF3EA 0%, transparent 55%)",
+  "#EEF0FB",
+].join(", ");
+// floating header / composer plates: rounded, design-system shadow
+const PLATE: React.CSSProperties = {
+  margin: 10,
+  borderRadius: 24,
+  background: "#ffffff",
+  boxShadow: "-1px -6px 55px -11px rgba(144, 142, 142, 0.2)",
+};
 
 const MOBILE_WIDTH = 460;
 const LEAD_IN = 12;
@@ -370,6 +389,7 @@ export function TelegramChatFlow({
   contact,
   accentColor,
   speed = 1,
+  background = WALLPAPER,
 }: TelegramChatFlowProps) {
   const frame = useCurrentFrame();
   const eff = frame * speed;
@@ -424,7 +444,7 @@ export function TelegramChatFlow({
         height: "100%",
         display: "flex",
         justifyContent: "center",
-        background: "transparent",
+        background,
         fontFamily:
           "var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif",
       }}
@@ -445,8 +465,7 @@ export function TelegramChatFlow({
             alignItems: "center",
             gap: 12,
             padding: "12px 14px",
-            background: "#ffffff",
-            boxShadow: "0 1px 0 rgba(0,0,0,0.06)",
+            ...PLATE,
           }}
         >
           {contact !== undefined && <Avatar contact={contact} size={38} />}
@@ -539,11 +558,10 @@ export function TelegramChatFlow({
         <div
           style={{
             display: "flex",
-            alignItems: "flex-end",
+            alignItems: "center",
             gap: 8,
-            padding: "8px 10px 12px",
-            background: "#ffffff",
-            boxShadow: "0 -1px 0 rgba(0,0,0,0.06)",
+            padding: 8,
+            ...PLATE,
           }}
         >
           <div

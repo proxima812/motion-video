@@ -97,7 +97,7 @@
 | `phone-scroll` | Телефон, в котором скроллится сайт. | components/remocn/phone-scroll (v19, v19Wide) |
 | `number-split` | Итоговое число раскладывается на части. | components/remocn/number-split (v19) |
 | `crew-of-one` | Один человек — много ролей (роли сменяются). | components/remocn/crew-of-one (v19) |
-| `telegram-chat-flow` | Переписка в Telegram. | components/remocn/telegram-chat-flow (v19) |
+| `telegram-chat-flow` | Переписка в Telegram: фон-обои, скругленные плашки шапки и ввода. | components/remocn/telegram-chat-flow (v19) |
 | `confetti` | Конфетти: успех, праздник. | components/remocn/confetti (v19, v19Wide) |
 | `icon-check` | Анимированная галочка. | components/remocn/icon-check (v19) |
 | `quadtree-mark` | Логотип собирается из квадродерева + имя. | components/remocn/quadtree-mark (v19, v19Wide) |
