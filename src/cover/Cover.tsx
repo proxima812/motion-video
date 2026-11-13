@@ -71,9 +71,9 @@ export const Cover: React.FC<CoverProps> = ({ background = "white", title, descr
         )}
         <div style={{ fontSize: 124, fontWeight: titleWeight, lineHeight: 1.02, letterSpacing: "-0.045em", color: "#0A0A0C" }}>{rich(title, titleAccent)}</div>
         {descPlate ? (
-          <div style={{ transform: "scale(2.4)", transformOrigin: wide ? "left center" : "center", margin: "36px 0" }}>
+          <div style={{ transform: "scale(1.7)", transformOrigin: wide ? "left center" : "center", margin: "20px 0" }}>
             <GlassPlate bg={descPlate}>
-              <span style={{ fontFamily: bodyFont, fontWeight: 500, fontSize: 19 }}>{description.replace(/\*/g, "")}</span>
+              <span style={{ fontFamily: bodyFont, fontWeight: 500, fontSize: 30, letterSpacing: "-0.01em" }}>{description.replace(/\*/g, "")}</span>
             </GlassPlate>
           </div>
         ) : (
