@@ -42,6 +42,7 @@ import { F as F18 } from "./v18/timeline";
 import { Video19 } from "./v19/Video19";
 import { Video19Wide } from "./v19/Video19Wide";
 import { F as F19 } from "./v19/timeline";
+import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
 import { PLAYGROUND_ALL_FRAMES, Playground, PlaygroundAll, playgroundMetadata, playgroundSchema } from "./playground/Playground";
 
 const V1 = withOutro(Video1, F1.duration, "ru");
@@ -64,6 +65,7 @@ const V17 = withOutro(Video17, F17.duration, "ru");
 const V18 = withOutro(Video18, F18.duration, "ru", "tatarverse");
 const V19 = withOutro(Video19, F19.duration, "ru", "tatarverse");
 const V19Wide = withOutro(Video19Wide, F19.duration, "ru", "tatarverse");
+const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
   <>
@@ -89,6 +91,7 @@ export const Root: React.FC = () => (
     <Composition id="V18" component={V18} width={1920} height={1080} fps={60} durationInFrames={outroTotal(F18.duration)} />
     <Composition id="V19" component={V19} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F19.duration)} />
     <Composition id="V19Wide" component={V19Wide} width={1920} height={1080} fps={60} durationInFrames={outroTotal(F19.duration)} />
+    <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "dot-map" as const,
       safeZone: true,
