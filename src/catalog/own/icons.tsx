@@ -20,9 +20,9 @@ export const Verdict: React.FC<{ ok: boolean; size?: number }> = ({ ok, size = 6
   <div style={{ width: size, height: size, borderRadius: size / 2, flex: "none", display: "grid", placeItems: "center", fontFamily: `${INTER}, sans-serif`, fontSize: size * 0.5, fontWeight: 700, lineHeight: 1, color: WHITE, background: ok ? K.green : K.red }}>{ok ? "✓" : "✕"}</div>
 );
 
-/** Database cylinder */
+/** Database cylinder (viewBox fits the whole drawing + stroke, nothing cropped) */
 export const DbIcon: React.FC<{ size: number; color?: string }> = ({ size, color = INK }) => (
-  <svg width={size} height={size * 1.15} viewBox="0 0 100 115">
+  <svg width={size} height={size * 1.34} viewBox="0 0 100 134" style={{ overflow: "visible", flex: "none" }}>
     {[0, 1, 2].map((i) => (
       <path key={i} d={`M8 ${22 + i * 32} v26 c0 10 19 16 42 16 s42 -6 42 -16 v-26`} fill="none" stroke={color} strokeWidth={7} />
     ))}
