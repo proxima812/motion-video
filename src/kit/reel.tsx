@@ -222,11 +222,11 @@ export const useEnginePaint = (frame: number) => {
 };
 
 /** Music bed ducked under voice; `silences` are [from, to] comedic dead-air gaps */
-const musicVolume = (vo: Vo[], [start, duration]: Range, silences: Range[], [low, high]: readonly [number, number]) => (f: number) => {
+export const musicVolume = (vo: Vo[], duration: number, silences: Range[], [low, high]: readonly [number, number]) => (f: number) => {
   const talking = vo.some((v) => f >= v.from - 6 && f < v.from + v.dur);
   const base = talking ? low : high;
   const gag = silences.reduce((m, [a, b]) => m * (1 - progress(f, a - 10, a) * (1 - progress(f, b - 4, b + 6))), 1);
-  const fadeIn = interpolate(f, [start, start + 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const fadeIn = interpolate(f, [0, 20], [0, 1], { extrapolateRight: "clamp" });
   const fadeOut = interpolate(f, [duration - 30, duration], [1, 0], { extrapolateLeft: "clamp" });
   return base * gag * fadeIn * fadeOut;
 };
@@ -242,12 +242,10 @@ export const ReelShell: React.FC<{
   overlay?: React.FC<{ frame: number }>;
   /** push scene content down (px) to sit closer to the vertical center */
   shift?: number;
-  /** music bed (staticFile path) and its volume [under voice, between lines] */
-  music?: string;
+  /** music bed (staticFile path) and its volume [under voice, between lines]; null = the parent plays the music */
+  music?: string | null;
   musicLevel?: readonly [number, number];
-  /** music fades in/out at these frames (default [0, duration]); for a part cut out of a longer reel */
-  musicWindow?: Range;
-}> = ({ scenes, headlines, headlineSize, vo, sfx, duration, silences = [], overlay: Overlay, shift = 0, music = "music/bed.mp3", musicLevel = [0.1, 0.2], musicWindow }) => {
+}> = ({ scenes, headlines, headlineSize, vo, sfx, duration, silences = [], overlay: Overlay, shift = 0, music = "music/bed.mp3", musicLevel = [0.1, 0.2] }) => {
   const frame = useCurrentFrame();
   setClock(frame, 60);
   useEnginePaint(frame);
@@ -265,7 +263,7 @@ export const ReelShell: React.FC<{
       <Headline frame={frame} items={headlines} size={headlineSize} />
       {Overlay && <Overlay frame={frame} />}
 
-      <Audio loop src={staticFile(music)} volume={musicVolume(vo, musicWindow ?? [0, duration], silences, musicLevel)} />
+      {music && <Audio loop src={staticFile(music)} volume={musicVolume(vo, duration, silences, musicLevel)} />}
       {vo.map((v) => (
         <Sequence key={v.src} from={v.from} layout="none">
           <Audio src={staticFile(v.src)} volume={1} />
