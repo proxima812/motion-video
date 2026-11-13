@@ -54,7 +54,7 @@ export const Playground: React.FC<PlaygroundProps> = ({ name, safeZone, title })
   const e = entryById(name);
   const bg = e.bg ?? (e.group === "remocn" || e.group === "paper" ? "none" : "orbit");
   return (
-    <AbsoluteFill style={{ ...tokens, background: "#fff", color: INK, fontFamily: PARAGRAPH.fontFamily, WebkitFontSmoothing: "antialiased" }}>
+    <AbsoluteFill style={{ ...tokens, background: "#fff", color: INK, fontFamily: PARAGRAPH.fontFamily, fontVariantNumeric: PARAGRAPH.fontVariantNumeric, WebkitFontSmoothing: "antialiased" }}>
       {bg === "orbit" && <DotOrbitBg />}
       {e.tactile && <TactileGate frame={frame} />}
       <AbsoluteFill>{e.render(frame)}</AbsoluteFill>

@@ -41,6 +41,7 @@ const nodAt = (frame: number, words: SpokenWord[]) =>
 const PILL: React.CSSProperties = {
   ...SURFACE,
   fontFamily: PARAGRAPH.fontFamily,
+  fontVariantNumeric: PARAGRAPH.fontVariantNumeric,
   color: INK,
   border: "0.5px solid rgba(0,0,0,0.06)",
   fontWeight: 400,

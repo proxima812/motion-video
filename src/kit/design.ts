@@ -12,7 +12,7 @@ export const WHITE = "#fff"; // all light text
 
 // Headings: Inter 400, the key word of the topic in 700. Paragraphs: Raleway 400, accent words 700. Numbers: Inter.
 export const HEADING: React.CSSProperties = { fontFamily: `${INTER}, sans-serif`, fontWeight: 400, color: INK, letterSpacing: "-0.03em", lineHeight: 1.05 };
-export const PARAGRAPH: React.CSSProperties = { fontFamily: `${RALEWAY}, sans-serif`, fontWeight: 400, color: INK, lineHeight: 1.35 };
+export const PARAGRAPH: React.CSSProperties = { fontFamily: `${RALEWAY}, sans-serif`, fontWeight: 400, color: INK, lineHeight: 1.35, fontVariantNumeric: "lining-nums proportional-nums" }; // Raleway defaults to old-style digits
 export const NUMBER: React.CSSProperties = { fontFamily: `${INTER}, sans-serif`, fontWeight: 700, color: INK, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.04em", lineHeight: 1 };
 
 // The only shadow / surface for components that have one (cards, pills, panels).
