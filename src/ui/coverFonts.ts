@@ -19,7 +19,7 @@ export type FontPair = "marck-manrope" | "badscript-onest" | "caveat-inter" | "p
 export const FONT_PAIRS: Record<FontPair, { accent: string; accentWeight: number; body: string }> = {
   "marck-manrope": { accent: marck("normal", S).fontFamily, accentWeight: 400, body: manrope("normal", B).fontFamily },
   "badscript-onest": { accent: badScript("normal", S).fontFamily, accentWeight: 400, body: onest("normal", B).fontFamily },
-  "caveat-inter": { accent: caveat("normal", { weights: ["700"], ...S }).fontFamily, accentWeight: 700, body: inter("normal", B).fontFamily },
+  "caveat-inter": { accent: caveat("normal", { weights: ["700"], ...S }).fontFamily, accentWeight: 700, body: inter("normal", { ...B, weights: ["500", "800", "900"] }).fontFamily },
   "pangolin-montserrat": { accent: pangolin("normal", S).fontFamily, accentWeight: 400, body: montserrat("normal", B).fontFamily },
   "lobster-golos": { accent: lobster("normal", S).fontFamily, accentWeight: 400, body: golos("normal", B).fontFamily },
   "neucha-manrope": { accent: neucha("normal", S).fontFamily, accentWeight: 400, body: manrope("normal", B).fontFamily },
