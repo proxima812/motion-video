@@ -1,5 +1,5 @@
 import React from "react";
-import { Building2, Globe, Handshake, Landmark, Laugh, MessageCircle, Users } from "lucide-react";
+import { ArrowRight, Bell, Building2, Check, Flame, Globe, Handshake, Heart, Landmark, Laugh, MessageCircle, Play, Share2, Sparkles, Users } from "lucide-react";
 import { AbsoluteFill, staticFile } from "remotion";
 import { TactileButton, TactileGlassWord, TactilePromptInput, TactileSwitch, TactileTabs } from "tactile-glass-ui";
 import { AchievementPop } from "@/components/remocn/achievement-pop";
@@ -90,6 +90,22 @@ const Mid: React.FC<{ children: React.ReactNode; gap?: number; style?: React.CSS
 const webSurface = (s: number): React.CSSProperties => ({ background: "#fff", border: "none", borderRadius: 24 / s, boxShadow: `${-1 / s}px ${-6 / s}px ${55 / s}px ${-11 / s}px rgba(144, 142, 142, 0.2)`, color: INK, fontFamily: PARAGRAPH.fontFamily });
 const webHeading: React.CSSProperties = { fontFamily: HEADING.fontFamily, color: INK, fontWeight: 400 };
 const Gsh: React.FC<{ children: React.ReactNode }> = ({ children }) => <GshFlat.Provider value="#FFFFFF">{children}</GshFlat.Provider>;
+
+/* Colored TactileButton: the glass hull stays transparent (library rule), the color is a plate under it that the glass refracts */
+const GLASS_PLATE = { refraction: 30, thickness: 40, bevelWidth: 6, frost: 20, dispersion: 60, sheen: 40, lightAngle: -46, darkness: 0, rim: 90, fluidBrightness: 44, fluidSpeed: 40, fluidScale: 30, fluidAuraWidth: 14, fluidCenter: 20, auroraFlow: 60 };
+const btnLabel: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontFamily: PARAGRAPH.fontFamily, fontWeight: 600, fontSize: 17, letterSpacing: "-0.01em" };
+const GlassPlate: React.FC<{ bg: string; children: React.ReactNode; circle?: boolean; glass?: Record<string, number> }> = ({ bg, children, circle, glass }) => (
+  <div style={{ display: "inline-flex", borderRadius: 9999, background: bg, boxShadow: "0 18px 40px -18px rgba(40,20,80,0.45)" }}>
+    <TactileButton {...GLASS_PLATE} {...glass} shape={circle ? "circle" : "pill"}>
+      <span style={btnLabel}>{children}</span>
+    </TactileButton>
+  </div>
+);
+const VIOLET = `linear-gradient(135deg, #8B5CF6, ${ACCENT})`;
+const EMERALD = "linear-gradient(135deg, #34D399, #0B5C45)";
+const SUNSET = "linear-gradient(135deg, #FB923C, #EC4899)";
+const OCEAN = "linear-gradient(135deg, #38BDF8, #1D4ED8)";
+const SMOKE = "linear-gradient(135deg, #3A3A44, #111114)";
 
 const AVATAR_KEYS: AvatarKey[] = [
   { at: 0, e: "smile-green" },
@@ -613,6 +629,10 @@ export const ENTRIES: Entry[] = [
   { id: "tactile-switch", group: "tactile", tactile: true, use: "Стеклянный переключатель.", source: "tactile-glass-ui (v1, v7)", render: (f) => <Mid><div style={{ transform: "scale(3)" }}><TactileSwitch {...GLASS} checked={f >= 60} /></div></Mid> },
   { id: "tactile-tabs", group: "tactile", tactile: true, use: "Стеклянные табы.", source: "tactile-glass-ui (v1)", render: (f) => <Mid><div style={{ transform: "scale(2)" }}><TactileTabs {...GLASS} items={["Код", "Ревью", "Извиниться"]} value={f >= 90 ? "Извиниться" : "Код"} /></div></Mid> },
   { id: "tactile-button", group: "tactile", tactile: true, use: "Стеклянная кнопка (shape='circle' для круглой).", source: "tactile-glass-ui (v1, v19)", render: () => <Mid><div style={{ transform: "scale(2)" }}><TactileButton {...GLASS}>Обновиться</TactileButton></div></Mid> },
+  { id: "tactile-button-accent", group: "tactile", tactile: true, use: "Главная CTA: стекло поверх фиолетового градиента (акцент ролика), белый текст + иконка.", source: "tactile-glass-ui + GlassPlate", render: () => <Mid><div style={{ transform: "scale(3)" }}><GlassPlate bg={VIOLET}><Sparkles size={20} strokeWidth={2.4} />Сгенерировать</GlassPlate></div></Mid> },
+  { id: "tactile-button-palette", group: "tactile", tactile: true, use: "Кнопки-плашки в разных цветах: успех, подписка, ссылка, темная.", source: "tactile-glass-ui + GlassPlate", render: () => <Mid gap={70}><div style={{ transform: "scale(2.6)", display: "flex", flexDirection: "column", alignItems: "center", gap: 22 }}><GlassPlate bg={EMERALD}><Check size={20} strokeWidth={2.8} />Готово</GlassPlate><GlassPlate bg={SUNSET}><Bell size={20} strokeWidth={2.4} />Подписаться</GlassPlate><GlassPlate bg={OCEAN}>Перейти на сайт<ArrowRight size={20} strokeWidth={2.4} /></GlassPlate><GlassPlate bg={SMOKE} glass={{ dispersion: 90, rim: 100 }}>Смотреть дальше</GlassPlate></div></Mid> },
+  { id: "tactile-badges", group: "tactile", tactile: true, use: "Маленькие стеклянные плашки-бейджи (статус, скидка, «новое»).", source: "tactile-glass-ui + GlassPlate", render: () => <Mid><div style={{ transform: "scale(2.2)", display: "flex", gap: 14 }}><GlassPlate bg={SUNSET}><Flame size={18} strokeWidth={2.4} />Хит</GlassPlate><GlassPlate bg={VIOLET}>Новое</GlassPlate><GlassPlate bg={EMERALD}>−50%</GlassPlate></div></Mid> },
+  { id: "tactile-icon-buttons", group: "tactile", tactile: true, use: "Круглые стеклянные кнопки-иконки на цветной подложке (play / лайк / поделиться).", source: "tactile-glass-ui + GlassPlate", render: (f) => { const p = springAt(f, 60, SPRING.bouncy) * (1 - springAt(f, 70, SPRING.snappy)); return <Mid><div style={{ transform: "scale(3)", display: "flex", gap: 22 }}><GlassPlate circle bg={VIOLET}><Play size={22} strokeWidth={2.4} fill="#fff" /></GlassPlate><div style={{ transform: `scale(${1 + p * 0.15})` }}><GlassPlate circle bg={SUNSET}><Heart size={22} strokeWidth={2.4} fill={f >= 64 ? "#fff" : "none"} /></GlassPlate></div><GlassPlate circle bg={OCEAN}><Share2 size={22} strokeWidth={2.4} /></GlassPlate></div></Mid>; } },
 
   /* ───────── shadcn ───────── */
   { id: "shadcn-card", group: "shadcn", use: "Карточка shadcn (оборачивать в WebScale).", source: "components/ui/card (v19)", render: () => <WebScale top={650} w={360} s={2.4}><UiCard style={webSurface(2.4)}><CardHeader><CardTitle style={webHeading}>Татарский <b>центр</b></CardTitle><CardDescription>Сиэтл, США</CardDescription></CardHeader><CardContent className="flex gap-2"><Badge variant="secondary">Татарский</Badge><Badge variant="secondary">Зарубежный</Badge></CardContent></UiCard></WebScale> },
