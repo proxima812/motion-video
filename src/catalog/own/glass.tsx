@@ -15,7 +15,7 @@ export const PLATE = {
   smoke: "linear-gradient(135deg, #3A3A44, #111114)",
 };
 
-const label: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontFamily: PARAGRAPH.fontFamily, fontWeight: 600, fontSize: 17, letterSpacing: "-0.01em" };
+const label: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontFamily: PARAGRAPH.fontFamily, fontVariantNumeric: PARAGRAPH.fontVariantNumeric, fontWeight: 600, fontSize: 17, letterSpacing: "-0.01em" };
 
 /** White text (+ optional lucide icon) on a colored glass pill; scale it up with a wrapper transform (native height 56 px). */
 export const GlassPlate: React.FC<{ bg: string; children: React.ReactNode; circle?: boolean; glass?: Record<string, number> }> = ({ bg, children, circle, glass }) => (

@@ -245,12 +245,15 @@ export const ReelShell: React.FC<{
   /** music bed (staticFile path) and its volume [under voice, between lines]; null = the parent plays the music */
   music?: string | null;
   musicLevel?: readonly [number, number];
-}> = ({ scenes, headlines, headlineSize, vo, sfx, duration, silences = [], overlay: Overlay, shift = 0, music = "music/bed.mp3", musicLevel = [0.1, 0.2] }) => {
+  /** background layer under the scenes (e.g. <DotOrbitBg />); default plain white */
+  bg?: React.ReactNode;
+}> = ({ scenes, headlines, headlineSize, vo, sfx, duration, silences = [], overlay: Overlay, shift = 0, music = "music/bed.mp3", musicLevel = [0.1, 0.2], bg }) => {
   const frame = useCurrentFrame();
   setClock(frame, 60);
   useEnginePaint(frame);
   return (
     <AbsoluteFill style={{ ...tokens, background: "#fff", color: K.text, fontFamily: K.font, WebkitFontSmoothing: "antialiased" }}>
+      {bg}
       {scenes.map(({ range, El }, i) =>
         frame >= range[0] - 2 && frame < range[1] + 6 ? (
           <AbsoluteFill key={i} style={sceneStyle(frame, range)}>
