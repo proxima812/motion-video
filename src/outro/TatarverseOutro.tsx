@@ -3,12 +3,25 @@ import { AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame, useVid
 import { SPRING, springAt } from "../stage/motion";
 import { fontFamily } from "../ui/theme";
 
-// End card for @the_tatarverse videos (60 fps, 3 s): logo on top, handle, three community logos below.
+// End card for @the_tatarverse videos (60 fps, 3 s): logo, handle, three big community logos (no plates)
+// peeking in from three screen edges.
 const FADE = 12; // = OVERLAP in Outro.tsx (not imported to avoid a cycle)
 const ICONS = ["tt", "bs", "qt"] as const;
 const LOGO_AT = 0;
 const HANDLE_AT = 10;
 const ICON_AT = (i: number) => 24 + i * 8;
+
+// icon centers sit on/just past the frame edge; dx/dy = direction it slides in from (off-screen)
+const PEEK = [
+  { x: 10, y: 1340, dx: -260, dy: 0, rot: 18 },
+  { x: 1075, y: 330, dx: 260, dy: 0, rot: -16 },
+  { x: 760, y: 1830, dx: 0, dy: 260, rot: -10 },
+];
+const PEEK_WIDE = [
+  { x: 10, y: 780, dx: -240, dy: 0, rot: 18 },
+  { x: 1915, y: 260, dx: 240, dy: 0, rot: -16 },
+  { x: 1380, y: 1010, dx: 0, dy: 240, rot: -10 },
+];
 
 const rise = (t: number, d = 40): React.CSSProperties => ({
   opacity: Math.min(1, t * 1.5),
@@ -38,7 +51,7 @@ export const TatarverseOutro: React.FC<{ collab?: boolean }> = ({ collab = false
             src={staticFile("tatarverse/logo.svg")}
             style={{ width: 230, opacity: Math.min(1, logo * 2), transform: `scale(${(0.6 + 0.4 * logo) * breathe}) rotate(${(1 - logo) * -40}deg)` }}
           />
-          <div style={{ ...rise(handle), marginTop: 44, fontSize: 76, fontWeight: 800, letterSpacing: "-0.03em", color: "#2e2e2f" }}>@the_tatarverse</div>
+          <div style={{ ...rise(handle), marginTop: 44, fontSize: 76, fontWeight: 700, letterSpacing: "-0.03em", color: "#2e2e2f" }}><span style={{ fontWeight: 400 }}>@</span>the_tatarverse</div>
           <div style={{ ...rise(springAt(frame, X_AT, SPRING.bouncy), 20), margin: "26px 0", fontSize: 90, fontWeight: 300, color: "#A3A6AC" }}>×</div>
           <div style={{ ...rise(springAt(frame, PARTNER_AT, SPRING.bouncy)), display: "flex", alignItems: "center", gap: 26, padding: "26px 52px", borderRadius: 999, background: "#2e2e2f" }}>
             <div style={{ width: 36, height: 36, borderRadius: 18, background: TATARO_GOLD }} />
@@ -51,33 +64,31 @@ export const TatarverseOutro: React.FC<{ collab?: boolean }> = ({ collab = false
           src={staticFile("tatarverse/logo.svg")}
           style={{ width: wide ? 230 : 300, opacity: Math.min(1, logo * 2), transform: `scale(${(0.6 + 0.4 * logo) * breathe}) rotate(${(1 - logo) * -40}deg)` }}
         />
-        <div style={{ ...rise(handle), marginTop: wide ? 44 : 70, fontSize: wide ? 72 : 84, fontWeight: 800, letterSpacing: "-0.03em", color: "#2e2e2f" }}>@the_tatarverse</div>
+        <div style={{ ...rise(handle), marginTop: wide ? 44 : 70, fontSize: wide ? 72 : 84, fontWeight: 700, letterSpacing: "-0.03em", color: "#2e2e2f" }}><span style={{ fontWeight: 400 }}>@</span>the_tatarverse</div>
       </div>
       )}
 
-      <div style={{ position: "absolute", top: collab ? 1300 : wide ? 690 : 1240, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 56 }}>
-        {ICONS.map((k, i) => {
-          const t = springAt(frame, ICON_AT(i), SPRING.bouncy);
-          return (
-            <div
-              key={k}
-              style={{
-                width: wide ? 170 : 190,
-                height: wide ? 170 : 190,
-                borderRadius: 48,
-                background: "#fff",
-                border: "1px solid rgba(0,0,0,0.08)",
-                boxShadow: "0 30px 60px -30px rgba(0,0,0,0.3)",
-                display: "grid",
-                placeItems: "center",
-                ...rise(t, 80),
-              }}
-            >
-              <Img src={staticFile(`tatarverse/icons/${k}.svg`)} style={{ width: 120, height: 120, objectFit: "contain" }} />
-            </div>
-          );
-        })}
-      </div>
+      {ICONS.map((k, i) => {
+        const t = springAt(frame, ICON_AT(i), SPRING.bouncy);
+        const p = (wide ? PEEK_WIDE : PEEK)[i];
+        const size = wide ? 300 : 380;
+        const bob = Math.sin((frame + i * 40) / 30) * 8;
+        return (
+          <Img
+            key={k}
+            src={staticFile(`tatarverse/icons/${k}.svg`)}
+            style={{
+              position: "absolute",
+              left: p.x - size / 2,
+              top: p.y - size / 2,
+              width: size,
+              height: size,
+              opacity: Math.min(1, t * 2),
+              transform: `translate(${(1 - t) * p.dx + p.dx * 0.04 * bob}px, ${(1 - t) * p.dy + p.dy * 0.04 * bob}px) rotate(${p.rot}deg)`,
+            }}
+          />
+        );
+      })}
 
       <Sequence from={0} layout="none"><Audio src={staticFile("sfx/06_Ripple_Textures_II.wav")} volume={0.22} /></Sequence>
       {collab && <Sequence from={PARTNER_AT + 2} layout="none"><Audio src={staticFile("sfx/03_Basscrack.wav")} volume={0.12} /></Sequence>}

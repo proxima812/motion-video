@@ -48,7 +48,7 @@
 | `dot-orbit-bg` | Фон по умолчанию для всех роликов (paper.design Dot Orbit). | kit/DotOrbitBg |
 | `odometer` | Цифры прокручиваются как на счетчике (старое значение → новое). | ui/Odometer |
 | `outro` | Концовка @const_proxima (RU/EN), добавляется withOutro(). | outro/Outro |
-| `outro-tatarverse` | Концовка @the_tatarverse, добавляется withOutro(..., 'tatarverse'). | outro/TatarverseOutro |
+| `outro-tatarverse` | Концовка @the_tatarverse: лого, «@» 400 + the_tatarverse 700, три иконки выглядывают из-за краев экрана; withOutro(..., 'tatarverse'). | outro/TatarverseOutro |
 | `cover` | Обложка ролика (Still Cover / CoverWide). | cover/Cover |
 
 ## tactile-glass-ui (5)
