@@ -39,7 +39,7 @@ import { Video16 } from "./v16/Video16";
 import { F as F16 } from "./v16/timeline";
 import { Video18 } from "./v18/Video18";
 import { F as F18 } from "./v18/timeline";
-import { Video19 } from "./v19/Video19";
+import { PARTS19, Video19, Video19Part } from "./v19/Video19";
 import { Video19Wide } from "./v19/Video19Wide";
 import { F as F19 } from "./v19/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -65,6 +65,7 @@ const V16 = withOutro(Video16, F16.duration, "ru", "tatarverse-tataro");
 const V17 = withOutro(Video17, F17.duration, "ru");
 const V18 = withOutro(Video18, F18.duration, "ru", "tatarverse");
 const V19 = withOutro(Video19, F19.duration, "ru", "tatarverse");
+const V19Parts = ([1, 2, 3] as const).map((n) => ({ n, len: PARTS19[n - 1][1] - PARTS19[n - 1][0], C: withOutro(Video19Part(n), PARTS19[n - 1][1] - PARTS19[n - 1][0], "ru", "tatarverse") }));
 const V19Wide = withOutro(Video19Wide, F19.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
@@ -91,6 +92,9 @@ export const Root: React.FC = () => (
     <Composition id="V17" component={V17} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F17.duration)} />
     <Composition id="V18" component={V18} width={1920} height={1080} fps={60} durationInFrames={outroTotal(F18.duration)} />
     <Composition id="V19" component={V19} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F19.duration)} />
+    {V19Parts.map(({ n, len, C }) => (
+      <Composition key={n} id={`V19P${n}`} component={C} width={1080} height={1920} fps={60} durationInFrames={outroTotal(len)} />
+    ))}
     <Composition id="V19Wide" component={V19Wide} width={1920} height={1080} fps={60} durationInFrames={outroTotal(F19.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
