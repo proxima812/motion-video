@@ -12,8 +12,9 @@ import { ShaderWarpCream } from "@/components/remocn/shader-warp-cream";
 // variant 5 - marker highlight under accent words
 // accent2/accent3 - gradient stops (variants 2, 4); logos - staticFile paths shown in a row under the description
 // background "shader-warp-cream" - Remocn ShaderWarpCream behind everything instead of white
-export type CoverProps = { background?: "white" | "shader-warp-cream"; title: string; description: string; badge?: string; variant?: 1 | 2 | 3 | 4 | 5; accent?: string; accent2?: string; accent3?: string; logos?: string[]; avatar?: string; accentFont?: "inter" | "caveat"; fontPair?: FontPair; avatarHeight?: number; titleWeight?: number; handTilt?: number; descPlate?: string };
+export type CoverProps = { background?: "white" | "shader-warp-cream"; title: string; description: string; badge?: string; variant?: 1 | 2 | 3 | 4 | 5; accent?: string; accent2?: string; accent3?: string; logos?: string[]; avatar?: string; accentFont?: "inter" | "caveat"; fontPair?: FontPair; avatarHeight?: number; titleWeight?: number; handTilt?: number; descPlate?: string; titleSize?: number };
 // titleWeight - title font weight (default 800); handTilt - handwritten accent rotation in deg (default -3)
+// titleSize - title font size in px (default 124, smaller for long titles)
 // descPlate - CSS background: description becomes white weight-500 text on a GlassPlate of this color
 
 const GRAD = (a: string, b: string, c: string) => `linear-gradient(100deg, ${a} 0%, ${b} 55%, ${c} 100%)`;
@@ -23,7 +24,7 @@ const rich = (text: string, accent: (s: string, i: number) => React.ReactNode) =
   text.split(/(\*[^*]+\*)/).map((p, i) => (p.startsWith("*") ? accent(p.slice(1, -1), i) : <React.Fragment key={i}>{p}</React.Fragment>));
 
 // Instagram cover: white background, short title + short description, avatar at the bottom.
-export const Cover: React.FC<CoverProps> = ({ background = "white", title, description, badge, variant = 1, accent = "#FF6A13", accent2 = "#FF3D6E", accent3 = "#B44DFF", logos = [], avatar = "avatar.png", accentFont = "inter", fontPair, avatarHeight, titleWeight = 800, handTilt = -3, descPlate }) => {
+export const Cover: React.FC<CoverProps> = ({ background = "white", title, description, badge, variant = 1, accent = "#FF6A13", accent2 = "#FF3D6E", accent3 = "#B44DFF", logos = [], avatar = "avatar.png", accentFont = "inter", fontPair, avatarHeight, titleWeight = 800, handTilt = -3, descPlate, titleSize = 124 }) => {
   // fontPair: accent words in a handwritten font, bigger and slightly tilted, the rest in the pair's body font.
   // accentFont "caveat" = legacy alias of fontPair "caveat-inter".
   // 16:9 still (CoverWide): text block on the left, avatar bottom right
@@ -69,7 +70,7 @@ export const Cover: React.FC<CoverProps> = ({ background = "white", title, descr
         {variant === 3 && badge && (
           <div style={{ padding: "12px 28px", borderRadius: 999, border: `2px solid ${accent}55`, color: accent, fontSize: 30, fontWeight: 600, letterSpacing: "0.14em" }}>{badge}</div>
         )}
-        <div style={{ fontSize: 124, fontWeight: titleWeight, lineHeight: 1.02, letterSpacing: "-0.045em", color: "#0A0A0C" }}>{rich(title, titleAccent)}</div>
+        <div style={{ fontSize: titleSize, fontWeight: titleWeight, lineHeight: 1.02, letterSpacing: "-0.045em", color: "#0A0A0C" }}>{rich(title, titleAccent)}</div>
         {descPlate ? (
           <div style={{ transform: "scale(1.7)", transformOrigin: wide ? "left center" : "center", margin: "20px 0" }}>
             <GlassPlate bg={descPlate}>
