@@ -1,0 +1,30 @@
+# deps / builds
+node_modules/
+out/
+.DS_Store
+
+# keys and local configs
+.env
+.env.*
+.codex/
+*.key
+*.pem
+
+# reels themselves and media (only engine, components and rules are in git)
+video/
+public/
+tat_avatar/
+SFX/
+*.mp4
+*.mov
+*.wav
+*.mp3
+
+# per-video helper scripts
+scripts/gen-vo-v*
+scripts/words-v*
+scripts/timeline-v*
+scripts/shots*-v*
+
+# reel compositions themselves
+src/v[0-9]*/
