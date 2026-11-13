@@ -72,38 +72,25 @@ export const Headline: React.FC<{ frame: number; items: HeadlineItem[]; size?: n
   );
 };
 
-/** "Not this" mark from `at`: a selection box (thin frame + corner handles, like in a design tool) snaps around
- * the word, then everything turns red - frame, handles, word and a soft red selection fill */
+/** "Not this" mark from `at`: text-selection handles (thin bar + filled dot, like selecting text on a phone) -
+ * the selection sweeps from the start to the end of the word, then everything turns red (handles, word, soft fill) */
 export const Strike: React.FC<{ frame: number; at: number; color?: string; children: React.ReactNode }> = ({ frame, at, color = K.red, children }) => {
-  const sel = springAt(frame, at, SPRING.snappy);
-  const red = ease.inOut(progress(frame, at + 22, at + 32));
+  const show = Math.min(1, springAt(frame, at, SPRING.snappy) * 1.5);
+  const sweep = ease.inOut(progress(frame, at + 4, at + 20));
+  const red = ease.inOut(progress(frame, at + 24, at + 34));
   const c = interpolateColors(red, [0, 1], [INK, color]);
-  const handle = (x: "left" | "right", y: "top" | "bottom"): React.CSSProperties => ({
-    position: "absolute",
-    [x]: "-0.09em",
-    [y]: "-0.09em",
-    width: "0.14em",
-    height: "0.14em",
-    background: WHITE,
-    border: `0.03em solid ${c}`,
-    boxSizing: "border-box",
-  });
+  const fill = `color-mix(in srgb, ${c} ${Math.round(10 + red * 6)}%, transparent)`;
+  // bar spans the line; the left handle's dot sits on top, the right one's at the bottom
+  const handle = (left: string, dot: "top" | "bottom"): React.CSSProperties => ({ position: "absolute", left, top: "0.02em", bottom: "-0.02em", width: "0.035em", marginLeft: "-0.0175em", background: c, opacity: show });
+  const knob = (dot: "top" | "bottom"): React.CSSProperties => ({ position: "absolute", left: "50%", [dot]: "-0.15em", width: "0.16em", height: "0.16em", marginLeft: "-0.08em", borderRadius: "50%", background: c });
   return (
-    <span style={{ position: "relative", display: "inline-block", margin: "0 0.2em" }}>
-      <span
-        style={{
-          position: "absolute",
-          inset: "0.04em -0.16em -0.02em",
-          border: `0.03em solid ${c}`,
-          background: `color-mix(in srgb, ${color} ${Math.round(red * 14)}%, transparent)`,
-          opacity: Math.min(1, sel * 1.5),
-          transform: `scale(${1.08 - 0.08 * Math.min(sel, 1)})`,
-        }}
-      >
-        <span style={handle("left", "top")} />
-        <span style={handle("right", "top")} />
-        <span style={handle("left", "bottom")} />
-        <span style={handle("right", "bottom")} />
+    <span style={{ position: "relative", display: "inline-block", margin: "0 0.08em" }}>
+      <span style={{ position: "absolute", left: "-0.04em", top: "0.02em", bottom: "-0.02em", width: `calc((100% + 0.08em) * ${sweep})`, background: fill }} />
+      <span style={handle("-0.04em", "top")}>
+        <span style={knob("top")} />
+      </span>
+      <span style={handle(`calc(-0.04em + (100% + 0.08em) * ${sweep})`, "bottom")}>
+        <span style={knob("bottom")} />
       </span>
       <span style={{ position: "relative", color: c }}>{children}</span>
     </span>
