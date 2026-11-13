@@ -45,7 +45,7 @@
 |---|---|---|
 | `design-system` | Сводка дизайн-системы: заголовок Inter, абзац Raleway, карточка с числом, плашки, аватар со стойками. | kit/design + kit/TatAvatar |
 | `tat-avatar` | Аватар-ведущий @the_tatarverse: эмоции по ключам, стойки вправо/влево/центр, субтитры на glass-плашках без иконок. | kit/TatAvatar |
-| `dot-orbit-bg` | Фон по умолчанию для всех роликов (paper.design Dot Orbit). | kit/DotOrbitBg |
+| `dot-orbit-bg` | Фон по умолчанию (paper.design Dot Orbit), 6 вариантов `variant` 1-6 — чуть отличаются; меняй от ролика к ролику. | kit/DotOrbitBg |
 | `odometer` | Цифры прокручиваются как на счетчике (старое значение → новое). | ui/Odometer |
 | `outro` | Концовка @const_proxima (RU/EN), добавляется withOutro(). | outro/Outro |
 | `outro-tatarverse` | Концовка @the_tatarverse: лого, «@» 400 + the_tatarverse 700, три иконки выглядывают из-за краев экрана; withOutro(..., 'tatarverse'). | outro/TatarverseOutro |

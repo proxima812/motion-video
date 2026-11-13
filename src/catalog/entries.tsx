@@ -38,7 +38,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card as UiCard, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GshFlat } from "@/lib/remocn/gsh/gsh-ground";
-import { DotOrbitBg } from "../kit/DotOrbitBg";
+import { DOT_ORBIT_VARIANTS, DotOrbitBg, type DotOrbitVariant } from "../kit/DotOrbitBg";
 import { TatAvatar, type AvatarKey, type SpokenWord, type StanceKey } from "../kit/TatAvatar";
 import { GLASS, K, count, shake } from "../kit/reel";
 import { Outro } from "../outro/Outro";
@@ -554,9 +554,23 @@ export const ENTRIES: Entry[] = [
   {
     id: "dot-orbit-bg",
     group: "shared",
-    use: "Фон по умолчанию для всех роликов (paper.design Dot Orbit).",
+    use: "Фон по умолчанию (paper.design Dot Orbit), 6 вариантов variant 1-6 — чуть отличаются; меняй от ролика к ролику.",
     source: "kit/DotOrbitBg",
-    render: () => null,
+    frames: 360,
+    bg: "none",
+    render: (f) => {
+      const n = (Math.min(5, Math.floor(f / 60)) + 1) as DotOrbitVariant;
+      return (
+        <AbsoluteFill>
+          <DotOrbitBg variant={n} />
+          <Mid>
+            <Pill>
+              variant {n} · {DOT_ORBIT_VARIANTS[n].name}
+            </Pill>
+          </Mid>
+        </AbsoluteFill>
+      );
+    },
   },
   {
     id: "odometer",

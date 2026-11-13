@@ -13,7 +13,7 @@ description: Создает новый Reels-ролик на Remotion по ко�
 
 Токены - `src/kit/design.ts`, фон - `src/kit/DotOrbitBg.tsx`, живая демонстрация - композиция `Playground` в Studio (`src/playground/Playground.tsx`): все компоненты каталога `src/catalog/`, выбор пропом `name`. Дорабатываешь стиль - сначала в `Playground`.
 
-- **Фон**: светлый шейдер paper.design Dot Orbit - `<DotOrbitBg />` (colors `#faf5fa`, `#ffffff57`, colorBack `#ffffff`, stepsPerColor 3, size 1, sizeRange 0.72, spreading 1, speed 2.1, scale 0.72).
+- **Фон**: светлый шейдер paper.design Dot Orbit - `<DotOrbitBg variant={N} />`, 6 вариантов (`DOT_ORBIT_VARIANTS` в `src/kit/DotOrbitBg.tsx`: 1 base, 2 lavender, 3 mint, 4 sky, 5 peach, 6 pearl) - чуть отличаются оттенком точек, плотностью, размером и разбросом. **Фон меняется от ролика к ролику**: не бери вариант предыдущего ролика - посмотри `output/bg-variant.txt` в последних папках `video/`, выбери следующий по кругу (6 → 1) и запиши номер в `output/bg-variant.txt` нового ролика. Внутри ролика вариант один.
 - **Тень**: у любого компонента с тенью (карточки, плашки, панели) - только `box-shadow: -1px -6px 55px -11px rgba(144, 142, 142, 0.2)`, фон `rgba(255, 255, 255, 1)`, радиус 24px (`SURFACE` / `SHADOW`). Других теней не придумывай; правишь чужой компонент с тенью - замени тень на эту.
 - **Цвет текста**: темный - всегда `#251B3A` (`INK`), белый - всегда `#fff`.
 - **Шрифты**: заголовки - Inter 400, главное слово темы - Inter 700 ("Привет, это **Сара**"). Параграфы - Raleway 400, важное слово для акцента - Raleway 700. Цифры - всегда Inter (`HEADING`, `PARAGRAPH`, `NUMBER`).
