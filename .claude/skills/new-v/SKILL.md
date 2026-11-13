@@ -44,6 +44,8 @@ description: Создает новый Reels-ролик на Remotion по ко�
 
 Прежде чем писать компонент с нуля, открой `src/catalog/CATALOG.md`: там все свои и сторонние компоненты, которые уже есть, с описанием. Демо - Studio → composition `Playground`, проп `name` (крупный заголовок в кадре - имя компонента). Свои берешь из `src/catalog/own/`, а не из старых `src/vN/`. Сделал в ролике новый переиспользуемый компонент - вынеси его в `src/catalog/own/`, добавь в `ENTRIES` (`src/catalog/entries.tsx`) и строку в `CATALOG.md`.
 
+**Приоритетные компоненты** - стеклянные кнопки и плашки `GlassPlate` (`src/catalog/own/glass.tsx`, демо `tactile-button-accent`, `tactile-button-palette`, `tactile-badges`, `tactile-icon-buttons`): белый текст + иконка lucide на цветном градиенте `PLATE`. Ставь их в ролик в первую очередь, где по смыслу нужна кнопка, статус или бейдж, но **не больше 3 раз за ролик и каждый раз с разным смыслом** (например: CTA «Перейти на сайт», статус «Готово», бейдж «−50%»; не три одинаковые CTA подряд).
+
 ## Компоненты shadcn и Remocn
 
 Только если на вопрос 9 ответили «да». shadcn уже инициализирован вручную: `components.json` (реестр `@remocn` -> `https://remocn.dev/r/{name}.json`), Tailwind v4 через `@remotion/tailwind-v4` в `remotion.config.ts`, стили и токены - `src/index.css`, `cn()` - `src/lib/utils.ts`, алиас `@/*` -> `src/*`.
