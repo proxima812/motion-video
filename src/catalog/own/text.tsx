@@ -72,30 +72,40 @@ export const Headline: React.FC<{ frame: number; items: HeadlineItem[]; size?: n
   );
 };
 
-/** "Not this" mark from `at`: the word turns red, red [ ] brackets close in on its sides with a red fill behind it
- * (word white), then the fill fades away, leaving the red word in red brackets */
+/** "Not this" mark from `at`: a selection box (thin frame + corner handles, like in a design tool) snaps around
+ * the word, then everything turns red - frame, handles, word and a soft red selection fill */
 export const Strike: React.FC<{ frame: number; at: number; color?: string; children: React.ReactNode }> = ({ frame, at, color = K.red, children }) => {
-  const red = progress(frame, at, at + 10);
-  const br = springAt(frame, at + 8, SPRING.bouncy);
-  const fill = ease.out(progress(frame, at + 14, at + 24)) * (1 - ease.inOut(progress(frame, at + 50, at + 64)));
-  const ink = interpolateColors(red, [0, 1], [INK, color]);
-  const bracket = (side: "l" | "r"): React.CSSProperties => ({
+  const sel = springAt(frame, at, SPRING.snappy);
+  const red = ease.inOut(progress(frame, at + 22, at + 32));
+  const c = interpolateColors(red, [0, 1], [INK, color]);
+  const handle = (x: "left" | "right", y: "top" | "bottom"): React.CSSProperties => ({
     position: "absolute",
-    top: "-0.06em",
-    bottom: "-0.06em",
-    width: "0.2em",
-    [side === "l" ? "left" : "right"]: "-0.32em",
-    border: `0.075em solid ${color}`,
-    [side === "l" ? "borderRight" : "borderLeft"]: "none",
-    opacity: Math.min(1, br * 1.5),
-    transform: `translateX(${(side === "l" ? -1 : 1) * (1 - br) * 0.4}em) scaleY(${0.6 + 0.4 * br})`,
+    [x]: "-0.09em",
+    [y]: "-0.09em",
+    width: "0.14em",
+    height: "0.14em",
+    background: WHITE,
+    border: `0.03em solid ${c}`,
+    boxSizing: "border-box",
   });
   return (
-    <span style={{ position: "relative", display: "inline-block", margin: "0 0.34em" }}>
-      <span style={{ position: "absolute", inset: "0.02em -0.06em", background: color, opacity: fill, transform: `scaleX(${0.4 + 0.6 * Math.min(1, fill * 2)})` }} />
-      <span style={bracket("l")} />
-      <span style={bracket("r")} />
-      <span style={{ position: "relative", color: interpolateColors(fill, [0, 1], [ink, WHITE]) }}>{children}</span>
+    <span style={{ position: "relative", display: "inline-block", margin: "0 0.2em" }}>
+      <span
+        style={{
+          position: "absolute",
+          inset: "0.04em -0.16em -0.02em",
+          border: `0.03em solid ${c}`,
+          background: `color-mix(in srgb, ${color} ${Math.round(red * 14)}%, transparent)`,
+          opacity: Math.min(1, sel * 1.5),
+          transform: `scale(${1.08 - 0.08 * Math.min(sel, 1)})`,
+        }}
+      >
+        <span style={handle("left", "top")} />
+        <span style={handle("right", "top")} />
+        <span style={handle("left", "bottom")} />
+        <span style={handle("right", "bottom")} />
+      </span>
+      <span style={{ position: "relative", color: c }}>{children}</span>
     </span>
   );
 };
