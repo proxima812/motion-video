@@ -74,7 +74,7 @@
 | name | для чего | откуда |
 |---|---|---|
 | `shader-warp` | Анимированный шейдер-градиент на фон. | components/remocn/shader-warp (@paper-design) |
-| `shader-warp-cream` | Кремовый шейдер-градиент (фон обложки). | components/remocn/shader-warp-cream (@paper-design) |
+| `shader-warp-cream` | Шейдер-градиент в акцентном фиолетовом (фон обложки). | components/remocn/shader-warp-cream (@paper-design) |
 
 ## Remocn (31)
 

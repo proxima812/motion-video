@@ -589,7 +589,7 @@ export const ENTRIES: Entry[] = [
 
   /* ───────── paper.design ───────── */
   { id: "shader-warp", group: "paper", use: "Анимированный шейдер-градиент на фон.", source: "components/remocn/shader-warp (@paper-design)", bg: "none", render: () => <ShaderWarp /> },
-  { id: "shader-warp-cream", group: "paper", use: "Кремовый шейдер-градиент (фон обложки).", source: "components/remocn/shader-warp-cream (@paper-design)", bg: "none", render: () => <ShaderWarpCream /> },
+  { id: "shader-warp-cream", group: "paper", use: "Шейдер-градиент в акцентном фиолетовом (фон обложки).", source: "components/remocn/shader-warp-cream (@paper-design)", bg: "none", render: () => <ShaderWarpCream /> },
 
   /* ───────── remocn ───────── */
   ...(
