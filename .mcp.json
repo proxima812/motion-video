@@ -3,6 +3,10 @@
     "remocn": {
       "type": "http",
       "url": "https://remocn.dev/mcp"
+    },
+    "reui": {
+      "type": "http",
+      "url": "https://mcp.reui.io"
     }
   }
 }
