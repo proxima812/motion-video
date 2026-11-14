@@ -43,6 +43,7 @@ import { Video19, Video19Part, partLen as partLen19 } from "./v19/Video19";
 import { Video19Wide } from "./v19/Video19Wide";
 import { F as F19 } from "./v19/timeline";
 import { Video20 } from "./v20/Video20";
+import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
 import { AVATAR_SHOWCASE_FRAMES, AvatarShowcase } from "./playground/AvatarShowcase";
@@ -109,6 +110,7 @@ export const Root: React.FC = () => (
     <Composition id="PlaygroundAll" component={PlaygroundAll} width={1080} height={1920} fps={60} durationInFrames={PLAYGROUND_ALL_FRAMES} />
     <Composition id="Outro" component={Outro} width={1080} height={1920} fps={60} durationInFrames={OUTRO_FRAMES} defaultProps={{ lang: "ru" as const }} />
     <Still id="Cover" component={Cover} width={1080} height={1920} defaultProps={{ title: "Заголовок", description: "Короткое описание темы" }} />
+    <Still id="Cover20" component={Cover20} width={1080} height={1920} />
     <Still id="CoverWide" component={Cover} width={1920} height={1080} defaultProps={{ title: "Заголовок", description: "Короткое описание темы" }} />
   </>
 );
