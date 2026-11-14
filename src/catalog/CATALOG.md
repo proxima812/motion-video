@@ -75,6 +75,25 @@
 | `shadcn-button` | Кнопки shadcn: default / outline / secondary. | components/ui/button (v19) |
 | `shadcn-badge` | Бейджи shadcn. | components/ui/badge (v19) |
 
+## ReUI (reui.io, стиль radix-luma)
+
+Установлено `shadcn add @reui/<name>` (style в `components.json` — `radix-luma`). Примеры — `src/components/examples/c-*.tsx` (веб-демо с useState: в ролик переносим разметку, а состояние задаем от `frame`), примитивы — `src/components/reui/`, стоковые shadcn-зависимости — `src/components/ui/`. Кнопка и карточка в стиле luma — `src/components/reui/luma/` (старые `ui/button`, `ui/card` из v19 не тронуты). Recharts — только с `isAnimationActive={false}`. MCP `reui` (`mcp.reui.io`) требует входа через `/mcp`.
+
+| пример | для чего |
+|---|---|
+| `c-trace-1` | Шаги AI-агента (trace) |
+| `c-avatar-18`, `c-avatar-21` | Группа аватаров с онлайн-статусом, social proof |
+| `c-tabs-7` | Табы со счетчиками |
+| `c-questionnaire-4` | Квиз с сегментным прогрессом |
+| `c-progress-7` | Многошаговый прогресс |
+| `c-calendar-22` | Календарь со списком событий |
+| `c-tooltip-13`, `c-popover-6` | Онлайн-статус, карточка профиля |
+| `c-command-5` | Командная палитра, поиск файлов |
+| `c-table-8` | Таблица проектов |
+| `c-chart-13` | Градиентный area-график |
+| `c-card-15` | Карточка метрики с трендом |
+| `c-badge-22`, `c-icon-tile-11`, `c-stepper-19` | Бейдж со статусом, фича-карточка с иконкой, степпер на icon-tile |
+
 ## paper.design шейдеры (2)
 
 | name | для чего | откуда |
