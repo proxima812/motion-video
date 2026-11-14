@@ -94,7 +94,8 @@ const SIDE = 100; // gap between the cutout box and the frame edge
 // cx placement, words to the right; mirror = flip her to look left, words left;
 // pillsLeft (legacy, wide layouts with her at the right edge) = words left without flipping.
 // color is ignored by the pills (they never take the accent color); kept so existing videos compile.
-export const TatAvatar: React.FC<{ frame: number; keys: AvatarKey[]; words?: SpokenWord[]; color?: string; cx?: number; scale?: number; frameH?: number; frameW?: number; pillsLeft?: boolean; mirror?: boolean; stances?: StanceKey[] }> = ({ frame, keys, words = [], cx: cx0 = 540, scale = 1, frameH = 1920, frameW = 1080, pillsLeft = false, mirror = false, stances }) => {
+// dir = folder of the emotion photos (staticFile path, another host preset, e.g. "v21/avatar"); fit = per-photo scale for that set.
+export const TatAvatar: React.FC<{ frame: number; keys: AvatarKey[]; words?: SpokenWord[]; color?: string; cx?: number; scale?: number; frameH?: number; frameW?: number; pillsLeft?: boolean; mirror?: boolean; stances?: StanceKey[]; dir?: string; fit?: Partial<Record<Emotion, number>> }> = ({ frame, keys, words = [], cx: cx0 = 540, scale = 1, frameH = 1920, frameW = 1080, pillsLeft = false, mirror = false, stances, dir = "tatarverse/avatar", fit = FIT }) => {
   const w = AVATAR.w * scale;
   const h = AVATAR.h * scale;
   const posX = (s: Stance) => (s === "right" ? SIDE + w / 2 : s === "left" ? frameW - SIDE - w / 2 : frameW / 2);
@@ -145,7 +146,7 @@ export const TatAvatar: React.FC<{ frame: number; keys: AvatarKey[]; words?: Spo
           return (
             <Img
               key={i}
-              src={staticFile(`tatarverse/avatar/${k.e}.png`)}
+              src={staticFile(`${dir}/${k.e}.png`)}
               style={{
                 position: "absolute",
                 inset: 0,
@@ -156,7 +157,7 @@ export const TatAvatar: React.FC<{ frame: number; keys: AvatarKey[]; words?: Spo
                 transformOrigin: "50% 100%",
                 opacity: Math.min(1, t * 1.8) * (1 - out),
                 filter: out > 0 || t < 0.98 ? `blur(${Math.max(out * 12, (1 - Math.min(t, 1)) * 8)}px)` : undefined,
-                transform: `translateY(${(1 - t) * 24 + out * 16}px) scale(${(0.95 + 0.05 * t) * (1 + breathe) * (FIT[k.e] ?? 1)})`,
+                transform: `translateY(${(1 - t) * 24 + out * 16}px) scale(${(0.95 + 0.05 * t) * (1 + breathe) * (fit[k.e] ?? 1)})`,
               }}
             />
           );

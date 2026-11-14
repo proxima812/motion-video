@@ -13,6 +13,7 @@ export const PLATE = {
   sunset: "linear-gradient(135deg, #FB923C, #EC4899)",
   ocean: "linear-gradient(135deg, #38BDF8, #1D4ED8)",
   smoke: "linear-gradient(135deg, #3A3A44, #111114)",
+  ruby: "linear-gradient(135deg, #FF6B5E, #C62828)",
 };
 
 const label: React.CSSProperties = { display: "inline-flex", alignItems: "center", gap: 10, color: "#fff", fontFamily: PARAGRAPH.fontFamily, fontVariantNumeric: PARAGRAPH.fontVariantNumeric, fontWeight: 600, fontSize: 17, letterSpacing: "-0.01em" };
