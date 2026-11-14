@@ -47,6 +47,8 @@ import { Video21 } from "./v21/Video21";
 import { F as F21 } from "./v21/timeline";
 import { Video22 } from "./v22/Video22";
 import { F as F22 } from "./v22/timeline";
+import { Video23 } from "./v23/Video23";
+import { F as F23 } from "./v23/timeline";
 import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -76,6 +78,7 @@ const V19Parts = ([1, 2, 3] as const).map((n) => ({ n, len: partLen19(n), C: wit
 const V19Wide = withOutro(Video19Wide, F19.duration, "ru", "tatarverse");
 const V21 = withOutro(Video21, F21.duration, "ru", "tatarverse");
 const V22 = withOutro(Video22, F22.duration, "ru", "tatarverse");
+const V23 = withOutro(Video23, F23.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -108,6 +111,7 @@ export const Root: React.FC = () => (
     <Composition id="V19Wide" component={V19Wide} width={1920} height={1080} fps={60} durationInFrames={outroTotal(F19.duration)} />
     <Composition id="V21" component={V21} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F21.duration)} />
     <Composition id="V22" component={V22} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F22.duration)} />
+    <Composition id="V23" component={V23} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F23.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "tactile-badges" as const,
