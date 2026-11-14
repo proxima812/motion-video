@@ -42,6 +42,8 @@ import { F as F18 } from "./v18/timeline";
 import { Video19, Video19Part, partLen as partLen19 } from "./v19/Video19";
 import { Video19Wide } from "./v19/Video19Wide";
 import { F as F19 } from "./v19/timeline";
+import { Video20 } from "./v20/Video20";
+import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
 import { AVATAR_SHOWCASE_FRAMES, AvatarShowcase } from "./playground/AvatarShowcase";
 import { PLAYGROUND_ALL_FRAMES, Playground, PlaygroundAll, playgroundMetadata, playgroundSchema } from "./playground/Playground";
@@ -95,6 +97,7 @@ export const Root: React.FC = () => (
     {V19Parts.map(({ n, len, C }) => (
       <Composition key={n} id={`V19P${n}`} component={C} width={1080} height={1920} fps={60} durationInFrames={outroTotal(len)} />
     ))}
+    <Composition id="V20" component={Video20} width={1080} height={1920} fps={60} durationInFrames={F20.duration} />
     <Composition id="V19Wide" component={V19Wide} width={1920} height={1080} fps={60} durationInFrames={outroTotal(F19.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
