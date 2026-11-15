@@ -49,6 +49,10 @@ import { Video22 } from "./v22/Video22";
 import { F as F22 } from "./v22/timeline";
 import { Video23 } from "./v23/Video23";
 import { F as F23 } from "./v23/timeline";
+import { Video24 } from "./v24/Video24";
+import { F as F24 } from "./v24/timeline";
+import { Video25 } from "./v25/Video25";
+import { F as F25 } from "./v25/timeline";
 import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -79,6 +83,8 @@ const V19Wide = withOutro(Video19Wide, F19.duration, "ru", "tatarverse");
 const V21 = withOutro(Video21, F21.duration, "ru", "tatarverse");
 const V22 = withOutro(Video22, F22.duration, "ru", "tatarverse");
 const V23 = withOutro(Video23, F23.duration, "ru", "tatarverse");
+const V24 = withOutro(Video24, F24.duration, "ru", "tatarverse");
+const V25 = withOutro(Video25, F25.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -112,6 +118,8 @@ export const Root: React.FC = () => (
     <Composition id="V21" component={V21} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F21.duration)} />
     <Composition id="V22" component={V22} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F22.duration)} />
     <Composition id="V23" component={V23} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F23.duration)} />
+    <Composition id="V24" component={V24} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F24.duration)} />
+    <Composition id="V25" component={V25} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F25.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "tactile-badges" as const,
