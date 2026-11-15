@@ -53,6 +53,32 @@ import { Video24 } from "./v24/Video24";
 import { F as F24 } from "./v24/timeline";
 import { Video25 } from "./v25/Video25";
 import { F as F25 } from "./v25/timeline";
+import { Video26 } from "./v26/Video26";
+import { F as F26 } from "./v26/timeline";
+import { Video27 } from "./v27/Video27";
+import { F as F27 } from "./v27/timeline";
+import { Video28 } from "./v28/Video28";
+import { F as F28 } from "./v28/timeline";
+import { Video29 } from "./v29/Video29";
+import { F as F29 } from "./v29/timeline";
+import { Video30 } from "./v30/Video30";
+import { F as F30 } from "./v30/timeline";
+import { Video31 } from "./v31/Video31";
+import { F as F31 } from "./v31/timeline";
+import { Video32 } from "./v32/Video32";
+import { F as F32 } from "./v32/timeline";
+import { Video33 } from "./v33/Video33";
+import { F as F33 } from "./v33/timeline";
+import { Video34 } from "./v34/Video34";
+import { F as F34 } from "./v34/timeline";
+import { Video35 } from "./v35/Video35";
+import { F as F35 } from "./v35/timeline";
+import { Video36 } from "./v36/Video36";
+import { F as F36 } from "./v36/timeline";
+import { Video37 } from "./v37/Video37";
+import { F as F37 } from "./v37/timeline";
+import { Video38 } from "./v38/Video38";
+import { F as F38 } from "./v38/timeline";
 import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -85,6 +111,19 @@ const V22 = withOutro(Video22, F22.duration, "ru", "tatarverse");
 const V23 = withOutro(Video23, F23.duration, "ru", "tatarverse");
 const V24 = withOutro(Video24, F24.duration, "ru", "tatarverse");
 const V25 = withOutro(Video25, F25.duration, "ru", "tatarverse");
+const V26 = withOutro(Video26, F26.duration, "ru", "tatarverse");
+const V27 = withOutro(Video27, F27.duration, "ru", "tatarverse");
+const V28 = withOutro(Video28, F28.duration, "ru", "tatarverse");
+const V29 = withOutro(Video29, F29.duration, "ru", "tatarverse");
+const V30 = withOutro(Video30, F30.duration, "ru", "tatarverse");
+const V31 = withOutro(Video31, F31.duration, "ru", "tatarverse");
+const V32 = withOutro(Video32, F32.duration, "ru", "tatarverse");
+const V33 = withOutro(Video33, F33.duration, "ru", "tatarverse");
+const V34 = withOutro(Video34, F34.duration, "ru", "tatarverse");
+const V35 = withOutro(Video35, F35.duration, "ru", "tatarverse");
+const V36 = withOutro(Video36, F36.duration, "ru", "tatarverse");
+const V37 = withOutro(Video37, F37.duration, "ru", "tatarverse");
+const V38 = withOutro(Video38, F38.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -120,6 +159,19 @@ export const Root: React.FC = () => (
     <Composition id="V23" component={V23} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F23.duration)} />
     <Composition id="V24" component={V24} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F24.duration)} />
     <Composition id="V25" component={V25} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F25.duration)} />
+    <Composition id="V26" component={V26} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F26.duration)} />
+    <Composition id="V27" component={V27} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F27.duration)} />
+    <Composition id="V28" component={V28} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F28.duration)} />
+    <Composition id="V29" component={V29} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F29.duration)} />
+    <Composition id="V30" component={V30} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F30.duration)} />
+    <Composition id="V31" component={V31} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F31.duration)} />
+    <Composition id="V32" component={V32} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F32.duration)} />
+    <Composition id="V33" component={V33} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F33.duration)} />
+    <Composition id="V34" component={V34} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F34.duration)} />
+    <Composition id="V35" component={V35} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F35.duration)} />
+    <Composition id="V36" component={V36} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F36.duration)} />
+    <Composition id="V37" component={V37} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F37.duration)} />
+    <Composition id="V38" component={V38} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F38.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "tactile-badges" as const,
