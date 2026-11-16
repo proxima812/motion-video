@@ -1,7 +1,8 @@
-import json, re, subprocess, sys
+import json, os, re, subprocess, sys
 n = sys.argv[1]; gap = int(sys.argv[2]) if len(sys.argv) > 2 else 14
-f = 8; starts = []
-for i in range(1, 7):
+f = 8; starts = []; i = 0
+while os.path.exists(f"public/v{n}/vo/l{i + 1}.mp3"):
+    i += 1
     d = float(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration","-of","csv=p=0",f"public/v{n}/vo/l{i}.mp3"]))
     dur = round(d*60); starts.append((f, dur))
     a = json.load(open(f"public/v{n}/vo/l{i}.json"))
