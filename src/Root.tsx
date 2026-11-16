@@ -103,6 +103,8 @@ import { Video49 } from "./v49/Video49";
 import { F as F49 } from "./v49/timeline";
 import { Video50 } from "./v50/Video50";
 import { F as F50 } from "./v50/timeline";
+import { Video51 } from "./v51/Video51";
+import { F as F51 } from "./v51/timeline";
 import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -160,6 +162,7 @@ const V47 = withOutro(Video47, F47.duration, "ru", "tatarverse");
 const V48 = withOutro(Video48, F48.duration, "ru", "tatarverse");
 const V49 = withOutro(Video49, F49.duration, "ru", "tatarverse");
 const V50 = withOutro(Video50, F50.duration, "ru", "tatarverse");
+const V51 = withOutro(Video51, F51.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -220,6 +223,7 @@ export const Root: React.FC = () => (
     <Composition id="V48" component={V48} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F48.duration)} />
     <Composition id="V49" component={V49} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F49.duration)} />
     <Composition id="V50" component={V50} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F50.duration)} />
+    <Composition id="V51" component={V51} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F51.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "tactile-button-palette" as const,
