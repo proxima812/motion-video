@@ -17,6 +17,7 @@ const puppeteer = require('puppeteer-core');
 const URL_SC = 'https://www.instagram.com/scheduled_content/';
 const MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
 const SHOT = '/tmp/postv/step.png';
+const PLACE = 'Алматы';   // «Добавить место»
 fs.mkdirSync('/tmp/postv', {recursive: true});
 
 const args = process.argv.slice(2);
@@ -83,7 +84,7 @@ const dialogTitle = () => p.evaluate(() => { const d = [...document.querySelecto
 
 // проверка шага скриншотом через Jev
 const STEPS = {select: 'Empty upload dialog asking to choose files from computer', crop: 'Crop step, dialog title Обрезать', edit: 'Edit step with cover photo strip, dialog title Редактировать',
-  details: 'Caption, AI label and schedule step, dialog title Новое видео Reels', progress: 'Loading spinner, dialog title Планирование', done: 'Success message Видео Reels запланировано', other: 'Calendar or anything else'};
+  details: 'Caption, place, AI label and schedule step, dialog title Новое видео Reels', progress: 'Loading spinner, dialog title Планирование', done: 'Success message Видео Reels запланировано', other: 'Calendar or anything else'};
 async function jevStep(want) {
   await p.screenshot({path: SHOT});
   const a = await jev(SHOT, {step: {type: 'choice', instructions: 'Which step of the Instagram scheduling dialog is shown on this screenshot?', criteria: STEPS}});
@@ -170,21 +171,44 @@ try {
   if (got != caption) throw new Error('подпись не совпала с summary-inst.txt (подсказка хэштегов?):\n' + got.slice(-120));
   log('подпись совпадает с файлом');
 
-  // переключатели: метка ИИ - вкл, планирование - вкл
+  // место: «Добавить место» -> Алматы -> город «Алматы, Қазақстан» (после выбора поле disabled со значением)
+  const place = () => p.evaluate(() => { const i = document.querySelector('[role=dialog] input[placeholder="Добавить место"]'); return i ? {v: i.value, set: i.disabled} : null; });
+  if (!(await place())?.set) {
+    await p.evaluate(() => { const i = document.querySelector('[role=dialog] input[placeholder="Добавить место"]'); i.scrollIntoView({block: 'center'}); i.focus(); });
+    await p.keyboard.type(PLACE, {delay: 40});
+    const t0 = Date.now(); let opt = null;
+    while (!opt && Date.now() - t0 < 15000) {
+      await sleep(700);
+      opt = await p.evaluate(pl => {
+        const bs = [...document.querySelectorAll('[role=dialog] button')].filter(e => e.getClientRects().length);
+        const e = bs.find(e => e.innerText.trim() == `${pl}\n${pl}, Қазақстан`) || bs.find(e => /^Алматы\n.*(Қазақстан|Казахстан)$/.test(e.innerText.trim())) || bs.find(e => e.innerText.trim() == `${pl}\n${pl}`);
+        if (!e) return null; e.scrollIntoView({block: 'center'}); const q = e.getBoundingClientRect(); return [q.x + q.width / 2, q.y + q.height / 2, e.innerText.trim().replace('\n', ' / ')];
+      }, PLACE);
+    }
+    if (!opt) throw new Error('нет места ' + PLACE + ' в подсказках');
+    await p.mouse.click(opt[0], opt[1]); await sleep(1200);
+    await blur(); await sleep(500);
+    log('место: ' + opt[2]);
+  }
+  const pl = await place();
+  if (!pl?.set || pl.v != PLACE) throw new Error('место не выбрано: ' + JSON.stringify(pl));
+
+  // переключатели: метка ИИ - выкл (не ставим), планирование - вкл; автосубтитры - ниже, после даты и времени
   const toggles = () => p.evaluate(() => {
     const d = [...document.querySelectorAll('[role=dialog]')].sort((a, b) => b.innerText.length - a.innerText.length)[0];
     const row = t => { const lab = [...d.querySelectorAll('span,div')].find(e => !e.children.length && e.innerText?.trim().startsWith(t)); if (!lab) return null;
-      let n = lab; for (let i = 0; i < 6 && n; i++, n = n.parentElement) { const c = n.querySelector('input[type=checkbox]'); if (c) { const q = (c.closest('label,div') || c).getBoundingClientRect(); return {on: c.checked, x: q.x + q.width / 2, y: q.y + q.height / 2}; } } return null; };
-    return {ai: row('Добавить метку ИИ'), sch: row('Запланируйте публикацию')};
+      let n = lab; for (let i = 0; i < 6 && n; i++, n = n.parentElement) { const c = n.querySelector('input[type=checkbox]'); if (c) { const box = c.closest('label,div') || c; const r = box.getBoundingClientRect();
+        if (r.top < 0 || r.bottom > innerHeight) box.scrollIntoView({block: 'center'}); const q = box.getBoundingClientRect(); return {on: c.checked, x: q.x + q.width / 2, y: q.y + q.height / 2}; } } return null; };
+    return {ai: row('Добавить метку ИИ'), sch: row('Запланируйте публикацию'), sub: row('Автоматические субтитры')};
   });
   let tg = await toggles();
   if (!tg.ai || !tg.sch) throw new Error('не нашел переключатели: ' + JSON.stringify(tg));
   // первый клик после подписи может уйти на закрытие подсказки хэштегов - до 4 попыток
-  for (let i = 0; i < 4 && !(tg.ai.on && tg.sch.on); i++) {
-    const k = !tg.ai.on ? tg.ai : tg.sch; await p.mouse.click(k.x, k.y); await sleep(900); tg = await toggles();
+  for (let i = 0; i < 4 && (tg.ai.on || !tg.sch.on); i++) {
+    const k = tg.ai.on ? tg.ai : tg.sch; await p.mouse.click(k.x, k.y); await sleep(900); tg = await toggles();
   }
-  if (!tg.ai.on || !tg.sch.on) throw new Error('переключатели не включились: ' + JSON.stringify(tg));
-  log('метка ИИ и планирование включены');
+  if (tg.ai.on || !tg.sch.on) throw new Error('переключатели не встали (ИИ выкл, планирование вкл): ' + JSON.stringify(tg));
+  log('метка ИИ выключена, планирование включено');
 
   // дата: открыть выпадающий календарь, листать до нужного месяца, кликнуть день
   const dateBox = () => p.evaluate(() => { const e = [...document.querySelectorAll('[role=dialog] span,[role=dialog] div')].find(e => !e.children.length && /^(пн|вт|ср|чт|пт|сб|вс), \d+ [а-я]+\.? \d{4} г\.$/.test(e.innerText?.trim()));
@@ -224,17 +248,31 @@ try {
     await p.keyboard.type(v, {delay: 40}); await sleep(300);
   }
   await blur(); await sleep(600);
+
+  // «Специальные возможности» -> «Автоматические субтитры» - вкл
+  if (!(await toggles()).sub) {
+    const sec = await p.evaluate(() => { const e = [...document.querySelectorAll('[role=dialog] span,[role=dialog] div')].find(e => !e.children.length && e.innerText?.trim() == 'Специальные возможности');
+      if (!e) return null; e.scrollIntoView({block: 'center'}); const q = e.getBoundingClientRect(); return [q.x + q.width / 2, q.y + q.height / 2]; });
+    if (!sec) throw new Error('нет раздела «Специальные возможности»');
+    await p.mouse.click(sec[0], sec[1]); await sleep(1200);
+  }
+  tg = await toggles();
+  for (let i = 0; i < 3 && tg.sub && !tg.sub.on; i++) { await p.mouse.click(tg.sub.x, tg.sub.y); await sleep(900); tg = await toggles(); }
+  if (!tg.sub?.on) throw new Error('автоматические субтитры не включились: ' + JSON.stringify(tg.sub));
+  if (tg.ai.on || !tg.sch.on) throw new Error('переключатели сбились: ' + JSON.stringify(tg));
+  log('автоматические субтитры включены');
   await p.screenshot({path: SHOT});
   const chk = await jev(SHOT, {
     time: {type: 'noul', instructions: `Does the Время (time) field show exactly ${HH}:${MM}?`},
     date: {type: 'noul', instructions: `Does the Дата (date) field show day ${slot.getDate()}?`},
     ai: {type: 'noul', instructions: 'Is the toggle next to Добавить метку ИИ switched on?'},
+    sub: {type: 'noul', instructions: 'Is the toggle next to Автоматические субтитры switched on?'},
     sch: {type: 'noul', instructions: 'Is the toggle next to Запланируйте публикацию контента switched on?'},
     err: {type: 'noul', instructions: 'Is there any red error message in the dialog (for example about time)?'},
   });
   const v = k => chk[k].noul;
-  log(`Jev: время ${v('time').toFixed(2)}, дата ${v('date').toFixed(2)}, ИИ ${v('ai').toFixed(2)}, планирование ${v('sch').toFixed(2)}, ошибка ${v('err').toFixed(2)}`);
-  if (v('time') < .5 || v('date') < .5 || v('ai') < .5 || v('sch') < .5 || v('err') > .5) throw new Error('Jev не подтвердил форму, скриншот ' + SHOT);
+  log(`Jev: время ${v('time').toFixed(2)}, дата ${v('date').toFixed(2)}, ИИ ${v('ai').toFixed(2)}, субтитры ${v('sub').toFixed(2)}, планирование ${v('sch').toFixed(2)}, ошибка ${v('err').toFixed(2)}`);
+  if (v('time') < .5 || v('date') < .5 || v('ai') > .5 || v('sub') < .5 || v('sch') < .5 || v('err') > .5) throw new Error('Jev не подтвердил форму, скриншот ' + SHOT);
   fs.copyFileSync(SHOT, path.join(out, 'post-form.png'));
 
   if (DRY) {
@@ -250,7 +288,7 @@ try {
   await sleep(800);
   await jevStep('done');
   await click('Готово', {within: true}).catch(() => {});
-  const rec = {video: +N, slug: dir, scheduled: `${iso(slot)}T${HH}:${MM}`, account: ACCOUNT, ...(PART ? {part: +PART} : {}), cover: path.basename(f.cover), caption: path.basename(f.caption), ai_label: true, at: new Date().toISOString().slice(0, 16)};
+  const rec = {video: +N, slug: dir, scheduled: `${iso(slot)}T${HH}:${MM}`, account: ACCOUNT, ...(PART ? {part: +PART} : {}), cover: path.basename(f.cover), caption: path.basename(f.caption), ai_label: false, auto_captions: true, place: PLACE, at: new Date().toISOString().slice(0, 16)};
   fs.writeFileSync(f.posted, JSON.stringify(rec, null, 2) + '\n');
   log('запланировано: ' + rec.scheduled + ', записан ' + path.relative(ROOT, f.posted));
 } catch (e) {
