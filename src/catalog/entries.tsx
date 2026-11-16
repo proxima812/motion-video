@@ -45,6 +45,7 @@ import { Card as UiCard, CardContent, CardDescription, CardHeader, CardTitle } f
 import { GshFlat } from "@/lib/remocn/gsh/gsh-ground";
 import { DOT_ORBIT_VARIANTS, DotOrbitBg, type DotOrbitVariant } from "../kit/DotOrbitBg";
 import { TatAvatar, type AvatarKey, type SpokenWord, type StanceKey } from "../kit/TatAvatar";
+import { TatDuo, type Turn } from "../kit/TatDuo";
 import { GLASS, K, count, shake } from "../kit/reel";
 import { Outro } from "../outro/Outro";
 import { TatarverseOutro } from "../outro/TatarverseOutro";
@@ -115,6 +116,13 @@ const SAMPLE: Omit<SpokenWord, "f">[] = [
   { w: "миру", accent: ACCENT },
 ];
 const SPOKEN: SpokenWord[] = Array.from({ length: 22 }, (_, i) => ({ f: 20 + i * 20, ...SAMPLE[i % SAMPLE.length] }));
+// two hosts in turns: Ahu 0-150, Alicja 150-300, Ahu again
+const DUO_TURNS: Turn[] = [
+  { from: 0, who: 0 },
+  { from: 150, who: 1 },
+  { from: 300, who: 0 },
+];
+const duoWords = (who: 0 | 1) => SPOKEN.filter((w) => (w.f >= 150 && w.f < 300 ? 1 : 0) === who);
 
 export const ENTRIES: Entry[] = [
   /* ───────── the design system itself ───────── */
@@ -571,6 +579,23 @@ export const ENTRIES: Entry[] = [
     source: "kit/TatAvatar",
     frames: 450,
     render: (f) => <TatAvatar frame={f} keys={AVATAR_KEYS} words={SPOKEN} stances={STANCES} />,
+  },
+  {
+    id: "tat-duo",
+    group: "shared",
+    use: "Два ведущих @the_tatarverse в одном ролике (диалог): Ahu слева, Alicja справа, обе всегда в кадре; говорящая крупнее и впереди, ее слова летят к центру, вторая слушает.",
+    source: "kit/TatDuo",
+    frames: 450,
+    render: (f) => (
+      <TatDuo
+        frame={f}
+        turns={DUO_TURNS}
+        hosts={[
+          { keys: [{ at: 0, e: "explaining" }, { at: 164, e: "listening" }, { at: 300, e: "point-right" }], words: duoWords(0) },
+          { keys: [{ at: 0, e: "soft-smile" }, { at: 150, e: "explaining" }, { at: 314, e: "smile-up" }], words: duoWords(1), dir: "girl-young/avatar" },
+        ]}
+      />
+    ),
   },
   {
     id: "dot-orbit-bg",
