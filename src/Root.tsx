@@ -174,7 +174,7 @@ export const Root: React.FC = () => (
     <Composition id="V38" component={V38} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F38.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
-      name: "tactile-badges" as const,
+      name: "tactile-button-palette" as const,
       safeZone: true,
       title: true,
     }} />

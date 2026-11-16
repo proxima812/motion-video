@@ -1,6 +1,6 @@
 # Озвучка ElevenLabs: v4 и v3
 
-Обе модели рабочие. По умолчанию `eleven_v4`, `eleven_v3` - по выбору пользователя или если v4 не подошел (клон звучит иначе, endpoint не принимает модель). Голос по умолчанию - Kyle `JyzM229ZjDtptOZjn48b` (как в `scripts/gen-vo.sh`); для @the_tatarverse - Ahu `xyqF3vGMQlPk3e7yA4DI` на `eleven_v4`, ключ - `ELEVENLABS_KEY` из `.env`.
+Обе модели рабочие. По умолчанию `eleven_v4`, `eleven_v3` - по выбору пользователя или если v4 не подошел (клон звучит иначе, endpoint не принимает модель). Голос определяется выбранным в `SKILL.md` пресетом. Второй пресет: Alicja - Warm & Understanding, voice_id `iCzRDxXsrROcDYzWimM9`, модель `eleven_v4` для обоих аккаунтов. Для основного пресета голос по умолчанию - Kyle `JyzM229ZjDtptOZjn48b` (как в `scripts/gen-vo.sh`); для @the_tatarverse - Ahu `xyqF3vGMQlPk3e7yA4DI` на `eleven_v4`, ключ - `ELEVENLABS_KEY` из `.env`.
 
 ## Общее для v4 и v3
 
