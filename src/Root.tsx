@@ -79,6 +79,30 @@ import { Video37 } from "./v37/Video37";
 import { F as F37 } from "./v37/timeline";
 import { Video38 } from "./v38/Video38";
 import { F as F38 } from "./v38/timeline";
+import { Video39 } from "./v39/Video39";
+import { F as F39 } from "./v39/timeline";
+import { Video40 } from "./v40/Video40";
+import { F as F40 } from "./v40/timeline";
+import { Video41 } from "./v41/Video41";
+import { F as F41 } from "./v41/timeline";
+import { Video42 } from "./v42/Video42";
+import { F as F42 } from "./v42/timeline";
+import { Video43 } from "./v43/Video43";
+import { F as F43 } from "./v43/timeline";
+import { Video44 } from "./v44/Video44";
+import { F as F44 } from "./v44/timeline";
+import { Video45 } from "./v45/Video45";
+import { F as F45 } from "./v45/timeline";
+import { Video46 } from "./v46/Video46";
+import { F as F46 } from "./v46/timeline";
+import { Video47 } from "./v47/Video47";
+import { F as F47 } from "./v47/timeline";
+import { Video48 } from "./v48/Video48";
+import { F as F48 } from "./v48/timeline";
+import { Video49 } from "./v49/Video49";
+import { F as F49 } from "./v49/timeline";
+import { Video50 } from "./v50/Video50";
+import { F as F50 } from "./v50/timeline";
 import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -124,6 +148,18 @@ const V35 = withOutro(Video35, F35.duration, "ru", "tatarverse");
 const V36 = withOutro(Video36, F36.duration, "ru", "tatarverse");
 const V37 = withOutro(Video37, F37.duration, "ru", "tatarverse");
 const V38 = withOutro(Video38, F38.duration, "ru", "tatarverse");
+const V39 = withOutro(Video39, F39.duration, "ru", "tatarverse");
+const V40 = withOutro(Video40, F40.duration, "ru", "tatarverse");
+const V41 = withOutro(Video41, F41.duration, "ru", "tatarverse");
+const V42 = withOutro(Video42, F42.duration, "ru", "tatarverse");
+const V43 = withOutro(Video43, F43.duration, "ru", "tatarverse");
+const V44 = withOutro(Video44, F44.duration, "ru", "tatarverse");
+const V45 = withOutro(Video45, F45.duration, "ru", "tatarverse");
+const V46 = withOutro(Video46, F46.duration, "ru", "tatarverse");
+const V47 = withOutro(Video47, F47.duration, "ru", "tatarverse");
+const V48 = withOutro(Video48, F48.duration, "ru", "tatarverse");
+const V49 = withOutro(Video49, F49.duration, "ru", "tatarverse");
+const V50 = withOutro(Video50, F50.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -172,6 +208,18 @@ export const Root: React.FC = () => (
     <Composition id="V36" component={V36} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F36.duration)} />
     <Composition id="V37" component={V37} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F37.duration)} />
     <Composition id="V38" component={V38} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F38.duration)} />
+    <Composition id="V39" component={V39} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F39.duration)} />
+    <Composition id="V40" component={V40} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F40.duration)} />
+    <Composition id="V41" component={V41} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F41.duration)} />
+    <Composition id="V42" component={V42} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F42.duration)} />
+    <Composition id="V43" component={V43} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F43.duration)} />
+    <Composition id="V44" component={V44} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F44.duration)} />
+    <Composition id="V45" component={V45} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F45.duration)} />
+    <Composition id="V46" component={V46} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F46.duration)} />
+    <Composition id="V47" component={V47} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F47.duration)} />
+    <Composition id="V48" component={V48} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F48.duration)} />
+    <Composition id="V49" component={V49} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F49.duration)} />
+    <Composition id="V50" component={V50} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F50.duration)} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "tactile-button-palette" as const,
