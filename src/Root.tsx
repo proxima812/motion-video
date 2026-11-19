@@ -107,6 +107,9 @@ import { Video51 } from "./v51/Video51";
 import { F as F51 } from "./v51/timeline";
 import { Video52 } from "./v52/Video52";
 import { F as F52 } from "./v52/timeline";
+import { Video53 } from "./v53/Video53";
+import { F as F53 } from "./v53/timeline";
+import { Cover53 } from "./v53/Cover53";
 import { Cover20 } from "./v20/Cover20";
 import { F as F20 } from "./v20/timeline";
 import { TEST_FRAMES, VideoTest } from "./v0/VideoTest";
@@ -228,6 +231,8 @@ export const Root: React.FC = () => (
     <Composition id="V50" component={V50} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F50.duration)} />
     <Composition id="V51" component={V51} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F51.duration)} />
     <Composition id="V52" component={V52} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F52.duration)} />
+    {/* dark preset: no Outro, the reel ends on its own song + picture fade */}
+    <Composition id="V53" component={Video53} width={1080} height={1920} fps={60} durationInFrames={F53.duration} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
       name: "tactile-button-palette" as const,
@@ -239,6 +244,7 @@ export const Root: React.FC = () => (
     <Composition id="Outro" component={Outro} width={1080} height={1920} fps={60} durationInFrames={OUTRO_FRAMES} defaultProps={{ lang: "ru" as const }} />
     <Still id="Cover" component={Cover} width={1080} height={1920} defaultProps={{ title: "Заголовок", description: "Короткое описание темы" }} />
     <Still id="Cover20" component={Cover20} width={1080} height={1920} />
+    <Still id="Cover53" component={Cover53} width={1080} height={1920} />
     <Still id="CoverWide" component={Cover} width={1920} height={1080} defaultProps={{ title: "Заголовок", description: "Короткое описание темы" }} />
   </>
 );
