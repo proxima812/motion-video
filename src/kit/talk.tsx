@@ -2,12 +2,14 @@ import React from "react";
 import { AbsoluteFill } from "remotion";
 import { Mic, Pause, Play, User } from "lucide-react";
 import { SPRING, ease, progress, springAt } from "../stage/motion";
-import { ReelShell, type Range, type SceneDef, type Sfx, type Vo } from "./reel";
+import { K, ReelShell, type Range, type SceneDef, type Sfx, type Vo } from "./reel";
 import { TatDuo, type DuoHost, type Turn } from "./TatDuo";
 import type { AvatarKey, Emotion, SpokenWord } from "./TatAvatar";
 import { DotOrbitBg, type DotOrbitVariant } from "./DotOrbitBg";
 import { HEADING, INK, NUMBER, PARAGRAPH, SURFACE } from "./design";
 import { Mark, Strike } from "../catalog/own/text";
+
+const STRIKE_RED = K.red;
 
 // @the_tatarverse "talk" series (gender war, adult serious tone, a moral at the end): a man's voice message
 // (no avatar, a Telegram-like voice bubble) that Ahu and Alicja listen to, then their dialog about it.
@@ -76,7 +78,9 @@ export const Title: React.FC<{ text: string; frame: number; at: number | number[
       {tokens(text).map(({ raw, kind }, i, all) => {
         const a = Array.isArray(when) ? when[Math.min(i, when.length - 1)] : when + i * stagger;
         const t = springAt(frame, a, SPRING.smooth);
-        const word = kind === "mark" ? <Mark frame={frame} at={a + 6} color={T.main}>{raw}</Mark> : kind === "strike" ? <Strike frame={frame} at={a + 6}>{raw}</Strike> : raw;
+        // a struck span of several words gets one cross, after its last word
+        const crossed = kind === "strike" && all[i + 1]?.kind !== "strike";
+        const word = kind === "mark" ? <Mark frame={frame} at={a + 6} color={T.main}>{raw}</Mark> : kind === "strike" ? crossed ? <Strike frame={frame} at={a + 6}>{raw}</Strike> : <Mark frame={frame} at={a + 6} color={STRIKE_RED}>{raw}</Mark> : raw;
         return (
           <span key={i} style={{ display: "inline-block", marginRight: i < all.length - 1 ? "0.24em" : 0, fontWeight: kind === "key" ? 700 : 400, color: kind === "key" ? T.main : undefined, opacity: Math.min(1, t * 1.3), transform: `translateY(${(1 - t) * 30}px)`, filter: `blur(${Math.max(0, (1 - t) * 8)}px)` }}>
             {word}
