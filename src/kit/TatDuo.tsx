@@ -9,7 +9,7 @@ import { TatAvatar, type AvatarKey, type Emotion, type SpokenWord } from "./TatA
 // Pose rules stay TatAvatar's: a key every ~2 s by meaning, never the same photo twice in a row.
 // Scene content stays above ~1330 px: the pills of the speaker float in the middle at 1350-1460.
 export type DuoHost = { keys: AvatarKey[]; words: SpokenWord[]; dir?: string; fit?: Partial<Record<Emotion, number>> };
-export type Turn = { from: number; who: 0 | 1 };
+export type Turn = { from: number; who: 0 | 1 | -1 }; // -1: nobody of the two talks (e.g. a voice message plays) - both listen
 
 const TALK = 0.94; // scale of the speaker
 const LISTEN = 0.82; // scale of the listener
@@ -22,6 +22,7 @@ export const TatDuo: React.FC<{ frame: number; hosts: readonly [DuoHost, DuoHost
   const focus = (h: 0 | 1) => {
     const i = turns.reduce((acc, t, k) => (frame >= t.from - LEAD ? k : acc), -1);
     if (i < 0) return turns[0]?.who === h ? 1 : 0;
+    // who -1 = both listen (small), nobody steps forward
     const cur = turns[i].who === h ? 1 : 0;
     const prev = i > 0 ? (turns[i - 1].who === h ? 1 : 0) : cur;
     return cur === prev ? cur : lerp(prev, cur, Math.min(1, springAt(frame, turns[i].from - LEAD, SPRING.smooth)));

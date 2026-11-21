@@ -105,6 +105,7 @@ import { Video50 } from "./v50/Video50";
 import { F as F50 } from "./v50/timeline";
 import { Video51 } from "./v51/Video51";
 import { F as F51 } from "./v51/timeline";
+import { Video54, F as F54 } from "./v54/Video54";
 import { Video52 } from "./v52/Video52";
 import { F as F52 } from "./v52/timeline";
 import { Video53 } from "./v53/Video53";
@@ -169,6 +170,7 @@ const V49 = withOutro(Video49, F49.duration, "ru", "tatarverse");
 const V50 = withOutro(Video50, F50.duration, "ru", "tatarverse");
 const V51 = withOutro(Video51, F51.duration, "ru", "tatarverse");
 const V52 = withOutro(Video52, F52.duration, "en", "tatarverse");
+const V54 = withOutro(Video54, F54.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -232,6 +234,7 @@ export const Root: React.FC = () => (
     <Composition id="V51" component={V51} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F51.duration)} />
     <Composition id="V52" component={V52} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F52.duration)} />
     {/* dark preset: no Outro, the reel ends on its own song + picture fade */}
+    <Composition id="V54" component={V54} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F54.duration)} />
     <Composition id="V53" component={Video53} width={1080} height={1920} fps={60} durationInFrames={F53.duration} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
