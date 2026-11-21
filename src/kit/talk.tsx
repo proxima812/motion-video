@@ -92,9 +92,10 @@ export const Title: React.FC<{ text: string; frame: number; at: number | number[
 };
 
 export const fadeOut = (frame: number, a: number, len = 10) => 1 - progress(frame, a, a + len);
-export const appear = (frame: number, a: number, cfg = SPRING.smooth) => {
+/** Pop-in style from `a`; base = a transform kept in front (e.g. "translateX(-50%)" for centered blocks) */
+export const appear = (frame: number, a: number, cfg = SPRING.smooth, base = "") => {
   const t = springAt(frame, a, cfg);
-  return { opacity: Math.min(1, t * 1.4), transform: `translateY(${(1 - t) * 40}px) scale(${0.94 + 0.06 * Math.min(t, 1)})` } as React.CSSProperties;
+  return { opacity: Math.min(1, t * 1.4), transform: `${base} translateY(${(1 - t) * 40}px) scale(${0.94 + 0.06 * Math.min(t, 1)})` } as React.CSSProperties;
 };
 
 /* ───────── Pieces ───────── */
