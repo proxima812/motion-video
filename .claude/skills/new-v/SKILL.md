@@ -44,7 +44,7 @@ description: Создает новый Reels-ролик на Remotion по ко�
 
 ## Пресеты ведущего
 
-**Все аватары ведущих лежат в `avatars/<имя>/`** (корень проекта): `ahu/` — Ahu (@the_tatarverse, основной), `alicja/` — Alicja, `kamilya/` — Камиля (бордовый), `alsu/` — Алсу (светлый жакет). Старых папок `tat_avatar/`, `girl_young_avatar/`, `hosts-avatar/`, `new-avatar/`, `tatar_man_avatar/` больше нет; новые наборы клади только в `avatars/`. В ролик копируй в `public/`, исходники не меняй.
+**Все аватары ведущих лежат в `avatars/<имя>/`** (корень проекта): `ahu/` — Ahu (@the_tatarverse, основной), `alicja/` — Alicja, `kamilya/` — Камиля (бордовый), `alsu/` — Алсу (светлый жакет). Голоса новых ведущих (ElevenLabs, `eleven_v4`, `language_code: ru`): **Камиля** — Victoria (Premium Warm Female Voice, русский, средний возраст), voice_id `Phc1KhVrCoW3CD0K7bUS`, stability 0.5, similarity_boost 0.75; **Алсу** — Nastya (русский, молодой), voice_id `YjESejviApN7SHrbfnA2`, stability 0.4, similarity_boost 0.75. Запасные: Anna – Warm, Natural `uZy6k5ZWEigWKQ7vOqbt` (для Камили), Helen – Confident & Expressive `Ci18HedgQCQGqsdoPbXo` (для Алсу). Старых папок `tat_avatar/`, `girl_young_avatar/`, `hosts-avatar/`, `new-avatar/`, `tatar_man_avatar/` больше нет; новые наборы клади только в `avatars/`. В ролик копируй в `public/`, исходники не меняй.
 
 Пресет не меняет аккаунт, дизайн, музыку, SFX или структуру ролика. Явно указанные пользователем настройки имеют приоритет. Для пары RU + EN используй один выбранный пресет в обеих версиях.
 
