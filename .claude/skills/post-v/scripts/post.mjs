@@ -144,9 +144,14 @@ log(`слот: ${iso(slot)} ${HH}:${MM}`);
 
 // --- окно публикации
 try {
-  await click('Запланировать публикацию контента');
-  await sleep(2500);
-  const inp = await p.waitForSelector('[role=dialog] input[type=file]', {timeout: 20000});
+  // the first click after a reload is sometimes swallowed: retry until the upload input shows up
+  let inp = null;
+  for (let i = 0; i < 4 && !inp; i++) {
+    if (i % 2 == 0) await click('Запланировать публикацию контента');
+    else await p.evaluate(() => { const t = 'Запланировать публикацию контента'; const e = [...document.querySelectorAll('div,span,button,a')].find(e => e.innerText?.trim() == t && ![...e.children].some(c => c.innerText?.trim() == t)); (e?.closest('[role=button],button') || e)?.click(); });
+    inp = await p.waitForSelector('[role=dialog] input[type=file]', {timeout: 8000}).catch(() => null);
+  }
+  if (!inp) throw new Error('не открылось окно загрузки');
   await inp.uploadFile(f.video); log('видео загружено');
   await waitText('Обрезать', 60000); await sleep(3000);
   await jevStep('crop');
