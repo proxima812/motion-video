@@ -57,7 +57,7 @@ await p.bringToFront();
 await p.goto(URL_SC, {waitUntil: 'networkidle2', timeout: 60000}).catch(() => {});
 await sleep(2000);
 // Windows: small physical window - give the page a tall viewport so the whole form fits in Jev screenshots
-if (process.platform === 'win32') await p.setViewport({width: 1400, height: 1500});
+if (process.platform === 'win32') { await p.setViewport({width: 1400, height: 1500}); await new Promise(r => setTimeout(r, 3000)); }
 if (/accounts\/login/.test(p.url())) { b.disconnect(); die('Instagram просит вход: запусти scripts/yandex-debug.sh --fresh (перенесет вход из основного браузера)', 4); }
 
 // клик по видимому элементу с точным текстом или по svg с aria-label
