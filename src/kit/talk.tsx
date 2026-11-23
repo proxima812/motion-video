@@ -4,6 +4,8 @@ import { Mic, Pause, Play, User } from "lucide-react";
 import { SPRING, ease, progress, springAt } from "../stage/motion";
 import { K, ReelShell, type Range, type SceneDef, type Sfx, type Vo } from "./reel";
 import { TatDuo, type DuoHost, type Turn } from "./TatDuo";
+import { TatQuad, type QuadSlot, type QuadTurn } from "./TatQuad";
+import { QUAD_FIT, type QuadHost } from "./quadFit";
 import type { AvatarKey, Emotion, SpokenWord } from "./TatAvatar";
 import { DotOrbitBg, type DotOrbitVariant } from "./DotOrbitBg";
 import { HEADING, INK, NUMBER, PARAGRAPH, SURFACE } from "./design";
@@ -16,7 +18,7 @@ const STRIKE_RED = K.red;
 // Both hosts stay on screen (TatDuo): Ahu left, Alicja right; while the voice message plays both listen.
 // Voice + timings: scripts/talk.py N gen|build -> src/vN/lines.ts (LINES). Scenes find their beats by word: at(L, 3, "тенденциях").
 
-export type Who = "ahu" | "alicja" | "man";
+export type Who = "ahu" | "alicja" | "man" | "kamilya" | "alsu";
 export type Line = { src: string; who: Who; from: number; dur: number; words: { f: number; w: string }[] };
 
 /** Frame of the n-th `word` in line `i` (1-based): case-insensitive exact match, else prefix match */
@@ -212,6 +214,42 @@ const drift = (El: React.FC<{ frame: number }>, [a, b]: Range): React.FC<{ frame
     </AbsoluteFill>
   );
   return D;
+};
+
+/* ───────── Quad: four hosts (Ahu, Alicja, Kamilya, Alsu), short light-humor sketches ───────── */
+
+export type QuadCfg = {
+  lines: Line[];
+  end: number;
+  T: Palette;
+  bg: DotOrbitVariant;
+  music: string;
+  /** left to right; each host's photos come from public/quad/<host>/ */
+  order: readonly [QuadHost, QuadHost, QuadHost, QuadHost];
+  keys: Record<QuadHost, AvatarKey[]>;
+  /** silent nods of the listeners (frames) */
+  nods?: Partial<Record<QuadHost, number[]>>;
+  scenes: TalkScene[];
+  sfx: Sfx[];
+};
+
+/** The whole quad reel (no outro: withOutro adds TatarverseOutro in Root) */
+export const QuadReel: React.FC<{ cfg: QuadCfg }> = ({ cfg }) => {
+  const { lines, end, T, bg, music, order, keys, nods: n = {}, scenes, sfx } = cfg;
+  const scenesDef: SceneDef[] = React.useMemo(() => scenes.map(([range, El]) => ({ range, El: drift(El, range) })), [scenes]);
+  const slots: QuadSlot[] = React.useMemo(
+    () => order.map((h) => ({ keys: keys[h], words: [...wordsOf(lines, h), ...nods(n[h] ?? [])], dir: `quad/${h}`, fit: QUAD_FIT[h] })),
+    [lines, order, keys, n],
+  );
+  const turns: QuadTurn[] = React.useMemo(() => lines.map((l) => ({ from: l.from, who: order.indexOf(l.who as QuadHost) })), [lines, order]);
+  const Hosts: React.FC<{ frame: number }> = React.useCallback(({ frame }) => <TatQuad frame={frame} turns={turns} slots={slots} />, [turns, slots]);
+  return (
+    <Ctx.Provider value={T}>
+      <AbsoluteFill style={{ background: "#fff", fontFamily: PARAGRAPH.fontFamily, color: INK }}>
+        <ReelShell scenes={scenesDef} headlines={[]} vo={voOf(lines)} sfx={sfx} duration={end} music={music} musicLevel={[0.045, 0.11]} overlay={Hosts} bg={<DotOrbitBg variant={bg} />} />
+      </AbsoluteFill>
+    </Ctx.Provider>
+  );
 };
 
 /** The whole reel (no outro: withOutro adds TatarverseOutro in Root) */

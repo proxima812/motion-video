@@ -1,5 +1,5 @@
 # Voice for the @the_tatarverse "talk" series (voice message + dialog of Ahu and Alicja).
-# video/N-*/субтитры.txt: one line per reply, "who: [tags] text", who = ahu | alicja | man.
+# video/N-*/субтитры.txt: one line per reply, "who: [tags] text", who = ahu | alicja | man | kamilya | alsu (quad series).
 #   python3 scripts/talk.py N gen [3 5]   - Eleven v4 with timestamps -> public/vN/vo/raw/l<i>.mp3 + .json (all lines or the listed)
 #   python3 scripts/talk.py N build [tempo] - trim silence (+ tempo), "voice message" filter on man lines,
 #                                            lay lines out with dialog gaps -> src/vN/lines.ts (LINES: from, dur, who, words)
@@ -7,9 +7,12 @@
 import base64, glob, json, os, re, subprocess, sys, urllib.request
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 N, cmd = sys.argv[1], sys.argv[2]
-VOICE = {"ahu": "xyqF3vGMQlPk3e7yA4DI", "alicja": "iCzRDxXsrROcDYzWimM9", "man": "9AjtU6o19uipv7QL8dLL"}
+VOICE = {"ahu": "xyqF3vGMQlPk3e7yA4DI", "alicja": "iCzRDxXsrROcDYzWimM9", "man": "9AjtU6o19uipv7QL8dLL",
+         "kamilya": "Phc1KhVrCoW3CD0K7bUS", "alsu": "YjESejviApN7SHrbfnA2"}
+# stability per voice (similarity_boost 0.75 for all): the man calmer, Alsu the liveliest
+STAB = {"man": 0.6, "alsu": 0.4}
 folder = [d for d in glob.glob(os.path.join(root, f"video/{N}-*")) if os.path.isdir(d)][0]
-rows = [l.strip() for l in open(os.path.join(folder, "субтитры.txt")) if l.strip()]
+rows = [l.strip() for l in open(os.path.join(folder, "субтитры.txt"), encoding="utf-8") if l.strip()]
 lines, gaps = [], {}
 for r in rows:
     who, text = r.split(":", 1)
@@ -24,7 +27,7 @@ if cmd == "gen":
     for i, (who, text) in enumerate(lines, 1):
         if only and str(i) not in only: continue
         # the man is calmer and steadier; the hosts a bit livelier
-        st = 0.6 if who == "man" else 0.5
+        st = STAB.get(who, 0.5)
         body = json.dumps({"text": text, "model_id": "eleven_v4", "language_code": "ru",
                            "voice_settings": {"stability": st, "similarity_boost": 0.75}}).encode()
         req = urllib.request.Request(f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE[who]}/with-timestamps?output_format=mp3_44100_192",
@@ -36,7 +39,7 @@ if cmd == "gen":
 
 if cmd == "build":
     tempo = sys.argv[3] if len(sys.argv) > 3 else "1.0"
-    subprocess.run(["python3", os.path.join(root, "scripts/trim-vo.py"), N, tempo], check=True, cwd=root)
+    subprocess.run([sys.executable, os.path.join(root, "scripts/trim-vo.py"), N, tempo], check=True, cwd=root)
     for i, (who, _) in enumerate(lines, 1):
         if who != "man": continue
         # a phone voice message: no lows, softened highs, a little room; zero-latency filters keep the timings
