@@ -5,6 +5,7 @@
 #                                            lay lines out with dialog gaps -> src/vN/lines.ts (LINES: from, dur, who, words)
 # Gaps: 14 frames between replies, 24 around the voice message; a line "gap: <frames>" in субтитры.txt overrides the next gap.
 import base64, glob, json, os, re, subprocess, sys, urllib.request
+sys.stdout.reconfigure(encoding="utf-8")  # Windows console: printing "ә" must not crash
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 N, cmd = sys.argv[1], sys.argv[2]
 VOICE = {"ahu": "xyqF3vGMQlPk3e7yA4DI", "alicja": "iCzRDxXsrROcDYzWimM9", "man": "9AjtU6o19uipv7QL8dLL",
