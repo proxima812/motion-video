@@ -111,6 +111,12 @@ import { Video56, F as F56 } from "./v56/Video56";
 import { Video57, F as F57 } from "./v57/Video57";
 import { Video58, F as F58 } from "./v58/Video58";
 import { Video59, F as F59 } from "./v59/Video59";
+import { Video66, F as F66 } from "./v66/Video66";
+import { Cover66 } from "./v66/Cover66";
+import { Video67, F as F67 } from "./v67/Video67";
+import { Cover67 } from "./v67/Cover67";
+import { Video68, F as F68 } from "./v68/Video68";
+import { Cover68 } from "./v68/Cover68";
 import { Video52 } from "./v52/Video52";
 import { F as F52 } from "./v52/timeline";
 import { Video53 } from "./v53/Video53";
@@ -181,6 +187,9 @@ const V56 = withOutro(Video56, F56.duration, "ru", "tatarverse");
 const V57 = withOutro(Video57, F57.duration, "ru", "tatarverse");
 const V58 = withOutro(Video58, F58.duration, "ru", "tatarverse");
 const V59 = withOutro(Video59, F59.duration, "ru", "tatarverse");
+const V66 = withOutro(Video66, F66.duration, "ru", "tatarverse");
+const V67 = withOutro(Video67, F67.duration, "ru", "tatarverse");
+const V68 = withOutro(Video68, F68.duration, "ru", "tatarverse");
 const VTest = withOutro(VideoTest, TEST_FRAMES, "ru", "tatarverse");
 
 export const Root: React.FC = () => (
@@ -250,6 +259,12 @@ export const Root: React.FC = () => (
     <Composition id="V57" component={V57} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F57.duration)} />
     <Composition id="V58" component={V58} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F58.duration)} />
     <Composition id="V59" component={V59} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F59.duration)} />
+    <Composition id="V66" component={V66} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F66.duration)} />
+    <Still id="Cover66" component={Cover66} width={1080} height={1920} />
+    <Composition id="V67" component={V67} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F67.duration)} />
+    <Still id="Cover67" component={Cover67} width={1080} height={1920} />
+    <Composition id="V68" component={V68} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F68.duration)} />
+    <Still id="Cover68" component={Cover68} width={1080} height={1920} />
     <Composition id="V53" component={Video53} width={1080} height={1920} fps={60} durationInFrames={F53.duration} />
     <Composition id="VTest" component={VTest} width={1080} height={1920} fps={60} durationInFrames={outroTotal(TEST_FRAMES)} />
     <Composition id="Playground" component={Playground} schema={playgroundSchema} calculateMetadata={playgroundMetadata} width={1080} height={1920} fps={60} durationInFrames={300} defaultProps={{
