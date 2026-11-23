@@ -13,7 +13,7 @@ out/
 # reels themselves and media (only engine, components and rules are in git)
 video/
 public/
-tat_avatar/
+avatars/ahu/
 SFX/
 *.mp4
 *.mov
