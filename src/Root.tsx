@@ -2,6 +2,7 @@ import React from "react";
 import { Composition, Still } from "remotion";
 import { Cover } from "./cover/Cover";
 import { WaveLayer } from "./cover/WaveLayer";
+import { Badge } from "./cover/Badge";
 import { FableReel } from "./fable/FableReel";
 import { F } from "./fable/timeline";
 import { Outro, OUTRO_FRAMES, outroTotal, withOutro } from "./outro/Outro";
@@ -336,6 +337,7 @@ export const Root: React.FC = () => (
     <Composition id="AvatarShowcase" component={AvatarShowcase} width={1080} height={1920} fps={60} durationInFrames={AVATAR_SHOWCASE_FRAMES} />
     <Composition id="PlaygroundAll" component={PlaygroundAll} width={1080} height={1920} fps={60} durationInFrames={PLAYGROUND_ALL_FRAMES} />
     <Composition id="Outro" component={Outro} width={1080} height={1920} fps={60} durationInFrames={OUTRO_FRAMES} defaultProps={{ lang: "ru" as const }} />
+    <Still id="Badge" component={Badge} width={1400} height={360} defaultProps={{ variant: "plate-1-violet", text: "Пришла на чай ушла с сумками" }} />
     <Still id="WaveLayer" component={WaveLayer} width={1080} height={1920} defaultProps={{}} />
     <Still id="Cover" component={Cover} width={1080} height={1920} defaultProps={{ title: "Заголовок", description: "Короткое описание темы" }} />
     <Still id="Cover20" component={Cover20} width={1080} height={1920} />
