@@ -1,0 +1,15 @@
+pensive.png <- girl_young_avatar/01_задумчивая.png
+dreamy.png <- girl_young_avatar/02_мечтательная.png
+displeased.png <- girl_young_avatar/03_недовольная.png
+surprised.png <- girl_young_avatar/04_удивление.png
+waving.png <- girl_young_avatar/05_радостно_машет.png
+inspired.png <- girl_young_avatar/06_вдохновение.png
+explaining.png <- girl_young_avatar/06_объясняет.png
+delighted.png <- girl_young_avatar/07_восторг.png
+skeptical.png <- girl_young_avatar/07_скепсис.png
+laughing.png <- girl_young_avatar/10_смех.png
+puzzled.png <- girl_young_avatar/11_недоумение.png
+disappointed.png <- girl_young_avatar/12_разочарование.png
+smile-up.png <- girl_young_avatar/14_улыбка_вверх.png
+thinking.png <- girl_young_avatar/8_размышляет.png
+soft-smile.png <- girl_young_avatar/9_сдержанная_улыбка.png
