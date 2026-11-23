@@ -80,4 +80,4 @@ if cmd == "build":
         L.append(f'  {{ src: "v{N}/vo/l{i}.mp3", who: "{who}", from: {f0}, dur: {dur}, words: [{ws}] }},')
     L += ["];", "", f"export const END = {end};", ""]
     os.makedirs(os.path.join(root, f"src/v{N}"), exist_ok=True)
-    open(os.path.join(root, f"src/v{N}/lines.ts"), "w").write("\n".join(L))
+    open(os.path.join(root, f"src/v{N}/lines.ts"), "w", encoding="utf-8").write("\n".join(L))
