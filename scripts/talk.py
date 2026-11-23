@@ -22,7 +22,7 @@ vo = os.path.join(root, f"public/v{N}/vo")
 os.makedirs(f"{vo}/raw", exist_ok=True)
 
 if cmd == "gen":
-    env = dict(l.strip().split("=", 1) for l in open(os.path.join(root, ".env")) if "=" in l)
+    env = dict(l.strip().split("=", 1) for l in open(os.path.join(root, ".env"), encoding="utf-8") if "=" in l)
     only = set(sys.argv[3:])
     for i, (who, text) in enumerate(lines, 1):
         if only and str(i) not in only: continue
@@ -34,7 +34,7 @@ if cmd == "gen":
                                      body, {"xi-api-key": env["ELEVENLABS_KEY"], "Content-Type": "application/json"})
         r = json.load(urllib.request.urlopen(req, timeout=180))
         open(f"{vo}/raw/l{i}.mp3", "wb").write(base64.b64decode(r["audio_base64"]))
-        json.dump(r["normalized_alignment"] or r["alignment"], open(f"{vo}/raw/l{i}.json", "w"), ensure_ascii=False)
+        json.dump(r["normalized_alignment"] or r["alignment"], open(f"{vo}/raw/l{i}.json", "w", encoding="utf-8"), ensure_ascii=False)
         print(f"l{i} {who} ok")
 
 if cmd == "build":
@@ -52,7 +52,7 @@ if cmd == "build":
     for i, (who, _) in enumerate(lines, 1):
         d = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", f"{vo}/l{i}.mp3"]))
         dur = round(d * 60)
-        a = json.load(open(f"{vo}/l{i}.json"))
+        a = json.load(open(f"{vo}/l{i}.json", encoding="utf-8"))
         cur, t, inside, words = "", 0.0, False, []
         for c, s in list(zip(a["characters"], a["character_start_times_seconds"])) + [(" ", 0)]:
             if c == "[": inside = True

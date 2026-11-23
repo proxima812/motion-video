@@ -6,7 +6,7 @@ import { K, ReelShell, type Range, type SceneDef, type Sfx, type Vo } from "./re
 import { TatDuo, type DuoHost, type Turn } from "./TatDuo";
 import { TatQuad, type QuadSlot, type QuadTurn } from "./TatQuad";
 import { QUAD_FIT, type QuadHost } from "./quadFit";
-import type { AvatarKey, Emotion, SpokenWord } from "./TatAvatar";
+import { TatAvatar, type AvatarKey, type Emotion, type SpokenWord, type StanceKey } from "./TatAvatar";
 import { DotOrbitBg, type DotOrbitVariant } from "./DotOrbitBg";
 import { HEADING, INK, NUMBER, PARAGRAPH, SURFACE } from "./design";
 import { Mark, Strike } from "../catalog/own/text";
@@ -214,6 +214,43 @@ const drift = (El: React.FC<{ frame: number }>, [a, b]: Range): React.FC<{ frame
     </AbsoluteFill>
   );
   return D;
+};
+
+/* ───────── Solo: one host per reel (Ahu / Alicja / Kamilya / Alsu in turns), short light-humor monologue ───────── */
+
+export type SoloCfg = {
+  lines: Line[];
+  end: number;
+  T: Palette;
+  bg: DotOrbitVariant;
+  music: string;
+  /** the host; her photos come from public/quad/<host>/ */
+  host: QuadHost;
+  keys: AvatarKey[];
+  /** optional side changes (TatAvatar stances): right / left / center */
+  stances?: StanceKey[];
+  /** extra silent nods (frames) */
+  nods?: number[];
+  scenes: TalkScene[];
+  sfx: Sfx[];
+};
+
+/** The whole solo reel (no outro: withOutro adds TatarverseOutro in Root). Full-size TatAvatar at the bottom: keep scenes above ~1300 px. */
+export const SoloReel: React.FC<{ cfg: SoloCfg }> = ({ cfg }) => {
+  const { lines, end, T, bg, music, host, keys, stances, nods: n = [], scenes, sfx } = cfg;
+  const scenesDef: SceneDef[] = React.useMemo(() => scenes.map(([range, El]) => ({ range, El: drift(El, range) })), [scenes]);
+  const words = React.useMemo(() => [...lines.flatMap((l) => l.words), ...nods(n)], [lines, n]);
+  const Host: React.FC<{ frame: number }> = React.useCallback(
+    ({ frame }) => <TatAvatar frame={frame} keys={keys} words={words} stances={stances} dir={`quad/${host}`} fit={QUAD_FIT[host]} />,
+    [keys, words, stances, host],
+  );
+  return (
+    <Ctx.Provider value={T}>
+      <AbsoluteFill style={{ background: "#fff", fontFamily: PARAGRAPH.fontFamily, color: INK }}>
+        <ReelShell scenes={scenesDef} headlines={[]} vo={voOf(lines)} sfx={sfx} duration={end} music={music} musicLevel={[0.045, 0.11]} overlay={Host} bg={<DotOrbitBg variant={bg} />} />
+      </AbsoluteFill>
+    </Ctx.Provider>
+  );
 };
 
 /* ───────── Quad: four hosts (Ahu, Alicja, Kamilya, Alsu), short light-humor sketches ───────── */
