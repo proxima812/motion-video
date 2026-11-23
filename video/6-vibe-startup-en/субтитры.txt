@@ -1,0 +1,5 @@
+[confident] I asked AI to build me a startup in ten seconds. And it actually did it!
+Beautiful UI, perfect architecture, Stripe connected. All that's left is testing.
+[short pause] I hit sign up. Error five hundred. Okay, let's ask it to fix that.
+[confident] The AI rebuilt the whole app. Zero files changed. Eight hundred forty-seven deleted.
+[short pause] Now the app is production ready.

@@ -1,0 +1,5 @@
+Fable 5.2 is here.
+Ask it to fix a typo... it rewrites your app. In Rust.
+Think Harder mode. Forty minutes later: hmm.
+Wrong? You're absolutely right!
+Fable 5.2. Point one better.

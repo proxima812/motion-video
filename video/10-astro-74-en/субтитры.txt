@@ -1,0 +1,7 @@
+[serious] Most people don't even realize where their Astro build time actually goes.
+[measured] Astro seven point four adds a timings flag. astro build timings breaks your build down by phase: plugins, Markdown, page rendering, images.
+[serious] In the blog starter, moving fetches into Promise dot all cut page generation from two point one seconds to one point one. [short pause] Nearly half.
+[measured] Next. Experimental parallel prerender renders static pages in worker threads, on every core but one.
+[measured] Image services can now be split: one for build, one for runtime. And Cloudflare now handles images on prerendered pages.
+[serious] Also: a not found handler for custom entrypoints, font validation, and a custom redirect page.
+[serious] And before you upgrade: you need Node twenty-two point twenty-two. Update Node first, then Astro.

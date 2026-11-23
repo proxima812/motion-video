@@ -1,0 +1,4 @@
+[confident] My startup is worth a billion dollars. Let me show you how I did it.
+First, I made a regular ChatGPT chat. Then I added a pretty interface and an animated logo.
+Called it proprietary AI infrastructure, and raised forty million dollars.
+[short pause] We don't have any users yet. [short pause] But our API bill is four dollars and eighty-two cents.

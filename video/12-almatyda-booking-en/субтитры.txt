@@ -1,0 +1,7 @@
+[serious] Nobody talks about this, but online booking can work without a single database.
+[measured] I built booking for the Almaty Da website. Rooms, dates and prices come from the Apart X API.
+[measured] The calendar and rates come over a WebSocket, and bookings are created through the REST API, version three.
+[serious] The server calculates the price from the site's rate plan. It doesn't trust the browser.
+[measured] Payment goes through the Plexy API. The payment link lives for thirty minutes, and at first the money is only authorized.
+[serious] Plexy sends a webhook, and the site checks the dates again. Free: booking and capture. Taken: the authorization is cancelled.
+[measured] Apart X and Plexy hold the state. The site has zero databases and thirty-four tests.
