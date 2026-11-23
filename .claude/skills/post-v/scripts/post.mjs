@@ -292,7 +292,7 @@ try {
 
   await click('Запланировать', {within: true});
   await waitText('Видео Reels запланировано', 300000);
-  await sleep(800);
+  await sleep(3000); // the progress ring fades out after the text shows up
   await jevStep('done');
   await click('Готово', {within: true}).catch(() => {});
   const rec = {video: +N, slug: dir, scheduled: `${iso(slot)}T${HH}:${MM}`, account: ACCOUNT, ...(PART ? {part: +PART} : {}), cover: path.basename(f.cover), caption: path.basename(f.caption), ai_label: false, auto_captions: true, place: PLACE, at: new Date().toISOString().slice(0, 16)};
