@@ -17,27 +17,27 @@ import { ShaderWarpCream } from "@/components/remocn/shader-warp-cream";
 // sparkles, aurora text) plus topic SVG drawn by the meaning of each reel. Render: bun scripts/cover-lab.mjs.
 
 const C = ["latin", "cyrillic"] as ("latin" | "cyrillic")[];
-const UNB = unbounded("normal", { weights: ["500", "700", "900"], subsets: C }).fontFamily;
-const INTER = inter("normal", { weights: ["400", "500", "700", "800"], subsets: C }).fontFamily;
-const HAND = caveat("normal", { weights: ["700"], subsets: C }).fontFamily;
-const MONT = montserrat("normal", { weights: ["800", "900"], subsets: C }).fontFamily;
-const SERIF = prata("normal", { subsets: C }).fontFamily;
-const RUSSO = russo("normal", { subsets: C }).fontFamily;
-const MONO = rubikMono("normal", { subsets: C }).fontFamily;
+export const UNB = unbounded("normal", { weights: ["500", "700", "900"], subsets: C }).fontFamily;
+export const INTER = inter("normal", { weights: ["400", "500", "700", "800"], subsets: C }).fontFamily;
+export const HAND = caveat("normal", { weights: ["700"], subsets: C }).fontFamily;
+export const MONT = montserrat("normal", { weights: ["800", "900"], subsets: C }).fontFamily;
+export const SERIF = prata("normal", { subsets: C }).fontFamily;
+export const RUSSO = russo("normal", { subsets: C }).fontFamily;
+export const MONO = rubikMono("normal", { subsets: C }).fontFamily;
 
 export const SAFE = { l: 35, t: 335, w: 1010, h: 1250 };
 
 /* ───────── shared pieces ───────── */
 
-type Host = "ahu" | "alicja" | "kamilya" | "alsu";
-const Avatar: React.FC<{ host: Host; pose: string; h?: number; x?: number; mirror?: boolean; sticker?: string; glow?: string }> = ({ host, pose, h = 900, x = 540, mirror, sticker, glow }) => {
+export type Host = "ahu" | "alicja" | "kamilya" | "alsu";
+export const Avatar: React.FC<{ host: Host; pose: string; h?: number; x?: number; mirror?: boolean; sticker?: string; glow?: string }> = ({ host, pose, h = 900, x = 540, mirror, sticker, glow }) => {
   const o = 6;
   const outline = sticker ? [`${o}px 0`, `-${o}px 0`, `0 ${o}px`, `0 -${o}px`, `${o}px ${o}px`, `-${o}px -${o}px`, `${o}px -${o}px`, `-${o}px ${o}px`].map((d) => `drop-shadow(${d} 0 ${sticker})`).join(" ") : "";
   const shadow = glow ? `drop-shadow(0 0 40px ${glow})` : "drop-shadow(0 30px 40px rgba(20,10,40,0.18))";
   return <Img src={staticFile(`quad/${host}/${pose}.png`)} style={{ position: "absolute", bottom: -50, left: x, height: h, width: "auto", transform: `translateX(-50%)${mirror ? " scaleX(-1)" : ""}`, filter: `${outline} ${shadow}`.trim(), zIndex: 5 }} />;
 };
 
-const Logo: React.FC<{ y?: number; size?: number; color?: string }> = ({ y = SAFE.t + 10, size = 64, color }) => (
+export const Logo: React.FC<{ y?: number; size?: number; color?: string }> = ({ y = SAFE.t + 10, size = 64, color }) => (
   <div style={{ position: "absolute", top: y, left: 540 - size / 2, width: size, height: size, zIndex: 6 }}>
     {color ? (
       <div style={{ width: size, height: size, background: color, WebkitMaskImage: `url(${staticFile("tatarverse/logo.svg")})`, WebkitMaskSize: "contain", WebkitMaskRepeat: "no-repeat", WebkitMaskPosition: "center" }} />
@@ -49,7 +49,7 @@ const Logo: React.FC<{ y?: number; size?: number; color?: string }> = ({ y = SAF
 
 const STAR = "M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z";
 /** Sparkles: 4-point stars */
-const Sparkles: React.FC<{ items: [number, number, number][]; color: string; opacity?: number }> = ({ items, color, opacity = 1 }) => (
+export const Sparkles: React.FC<{ items: [number, number, number][]; color: string; opacity?: number }> = ({ items, color, opacity = 1 }) => (
   <>
     {items.map(([x, y, s], i) => (
       <svg key={i} viewBox="0 0 24 24" width={s} height={s} style={{ position: "absolute", left: x - s / 2, top: y - s / 2, opacity, zIndex: 4 }}>
@@ -60,17 +60,17 @@ const Sparkles: React.FC<{ items: [number, number, number][]; color: string; opa
 );
 
 /** Grid pattern faded by a radial mask */
-const GridPattern: React.FC<{ color: string; size?: number; at?: string }> = ({ color, size = 72, at = "50% 35%" }) => (
+export const GridPattern: React.FC<{ color: string; size?: number; at?: string }> = ({ color, size = 72, at = "50% 35%" }) => (
   <AbsoluteFill style={{ backgroundImage: `linear-gradient(${color} 1.5px, transparent 1.5px), linear-gradient(90deg, ${color} 1.5px, transparent 1.5px)`, backgroundSize: `${size}px ${size}px`, backgroundPosition: "center", maskImage: `radial-gradient(70% 45% at ${at}, #000 30%, transparent 100%)`, WebkitMaskImage: `radial-gradient(70% 45% at ${at}, #000 30%, transparent 100%)` }} />
 );
 
 /** Dot pattern */
-const DotPattern: React.FC<{ color: string; size?: number; r?: number; mask?: boolean }> = ({ color, size = 36, r = 2.5, mask = true }) => (
+export const DotPattern: React.FC<{ color: string; size?: number; r?: number; mask?: boolean }> = ({ color, size = 36, r = 2.5, mask = true }) => (
   <AbsoluteFill style={{ backgroundImage: `radial-gradient(${color} ${r}px, transparent ${r + 0.5}px)`, backgroundSize: `${size}px ${size}px`, ...(mask ? { maskImage: "radial-gradient(75% 55% at 50% 40%, #000 35%, transparent 100%)", WebkitMaskImage: "radial-gradient(75% 55% at 50% 40%, #000 35%, transparent 100%)" } : null) }} />
 );
 
 /** Ripple: concentric circles fading out */
-const Ripple: React.FC<{ x: number; y: number; color: string; n?: number; step?: number; base?: number }> = ({ x, y, color, n = 7, step = 130, base = 220 }) => (
+export const Ripple: React.FC<{ x: number; y: number; color: string; n?: number; step?: number; base?: number }> = ({ x, y, color, n = 7, step = 130, base = 220 }) => (
   <>
     {Array.from({ length: n }, (_, i) => {
       const r = base + i * step;
@@ -80,7 +80,7 @@ const Ripple: React.FC<{ x: number; y: number; color: string; n?: number; step?:
 );
 
 /** Meteors: thin diagonal streaks with a bright head */
-const Meteors: React.FC<{ items: [number, number, number][]; color: string }> = ({ items, color }) => (
+export const Meteors: React.FC<{ items: [number, number, number][]; color: string }> = ({ items, color }) => (
   <>
     {items.map(([x, y, len], i) => (
       <div key={i} style={{ position: "absolute", left: x, top: y, width: len, height: 2, transform: "rotate(215deg)", transformOrigin: "0 0", background: `linear-gradient(90deg, ${color}, transparent)`, boxShadow: `0 0 10px ${color}` }}>
@@ -91,20 +91,20 @@ const Meteors: React.FC<{ items: [number, number, number][]; color: string }> = 
 );
 
 /** Retro grid: neon floor in perspective */
-const RetroGrid: React.FC<{ color: string; top?: number }> = ({ color, top = 980 }) => (
+export const RetroGrid: React.FC<{ color: string; top?: number }> = ({ color, top = 980 }) => (
   <div style={{ position: "absolute", left: -600, right: -600, top, bottom: -200, perspective: 420, overflow: "hidden" }}>
     <div style={{ position: "absolute", inset: 0, transform: "rotateX(62deg)", transformOrigin: "50% 0", backgroundImage: `linear-gradient(${color} 2px, transparent 2px), linear-gradient(90deg, ${color} 2px, transparent 2px)`, backgroundSize: "90px 90px", maskImage: "linear-gradient(transparent, #000 25%)", WebkitMaskImage: "linear-gradient(transparent, #000 25%)" }} />
   </div>
 );
 
 /** Card with a border beam (a bright arc running along the rim) */
-const BeamCard: React.FC<{ style?: React.CSSProperties; beam: [string, string]; children: React.ReactNode }> = ({ style, beam, children }) => (
+export const BeamCard: React.FC<{ style?: React.CSSProperties; beam: [string, string]; children: React.ReactNode }> = ({ style, beam, children }) => (
   <div style={{ position: "relative", borderRadius: 44, padding: 3, background: `conic-gradient(from 200deg, transparent 0 55%, ${beam[0]} 70%, ${beam[1]} 80%, transparent 92%)`, boxShadow: "0 40px 80px -30px rgba(60,20,90,0.45)", ...style }}>
     <div style={{ borderRadius: 41, background: "rgba(255,255,255,0.62)", backdropFilter: "blur(26px) saturate(1.6)", WebkitBackdropFilter: "blur(26px) saturate(1.6)", border: "1px solid rgba(255,255,255,0.8)", padding: "44px 48px" }}>{children}</div>
   </div>
 );
 
-const grad = (g: string): React.CSSProperties => ({ backgroundImage: g, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" });
+export const grad = (g: string): React.CSSProperties => ({ backgroundImage: g, WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" });
 
 /* ───────── 1. Timer · V60 «Я на минутку» · Ahu ───────── */
 const C1: React.FC = () => (
@@ -126,7 +126,7 @@ const C1: React.FC = () => (
 );
 
 /* ───────── 2. Sticker pop · V61 «Чак-чак в аэрогриле» · Alicja ───────── */
-const Honey: React.FC<{ x: number; y: number; s: number; r?: number }> = ({ x, y, s, r = 0 }) => (
+export const Honey: React.FC<{ x: number; y: number; s: number; r?: number }> = ({ x, y, s, r = 0 }) => (
   <svg viewBox="0 0 40 52" width={s} height={s * 1.3} style={{ position: "absolute", left: x, top: y, transform: `rotate(${r}deg)` }}>
     <path d="M20 2C20 2 4 24 4 34a16 16 0 0 0 32 0C36 24 20 2 20 2Z" fill="#F2A900" stroke="#1D1A14" strokeWidth="3" />
     <ellipse cx="13" cy="33" rx="3.5" ry="6" fill="#FFE07A" />
