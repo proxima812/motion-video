@@ -111,6 +111,12 @@ import { Video56, F as F56 } from "./v56/Video56";
 import { Video57, F as F57 } from "./v57/Video57";
 import { Video58, F as F58 } from "./v58/Video58";
 import { Video59, F as F59 } from "./v59/Video59";
+import { Video72, F as F72 } from "./v72/Video72";
+import { Cover72 } from "./v72/Cover72";
+import { Video73, F as F73 } from "./v73/Video73";
+import { Cover73 } from "./v73/Cover73";
+import { Video74, F as F74 } from "./v74/Video74";
+import { Cover74 } from "./v74/Cover74";
 import { Video63, F as F63 } from "./v63/Video63";
 import { Cover63 } from "./v63/Cover63";
 import { Video64, F as F64 } from "./v64/Video64";
@@ -199,6 +205,9 @@ const V56 = withOutro(Video56, F56.duration, "ru", "tatarverse");
 const V57 = withOutro(Video57, F57.duration, "ru", "tatarverse");
 const V58 = withOutro(Video58, F58.duration, "ru", "tatarverse");
 const V59 = withOutro(Video59, F59.duration, "ru", "tatarverse");
+const V72 = withOutro(Video72, F72.duration, "ru", "tatarverse");
+const V73 = withOutro(Video73, F73.duration, "ru", "tatarverse");
+const V74 = withOutro(Video74, F74.duration, "ru", "tatarverse");
 const V63 = withOutro(Video63, F63.duration, "ru", "tatarverse");
 const V64 = withOutro(Video64, F64.duration, "ru", "tatarverse");
 const V65 = withOutro(Video65, F65.duration, "ru", "tatarverse");
@@ -277,6 +286,12 @@ export const Root: React.FC = () => (
     <Composition id="V57" component={V57} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F57.duration)} />
     <Composition id="V58" component={V58} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F58.duration)} />
     <Composition id="V59" component={V59} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F59.duration)} />
+    <Composition id="V72" component={V72} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F72.duration)} />
+    <Still id="Cover72" component={Cover72} width={1080} height={1920} />
+    <Composition id="V73" component={V73} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F73.duration)} />
+    <Still id="Cover73" component={Cover73} width={1080} height={1920} />
+    <Composition id="V74" component={V74} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F74.duration)} />
+    <Still id="Cover74" component={Cover74} width={1080} height={1920} />
     <Composition id="V63" component={V63} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F63.duration)} />
     <Still id="Cover63" component={Cover63} width={1080} height={1920} />
     <Composition id="V64" component={V64} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F64.duration)} />
