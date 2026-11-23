@@ -8,7 +8,8 @@ export async function jev(png, questions) {
   const key = (env.match(/^TYPESAFE_KEY=(.*)$/m) || [])[1]?.trim().replace(/^["']|["']$/g, '');
   if (!key) throw new Error('нет TYPESAFE_KEY в .env');
   // Jev принимает картинки до ~1024px: уменьшаем копию через sips
-  const small = '/tmp/postv/jev.png'; execFileSync('sips', ['-Z', '1024', png, '--out', small], {stdio: 'ignore'});
+  const small = '/tmp/postv/jev.png'; if (process.platform === 'win32') execFileSync('python', ['-c', 'import sys; from PIL import Image; im=Image.open(sys.argv[1]); im.thumbnail((1024,1024)); im.save(sys.argv[2])', png, small], {stdio: 'ignore'});
+  else execFileSync('sips', ['-Z', '1024', png, '--out', small], {stdio: 'ignore'});
   const body = {model: 'jev-preview', state: 'screen', questions,
     assets: {screen: {type: 'image', format: 'png', data_base64: fs.readFileSync(small).toString('base64')}}};
   const r = await fetch('https://api.typesafe.ai/v1/systemone', {method: 'POST',

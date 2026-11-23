@@ -56,6 +56,8 @@ const p = pages.find(x => x.url().includes('instagram.com')) || await b.newPage(
 await p.bringToFront();
 await p.goto(URL_SC, {waitUntil: 'networkidle2', timeout: 60000}).catch(() => {});
 await sleep(2000);
+// Windows: small physical window - give the page a tall viewport so the whole form fits in Jev screenshots
+if (process.platform === 'win32') await p.setViewport({width: 1400, height: 1500});
 if (/accounts\/login/.test(p.url())) { b.disconnect(); die('Instagram просит вход: запусти scripts/yandex-debug.sh --fresh (перенесет вход из основного браузера)', 4); }
 
 // клик по видимому элементу с точным текстом или по svg с aria-label
@@ -212,7 +214,7 @@ try {
 
   // дата: открыть выпадающий календарь, листать до нужного месяца, кликнуть день
   const dateBox = () => p.evaluate(() => { const e = [...document.querySelectorAll('[role=dialog] span,[role=dialog] div')].find(e => !e.children.length && /^(пн|вт|ср|чт|пт|сб|вс), \d+ [а-я]+\.? \d{4} г\.$/.test(e.innerText?.trim()));
-    if (!e) return null; const q = e.getBoundingClientRect(); return {t: e.innerText.trim(), x: q.x + q.width / 2, y: q.y + q.height / 2}; });
+    if (!e) return null; e.scrollIntoView({block: 'center'}); const q = e.getBoundingClientRect(); return {t: e.innerText.trim(), x: q.x + q.width / 2, y: q.y + q.height / 2}; });
   const db = await dateBox(); if (!db) throw new Error('нет поля даты');
   await p.mouse.click(db.x, db.y); await sleep(800);
   const want = `${MONTHS[slot.getMonth()]} ${slot.getFullYear()} г.`;
