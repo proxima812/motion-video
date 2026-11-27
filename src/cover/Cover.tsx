@@ -4,7 +4,6 @@ import { fontFamily } from "../ui/theme";
 import { FONT_PAIRS, type FontPair } from "../ui/coverFonts";
 import { GlassPlate } from "../catalog/own/glass";
 import { ShaderWarpCream } from "@/components/remocn/shader-warp-cream";
-import { getPreset, palette as presetPalette } from "../kit/presets";
 
 // variant 1 - accent words in solid orange
 // variant 2 - gradient title (orange -> pink)
@@ -13,7 +12,7 @@ import { getPreset, palette as presetPalette } from "../kit/presets";
 // variant 5 - marker highlight under accent words
 // accent2/accent3 - gradient stops (variants 2, 4); logos - staticFile paths shown in a row under the description
 // background "shader-warp-cream" - Remocn ShaderWarpCream behind everything instead of white; bgColors - its 3 colors (light -> accent), default violet
-export type CoverProps = { background?: "white" | "shader-warp-cream"; title: string; description: string; badge?: string; variant?: 1 | 2 | 3 | 4 | 5; accent?: string; accent2?: string; accent3?: string; logos?: string[]; avatar?: string; accentFont?: "inter" | "caveat"; fontPair?: FontPair; avatarHeight?: number; titleWeight?: number; handTilt?: number; descPlate?: string; titleSize?: number; accentWeight?: number; maxTitleLines?: number; topLogo?: string; bgColors?: string[]; avatar2?: string; preset?: string; palette?: string };
+export type CoverProps = { background?: "white" | "shader-warp-cream"; title: string; description: string; badge?: string; variant?: 1 | 2 | 3 | 4 | 5; accent?: string; accent2?: string; accent3?: string; logos?: string[]; avatar?: string; accentFont?: "inter" | "caveat"; fontPair?: FontPair; avatarHeight?: number; titleWeight?: number; handTilt?: number; descPlate?: string; titleSize?: number; accentWeight?: number; maxTitleLines?: number; topLogo?: string; bgColors?: string[]; avatar2?: string };
 // titleWeight - title font weight (default 800); handTilt - handwritten accent rotation in deg (default -3)
 // titleSize - title font size in px (default 124, smaller for long titles)
 // accentWeight - *star* words: same font and black color, only this weight (e.g. title 500 + accents 900)
@@ -21,15 +20,6 @@ export type CoverProps = { background?: "white" | "shader-warp-cream"; title: st
 // topLogo - staticFile path of a 60x60 logo above the title
 // descPlate - CSS background: description becomes white weight-500 text on a GlassPlate of this color
 // avatar2 - second host (two-host reels): avatar stands left looking right, avatar2 mirrored on the right looking left (9:16 only)
-// preset + palette - host preset (src/kit/presets): its cover look in that palette (cream shader colors, plate, logo, fonts) + its CoverDecor;
-//   explicit props win over the preset ones
-
-export const Cover: React.FC<CoverProps> = (props) => {
-  if (!props.preset || props.preset === "default") return <CoverBase {...props} />;
-  const P = getPreset(props.preset);
-  const pal = presetPalette(props.preset, props.palette);
-  return <CoverBase {...P.cover(pal)} {...props} decor={P.CoverDecor ? <P.CoverDecor pal={pal} /> : null} />;
-};
 
 const GRAD = (a: string, b: string, c: string) => `linear-gradient(100deg, ${a} 0%, ${b} 55%, ${c} 100%)`;
 
@@ -38,7 +28,7 @@ const rich = (text: string, accent: (s: string, i: number) => React.ReactNode) =
   text.split(/(\*[^*]+\*)/).map((p, i) => (p.startsWith("*") ? accent(p.slice(1, -1), i) : <React.Fragment key={i}>{p}</React.Fragment>));
 
 // Instagram cover: white background, short title + short description, avatar at the bottom.
-const CoverBase: React.FC<CoverProps & { decor?: React.ReactNode }> = ({ background = "white", title, description, badge, variant = 1, accent = "#FF6A13", accent2 = "#FF3D6E", accent3 = "#B44DFF", logos = [], avatar = "avatar.png", accentFont = "inter", fontPair, avatarHeight, titleWeight = 800, handTilt = -3, descPlate, titleSize = 124, accentWeight, maxTitleLines, topLogo, bgColors, avatar2, decor }) => {
+export const Cover: React.FC<CoverProps> = ({ background = "white", title, description, badge, variant = 1, accent = "#FF6A13", accent2 = "#FF3D6E", accent3 = "#B44DFF", logos = [], avatar = "avatar.png", accentFont = "inter", fontPair, avatarHeight, titleWeight = 800, handTilt = -3, descPlate, titleSize = 124, accentWeight, maxTitleLines, topLogo, bgColors, avatar2 }) => {
   // fontPair: accent words in a handwritten font, bigger and slightly tilted, the rest in the pair's body font.
   // accentFont "caveat" = legacy alias of fontPair "caveat-inter".
   // 16:9 still (CoverWide): text block on the left, avatar bottom right
@@ -73,7 +63,6 @@ const CoverBase: React.FC<CoverProps & { decor?: React.ReactNode }> = ({ backgro
           <ShaderWarpCream {...(bgColors ? { colors: bgColors } : null)} />
         </AbsoluteFill>
       )}
-      {decor}
       {variant === 4 && (
         <AbsoluteFill
           style={{

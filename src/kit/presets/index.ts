@@ -1,8 +1,9 @@
-// Host presets registry. A reel picks a preset and one palette of its family:
-//   const P = PRESETS.kamilya; const pal = palette("kamilya", "garnet");
-//   <ReelShell bg={<><P.Bg pal={pal} />{P.Decor && <P.Decor pal={pal} />}</>} transition={P.motion.scene} pad={P.motion.scenePad} ... />
-//   <TatAvatar dir={P.avatarDir!} fit={P.fit} ... />
-// Cover: --props='{"preset":"kamilya","palette":"garnet",...}'. Rules: .claude/skills/new-v/SKILL.md «Пресеты ведущих».
+// Host presets registry. A solo reel picks its host's preset and one palette of the family:
+//   const T = palette("kamilya", "garnet");
+//   <SoloReel cfg={{ host: "kamilya", look: true, T, ... }} />   (look = preset background, scene transitions, drift)
+// Scenes use the preset's Title / motion.enter / elements (PRESETS.kamilya, src/kit/presets/kamilya.tsx).
+// Cover: CoverN on one of the host's approved styles (PRESETS[host].covers) in the same palette.
+// Rules: .claude/skills/new-v/SKILL.md «Пресеты ведущих».
 import { AHU } from "./ahu";
 import { ALICJA } from "./alicja";
 import { ALSU } from "./alsu";
@@ -21,4 +22,4 @@ export const palette = (id: string | undefined, name?: string): Palette => {
   return p.palettes.find((x) => x.name === name) ?? p.palettes[0];
 };
 
-export type { HostId, HostPreset, Palette, PresetId, TitleProps } from "./types";
+export type { CoverStyle, HostPreset, Palette, PresetId, TitleProps } from "./types";

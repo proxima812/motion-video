@@ -10,6 +10,7 @@ import { TatAvatar, type AvatarKey, type Emotion, type SpokenWord, type StanceKe
 import { DotOrbitBg, type DotOrbitVariant } from "./DotOrbitBg";
 import { HEADING, INK, NUMBER, PARAGRAPH, SURFACE } from "./design";
 import { Mark, Strike } from "../catalog/own/text";
+import { PRESETS } from "./presets";
 
 const STRIKE_RED = K.red;
 
@@ -40,7 +41,7 @@ const wordsOf = (lines: Line[], who: Who): SpokenWord[] => lines.filter((l) => l
 const nods = (frames: number[]): SpokenWord[] => frames.map((f) => ({ f, w: "" }));
 
 /** Accent triple + light neutrals, one palette per reel (the cover takes it too) */
-export type Palette = { main: string; vivid: string; glow: string; pale: string; plate: string; gray: string; muted: string };
+export type Palette = { main: string; vivid: string; glow: string; pale: string; plate: string; gray: string; muted: string; /** loud background (host preset Alsu) */ bright?: string };
 const Ctx = React.createContext<Palette | null>(null);
 export const usePalette = () => {
   const c = React.useContext(Ctx);
@@ -207,9 +208,9 @@ export type TalkCfg = {
 };
 
 /** Slow push-in over each scene, so the frame never stands still */
-const drift = (El: React.FC<{ frame: number }>, [a, b]: Range): React.FC<{ frame: number }> => {
+const drift = (El: React.FC<{ frame: number }>, [a, b]: Range, amount = 0.035): React.FC<{ frame: number }> => {
   const D: React.FC<{ frame: number }> = ({ frame }) => (
-    <AbsoluteFill style={{ transformOrigin: "540px 720px", transform: `scale(${1 + 0.035 * ease.inOut(progress(frame, a, b))})` }}>
+    <AbsoluteFill style={{ transformOrigin: "540px 720px", transform: `scale(${1 + amount * ease.inOut(progress(frame, a, b))})` }}>
       <El frame={frame} />
     </AbsoluteFill>
   );
@@ -233,12 +234,15 @@ export type SoloCfg = {
   nods?: number[];
   scenes: TalkScene[];
   sfx: Sfx[];
+  /** host preset look (src/kit/presets): the preset background, scene transitions and drift instead of Dot Orbit */
+  look?: boolean;
 };
 
 /** The whole solo reel (no outro: withOutro adds TatarverseOutro in Root). Full-size TatAvatar at the bottom: keep scenes above ~1300 px. */
 export const SoloReel: React.FC<{ cfg: SoloCfg }> = ({ cfg }) => {
-  const { lines, end, T, bg, music, host, keys, stances, nods: n = [], scenes, sfx } = cfg;
-  const scenesDef: SceneDef[] = React.useMemo(() => scenes.map(([range, El]) => ({ range, El: drift(El, range) })), [scenes]);
+  const { lines, end, T, bg, music, host, keys, stances, nods: n = [], scenes, sfx, look } = cfg;
+  const P = look ? PRESETS[host] : null;
+  const scenesDef: SceneDef[] = React.useMemo(() => scenes.map(([range, El]) => ({ range, El: drift(El, range, P?.motion.drift) })), [scenes, P]);
   const words = React.useMemo(() => [...lines.flatMap((l) => l.words), ...nods(n)], [lines, n]);
   const Host: React.FC<{ frame: number }> = React.useCallback(
     ({ frame }) => <TatAvatar frame={frame} keys={keys} words={words} stances={stances} dir={`quad/${host}`} fit={QUAD_FIT[host]} />,
@@ -247,7 +251,8 @@ export const SoloReel: React.FC<{ cfg: SoloCfg }> = ({ cfg }) => {
   return (
     <Ctx.Provider value={T}>
       <AbsoluteFill style={{ background: "#fff", fontFamily: PARAGRAPH.fontFamily, color: INK }}>
-        <ReelShell scenes={scenesDef} headlines={[]} vo={voOf(lines)} sfx={sfx} duration={end} music={music} musicLevel={[0.045, 0.11]} overlay={Host} bg={<DotOrbitBg variant={bg} />} />
+        <ReelShell scenes={scenesDef} headlines={[]} vo={voOf(lines)} sfx={sfx} duration={end} music={music} musicLevel={[0.045, 0.11]} overlay={Host}
+          bg={P ? <P.Bg pal={{ name: "reel", ...T }} /> : <DotOrbitBg variant={bg} />} {...(P ? { transition: P.motion.scene, pad: P.motion.scenePad } : null)} />
       </AbsoluteFill>
     </Ctx.Provider>
   );

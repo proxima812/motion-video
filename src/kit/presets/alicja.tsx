@@ -1,39 +1,57 @@
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, useCurrentFrame } from "remotion";
 import { SPRING, ease, progress, springAt } from "../../stage/motion";
+import { DotPattern, HAND, Sparkles } from "../../cover/CoverLab";
 import { PARAGRAPH } from "../design";
-import { HOST_FIT } from "./fit";
-import { CreamWash, makeTitle, plate, tatarverseCover } from "./shared";
+import { QUAD_FIT } from "../quadFit";
+import { makeTitle, plate, tint } from "./shared";
 import type { HostPreset, Palette } from "./types";
 
-// Alicja - «подруга». White blouse with gold embroidery. Soft: things appear out of blur, words float up one by one,
-// light parallax. Elements: chat bubbles, quote cards, polaroids. Decor: a gold embroidery line that draws itself,
-// warm glow. Telling: a story / a case from life -> the feeling -> a soft conclusion.
+// Alicja - «подруга». White blouse with gold embroidery. Continues her bubble cover: pale background with soft
+// radial glows and a dot pattern, a handwritten kicker, giant speech bubbles pointing at her, hearts / sparkles.
+// Motion: soft - things come out of blur, words float up one by one, blurred crossfades.
+// Telling: a story / a case from life -> the feeling -> a soft conclusion.
 
 export const ALICJA_PALETTES: readonly Palette[] = [
-  { name: "honey", main: "#8A5A12", vivid: "#D49A2A", glow: "#F2D79B", pale: "#FCF5E6", plate: plate("#E0A93C", "#A86F14"), bg: ["#fdf7ec", "#f0cf8c", "#D49A2A"] },
-  { name: "terracotta", main: "#9A4527", vivid: "#D2693F", glow: "#F3C2A6", pale: "#FCF1EA", plate: plate("#E07A50", "#A9502E"), bg: ["#fdf3ee", "#efb397", "#D2693F"] },
-  { name: "caramel", main: "#7A4B2A", vivid: "#C07A45", glow: "#EBC9A8", pale: "#FAF2EA", plate: plate("#CC8A55", "#86532E"), bg: ["#fbf4ec", "#e2bb95", "#B8743F"] },
+  { name: "honey", main: "#8A5A12", vivid: "#D49A2A", glow: "#F2D79B", pale: "#FCF5E6", plate: plate("#E0A93C", "#A86F14"), gray: "#EFE6D6", muted: "#8F8270" },
+  { name: "terracotta", main: "#9A4527", vivid: "#D2693F", glow: "#F3C2A6", pale: "#FCF1EA", plate: plate("#E07A50", "#A9502E"), gray: "#EFE2DA", muted: "#8E7A70" },
+  { name: "caramel", main: "#7A4B2A", vivid: "#C07A45", glow: "#EBC9A8", pale: "#FAF2EA", plate: plate("#CC8A55", "#86532E"), gray: "#ECE2D8", muted: "#887868" },
 ];
 
 const SPR = SPRING.soft;
 
-/** Words float up out of blur one by one; key words glow softly */
+/** Words float up out of blur one by one; key words are handwritten (Caveat), bigger, slightly tilted */
 const Title = makeTitle(SPR, 5, (t, i, key, pal) => ({
   opacity: Math.min(1, t * 1.2),
-  transform: `translateY(${(1 - t) * 26}px)`,
+  transform: `translateY(${(1 - t) * 26}px)${key ? " rotate(-3deg)" : ""}`,
   filter: t < 0.98 ? `blur(${Math.max(0, (1 - t) * 12)}px)` : undefined,
-  textShadow: key ? `0 0 ${28 * Math.min(1, t)}px ${pal.glow}` : undefined,
+  ...(key ? { fontFamily: HAND, fontWeight: 700, fontSize: "1.32em", lineHeight: 0.8, letterSpacing: 0, color: pal.main } : null),
 }));
+
+/** Bubble-cover background: pale + two soft glows that breathe, a dot pattern, a few drifting sparkles */
+const Bg: React.FC<{ pal: Palette }> = ({ pal }) => {
+  const frame = useCurrentFrame();
+  const b = Math.sin(frame / 90);
+  return (
+    <AbsoluteFill style={{ background: `radial-gradient(70% 50% at ${20 + b * 4}% ${20 + b * 3}%, ${pal.glow}AA 0%, transparent 70%), radial-gradient(60% 45% at ${90 - b * 4}% 60%, ${pal.glow} 0%, transparent 70%), ${pal.pale}` }}>
+      <DotPattern color={tint(pal.main, 0.16)} size={34} />
+      {[[140, 900, 34, 0], [930, 1010, 46, 50], [880, 600, 28, 100]].map(([x, y, s, ph], i) => (
+        <AbsoluteFill key={i} style={{ transform: `translateY(${Math.sin((frame + ph) / 60) * 14}px)`, opacity: 0.45 + 0.25 * Math.sin((frame + ph) / 40) }}>
+          <Sparkles color={pal.vivid} items={[[x, y, s]]} />
+        </AbsoluteFill>
+      ))}
+    </AbsoluteFill>
+  );
+};
 
 export const ALICJA: HostPreset = {
   id: "alicja",
   name: "Alicja",
   role: "подруга",
-  voice: { id: "iCzRDxXsrROcDYzWimM9", name: "Alicja - Warm & Understanding", stability: 0.5, similarity: 0.75, tags: ["[warm]", "[soft]", "[light laugh]", "[sincere]"] },
-  avatarDir: "hosts/alicja",
-  fit: HOST_FIT.alicja,
   palettes: ALICJA_PALETTES,
+  covers: ["bubble"],
+  tags: ["[warm]", "[soft]", "[light laugh]", "[sincere]"],
+  fit: QUAD_FIT.alicja,
   motion: {
     spring: SPR,
     stagger: 5,
@@ -52,10 +70,10 @@ export const ALICJA: HostPreset = {
       return { opacity: t * (1 - out), filter: t < 1 || out > 0 ? `blur(${(1 - t) * 16 + out * 16}px)` : undefined, transform: `translateY(${(1 - t) * 24 - out * 18}px)` };
     },
     scenePad: [4, 14],
+    drift: 0.02,
   },
   Title,
-  Bg: ({ pal }) => <CreamWash pal={pal} from={900} strength={0.7} speed={0.45} />,
-  cover: (pal) => tatarverseCover(pal),
+  Bg,
   Showcase: ({ frame, pal }) => (
     <AbsoluteFill>
       <Title text="Alicja *подруга*" frame={frame} at={10} pal={pal} top={700} size={120} />

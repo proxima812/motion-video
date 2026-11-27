@@ -704,7 +704,7 @@ export const ENTRIES: Entry[] = [
       return {
         id: `preset-${id}-${pal.name}`,
         group: "shared",
-        use: `Пресет ${P.name} (${P.role}), палитра ${pal.name}: анимация, элементы, декор.`,
+        use: `Пресет ${P.name} (${P.role}), палитра ${pal.name}: фон, заголовок, анимация, элементы. Обложки: ${P.covers.join(", ")}.`,
         source: `kit/presets/${id}`,
         frames: 600,
         bg: "none",
@@ -712,7 +712,6 @@ export const ENTRIES: Entry[] = [
         render: (frame) => (
           <>
             <P.Bg pal={pal} />
-            {P.Decor && <P.Decor pal={pal} />}
             <P.Showcase frame={frame} pal={pal} />
           </>
         ),

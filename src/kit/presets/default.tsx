@@ -10,18 +10,18 @@ import type { HostPreset, Palette } from "./types";
 // Default preset = the shared kit exactly as before host presets: Dot Orbit background, soft blur-rise motion,
 // violet accent. For @const_proxima and any reel without a host preset. Old reels don't import presets at all.
 
-const VIOLET: Palette = { name: "violet", main: "#6E33CC", vivid: "#8B5CF6", glow: "#C9B5F5", pale: "#F3EEFD", plate: plate("#8B5CF6", "#6E33CC"), bg: ["#f4eeff", "#b48cf2", "#6E33CC"] };
+const VIOLET: Palette = { name: "violet", main: "#6E33CC", vivid: "#8B5CF6", glow: "#C9B5F5", pale: "#F3EEFD", plate: plate("#8B5CF6", "#6E33CC"), gray: "#E6E1EF", muted: "#7D7590" };
 
-const Title = makeTitle(SPRING.smooth, 3, (t) => ({ opacity: Math.min(1, t * 1.3), transform: `translateY(${(1 - t) * 30}px)`, filter: `blur(${Math.max(0, (1 - t) * 8)}px)` }));
+const Title = makeTitle(SPRING.smooth, 3, (t, i, key, pal) => ({ opacity: Math.min(1, t * 1.3), transform: `translateY(${(1 - t) * 30}px)`, filter: `blur(${Math.max(0, (1 - t) * 8)}px)`, fontWeight: key ? 700 : 400, color: key ? pal.main : undefined }));
 
 export const DEFAULT_PRESET: HostPreset = {
   id: "default",
   name: "Основной",
   role: "основной",
-  voice: null,
-  avatarDir: null,
-  fit: {},
   palettes: [VIOLET],
+  covers: [],
+  tags: [],
+  fit: {},
   motion: {
     spring: SPRING.smooth,
     stagger: 3,
@@ -29,10 +29,10 @@ export const DEFAULT_PRESET: HostPreset = {
     exit: leave,
     scene: sceneStyle,
     scenePad: [2, 6],
+    drift: 0.035,
   },
   Title,
   Bg: () => <DotOrbitBg variant={1} />,
-  cover: () => ({}),
   Showcase: ({ frame, pal }) => (
     <AbsoluteFill>
       <Title text="Основной *пресет*" frame={frame} at={10} pal={pal} top={760} size={110} />
