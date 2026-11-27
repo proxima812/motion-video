@@ -136,6 +136,15 @@ import { Video73, F as F73 } from "./v73/Video73";
 import { Cover73 } from "./v73/Cover73";
 import { Video74, F as F74 } from "./v74/Video74";
 import { Cover74 } from "./v74/Cover74";
+// host preset demos (src/kit/presets): V75 Ahu, V76 Alicja, V77 Kamilya, V78 Alsu
+import { Video75, F as F75 } from "./v75/Video75";
+import { Cover75 } from "./v75/Cover75";
+import { Video76, F as F76 } from "./v76/Video76";
+import { Cover76 } from "./v76/Cover76";
+import { Video77, F as F77 } from "./v77/Video77";
+import { Cover77 } from "./v77/Cover77";
+import { Video78, F as F78 } from "./v78/Video78";
+import { Cover78 } from "./v78/Cover78";
 import { Video66, F as F66 } from "./v66/Video66";
 import { Cover66 } from "./v66/Cover66";
 import { Video67, F as F67 } from "./v67/Video67";
@@ -225,6 +234,10 @@ const V71 = withOutro(Video71, F71.duration, "ru", "tatarverse");
 const V72 = withOutro(Video72, F72.duration, "ru", "tatarverse");
 const V73 = withOutro(Video73, F73.duration, "ru", "tatarverse");
 const V74 = withOutro(Video74, F74.duration, "ru", "tatarverse");
+const V75 = withOutro(Video75, F75.duration, "ru", "tatarverse");
+const V76 = withOutro(Video76, F76.duration, "ru", "tatarverse");
+const V77 = withOutro(Video77, F77.duration, "ru", "tatarverse");
+const V78 = withOutro(Video78, F78.duration, "ru", "tatarverse");
 const V66 = withOutro(Video66, F66.duration, "ru", "tatarverse");
 const V67 = withOutro(Video67, F67.duration, "ru", "tatarverse");
 const V68 = withOutro(Video68, F68.duration, "ru", "tatarverse");
@@ -320,6 +333,14 @@ export const Root: React.FC = () => (
     <Still id="Cover73" component={Cover73} width={1080} height={1920} />
     <Composition id="V74" component={V74} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F74.duration)} />
     <Still id="Cover74" component={Cover74} width={1080} height={1920} />
+    <Composition id="V75" component={V75} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F75.duration)} />
+    <Still id="Cover75" component={Cover75} width={1080} height={1920} />
+    <Composition id="V76" component={V76} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F76.duration)} />
+    <Still id="Cover76" component={Cover76} width={1080} height={1920} />
+    <Composition id="V77" component={V77} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F77.duration)} />
+    <Still id="Cover77" component={Cover77} width={1080} height={1920} />
+    <Composition id="V78" component={V78} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F78.duration)} />
+    <Still id="Cover78" component={Cover78} width={1080} height={1920} />
     <Composition id="V66" component={V66} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F66.duration)} />
     <Still id="Cover66" component={Cover66} width={1080} height={1920} />
     <Composition id="V67" component={V67} width={1080} height={1920} fps={60} durationInFrames={outroTotal(F67.duration)} />
