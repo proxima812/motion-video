@@ -212,7 +212,7 @@ const Showcase: React.FC<{ frame: number; pal: Palette }> = ({ frame, pal }) => 
     <Title text="Alicja *подруга*" frame={frame} at={10} pal={pal} top={200} size={110} />
     <ChatBubbles frame={frame} pal={pal} y={420} items={[{ at: 60, side: "in", text: "пойдем на татарский вечер" }, { at: 120, side: "out", text: "мне страшно" }]} />
     <SpeechBubble frame={frame} at={190} pal={pal} x={540} y={820} w={860} size={96} text="достаточно прийти" textAt={200} sub="чтобы стать своей" subAt={240} />
-    <FloatingHearts frame={frame} at={260} pal={pal} x={540} y={1200} />
+    <FloatingHearts frame={frame} at={260} pal={pal} x={860} y={1500} spread={180} />
   </AbsoluteFill>
 );
 

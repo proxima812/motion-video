@@ -181,7 +181,7 @@ export const Confetti: React.FC<{ frame: number; at: number; pal: Palette; x: nu
 const Showcase: React.FC<{ frame: number; pal: Palette }> = ({ frame, pal }) => (
   <AbsoluteFill>
     <StickerWord frame={frame} at={10} text="проверь" y={190} size={110} />
-    <RoundBadge frame={frame} at={30} big={frame >= 170 ? "1/1" : "0/1"} small="верно" x={890} y={260} d={200} bumpAt={[170]} />
+    <RoundBadge frame={frame} at={30} big={frame >= 170 ? "1/1" : "0/1"} small="верно" x={930} y={390} d={170} rot={10} bumpAt={[170]} />
     <QuizCard frame={frame} at={50} pal={pal} question="Рәхмәт" lead="это" y={420} options={[{ text: "спасибо", at: 80, correct: true, judge: 170 }, { text: "привет", at: 90, judge: 150 }]} />
     <Confetti frame={frame} at={170} pal={pal} x={540} y={800} />
     <BigType frame={frame} at={[240, 252]} pal={pal} lines={["знаешь", "больше"]} y={1120} size={130} />
