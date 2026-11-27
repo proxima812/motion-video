@@ -28,4 +28,4 @@ for (const n of ns) {
 }
 await browser.close({ silent: true });
 // review copies with the safe zone (x 35..1045, y 335..1585)
-execFileSync("python", ["-c", "import sys\nfrom PIL import Image, ImageDraw\nfor f in sys.argv[1:]:\n im=Image.open(f).convert('RGB'); d=ImageDraw.Draw(im); d.rectangle((35,335,1045,1585),outline=(0,194,255),width=4); im.save(f.replace('cover.jpg','cover-safe.png'))", ...outs], { stdio: "inherit" });
+execFileSync(process.platform === "win32" ? "python" : "python3", ["-c", "import sys\nfrom PIL import Image, ImageDraw\nfor f in sys.argv[1:]:\n im=Image.open(f).convert('RGB'); d=ImageDraw.Draw(im); d.rectangle((35,335,1045,1585),outline=(0,194,255),width=4); im.save(f.replace('cover.jpg','cover-safe.png'))", ...outs], { stdio: "inherit" });
