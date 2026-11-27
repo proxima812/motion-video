@@ -208,9 +208,9 @@ export const KAMILYA: HostPreset = {
     <AbsoluteFill>
       <Title text="бабушкин *сундук*" frame={frame} at={10} pal={pal} top={200} size={100} />
       <FormCard frame={frame} pal={pal} at={40} header="ОПИСЬ" y={380} rows={[{ q: "полотенце", a: "сложено", at: 60, write: 90 }, { q: "тюльпаны", a: "24", at: 110, write: 140 }, { q: "на виду", a: "нет", ok: false, at: 160, write: 190 }]} />
-      <Stamp frame={frame} at={240} pal={pal} text="ХРАНИТЬ" x={830} y={760} size={220} />
-      <SerifQuote frame={frame} pal={pal} y={930} size={84} lines={[{ text: "традиция живет", at: 280 }, { text: "пока *на виду*", at: 320 }]} />
-      <MapRoute frame={frame} pal={pal} at={380} draw={[400, 470]} y={1280} h={480} />
+      <Stamp frame={frame} at={240} pal={pal} text="АРХИВ" x={870} y={930} size={190} />
+      <SerifQuote frame={frame} pal={pal} y={1020} size={84} lines={[{ text: "традиция живет", at: 280 }, { text: "пока *на виду*", at: 320 }]} />
+      <MapRoute frame={frame} pal={pal} at={380} draw={[400, 470]} y={1340} h={460} />
     </AbsoluteFill>
   ),
 };
