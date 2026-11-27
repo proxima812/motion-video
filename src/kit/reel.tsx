@@ -70,7 +70,8 @@ export const leave = (frame: number, at: number): React.CSSProperties => {
 
 export type Range = readonly [number, number];
 
-const sceneStyle = (frame: number, [a, b]: Range): React.CSSProperties => {
+/** Default scene in/out: spring up from blur, leave up into blur (host presets pass their own via ReelShell `transition`) */
+export const sceneStyle = (frame: number, [a, b]: Range): React.CSSProperties => {
   const inT = a === 0 ? 1 : springAt(frame, a, SPRING.smooth);
   const out = progress(frame, b - 8, b + 3);
   return {
@@ -247,7 +248,11 @@ export const ReelShell: React.FC<{
   musicLevel?: readonly [number, number];
   /** background layer under the scenes (e.g. <DotOrbitBg />); default plain white */
   bg?: React.ReactNode;
-}> = ({ scenes, headlines, headlineSize, vo, sfx, duration, silences = [], overlay: Overlay, shift = 0, music = "music/bed.mp3", musicLevel = [0.1, 0.2], bg }) => {
+  /** scene in/out style (host preset `motion.scene`); default sceneStyle */
+  transition?: (frame: number, range: Range) => React.CSSProperties;
+  /** frames a scene stays mounted before its start / after its end (longer transitions need more) */
+  pad?: readonly [number, number];
+}> = ({ scenes, headlines, headlineSize, vo, sfx, duration, silences = [], overlay: Overlay, shift = 0, music = "music/bed.mp3", musicLevel = [0.1, 0.2], bg, transition = sceneStyle, pad = [2, 6] }) => {
   const frame = useCurrentFrame();
   setClock(frame, 60);
   useEnginePaint(frame);
@@ -255,8 +260,8 @@ export const ReelShell: React.FC<{
     <AbsoluteFill style={{ ...tokens, background: "#fff", color: K.text, fontFamily: K.font, WebkitFontSmoothing: "antialiased" }}>
       {bg}
       {scenes.map(({ range, El }, i) =>
-        frame >= range[0] - 2 && frame < range[1] + 6 ? (
-          <AbsoluteFill key={i} style={sceneStyle(frame, range)}>
+        frame >= range[0] - pad[0] && frame < range[1] + pad[1] ? (
+          <AbsoluteFill key={i} style={transition(frame, range)}>
             <AbsoluteFill style={{ transform: `translateY(${shift}px)` }}>
               <El frame={frame} />
             </AbsoluteFill>

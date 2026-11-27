@@ -58,6 +58,7 @@ import { AiBubble, Bubble, Browser, Card, Chip, Meter, Pill, StatTile, Stamp, St
 import { CheckCircle, DbIcon, Verdict, Wordmark } from "./own/icons";
 import { GlassPlate, PLATE } from "./own/glass";
 import { DotGrid, InterScope, PowerOff, Pointer, Punch, ScaleFill, WebScale } from "./own/fx";
+import { PRESETS, PRESET_IDS } from "../kit/presets";
 
 // Every component of the catalog with a demo. Pick one in Studio: Playground -> props -> name.
 // Groups: own = our components (src/catalog/own, being restyled to src/kit/design.ts),
@@ -696,6 +697,28 @@ export const ENTRIES: Entry[] = [
       ["tv-power-off", "Выключение ТВ (canvas): в рендере падает, вместо него power-off.", "не использовался", 120, <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", padding: 100, fontSize: 44, textAlign: "center" }}>tv-power-off не рендерится (нет canvas capture API) — используй power-off</AbsoluteFill>],
     ] as const
   ).map(([id, use, from, frames, el]): Entry => ({ id, group: "remocn", use, source: `components/remocn/${id} (${from})`, frames, bg: "none", render: () => <Gsh><InterScope>{el}</InterScope></Gsh> })),
+  // Host presets (src/kit/presets): one entry per preset and palette - background, decor and the preset showcase
+  ...PRESET_IDS.filter((id) => id !== "default").flatMap((id) =>
+    PRESETS[id].palettes.map((pal): Entry => {
+      const P = PRESETS[id];
+      return {
+        id: `preset-${id}-${pal.name}`,
+        group: "shared",
+        use: `Пресет ${P.name} (${P.role}), палитра ${pal.name}: анимация, элементы, декор.`,
+        source: `kit/presets/${id}`,
+        frames: 600,
+        bg: "none",
+        tactile: true,
+        render: (frame) => (
+          <>
+            <P.Bg pal={pal} />
+            {P.Decor && <P.Decor pal={pal} />}
+            <P.Showcase frame={frame} pal={pal} />
+          </>
+        ),
+      };
+    }),
+  ),
 ];
 
 export const IDS = ENTRIES.map((e) => e.id) as [string, ...string[]];
