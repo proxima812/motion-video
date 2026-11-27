@@ -85,14 +85,16 @@ export const Kicker: React.FC<{ frame: number; at: number; out?: number; pal: Pa
 
 /** Speech bubble from the bubble cover: white, round, a tail pointing down (at the host) at `tail` (0..1 of the width).
  *  text = Inter 800 in a vivid -> main gradient, words appear at `textAt` (one start or a start per word); sub = gray line under it.
- *  dots = no text, only typing dots (she wants to speak but stays silent). */
+ *  dots = no text, only typing dots (she wants to speak but stays silent); typing = dots in the empty bubble until the first word. */
 export const SpeechBubble: React.FC<{
   frame: number; at: number; out?: number; pal: Palette; x: number; y: number; w?: number; size?: number;
-  text?: string; textAt?: number | number[]; sub?: string; subAt?: number; tail?: number | null; dots?: boolean; rot?: number;
-}> = ({ frame, at, out, pal, x, y, w, size = 112, text, textAt, sub, subAt, tail = 0.5, dots, rot = 0 }) => {
+  text?: string; textAt?: number | number[]; sub?: string; subAt?: number; tail?: number | null; dots?: boolean; typing?: boolean; rot?: number;
+}> = ({ frame, at, out, pal, x, y, w, size = 112, text, textAt, sub, subAt, tail = 0.5, dots, typing, rot = 0 }) => {
   const words = text ? text.split(" ") : [];
   const breathe = 1 + Math.sin((frame - at) / 50) * 0.008;
   const tw = size * 0.85;
+  const first = Array.isArray(textAt) ? textAt[0] : (textAt ?? at);
+  const wait = typing && !dots ? 1 - progress(frame, first - 6, first + 4) : 0;
   return (
     <div style={{ position: "absolute", left: x, top: y, width: w, transform: `translateX(-50%) rotate(${rot}deg)`, ...(w ? null : { whiteSpace: "nowrap" }) }}>
       <div style={{ ...life(frame, at, out), transformOrigin: `${(tail ?? 0.5) * 100}% 100%` }}>
@@ -102,7 +104,12 @@ export const SpeechBubble: React.FC<{
               <TypingDots frame={frame} color={tint(pal.main, 0.45)} size={size * 0.2} />
             </div>
           ) : (
-            <div style={{ fontFamily: INTER, fontWeight: 800, fontSize: size, letterSpacing: "-0.04em", lineHeight: 1.02 }}>
+            <div style={{ position: "relative", fontFamily: INTER, fontWeight: 800, fontSize: size, letterSpacing: "-0.04em", lineHeight: 1.02 }}>
+              {wait > 0 && (
+                <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", opacity: wait }}>
+                  <TypingDots frame={frame} color={tint(pal.main, 0.45)} size={size * 0.2} />
+                </div>
+              )}
               {words.map((wd, i) => {
                 const a = Array.isArray(textAt) ? (textAt[i] ?? textAt[textAt.length - 1]) : (textAt ?? at) + i * 5;
                 const t = springAt(frame, a, SPR);
